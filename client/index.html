@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat</title>
+  <script type="module">
+    import { io } from "https://cdn.socket.io/4.8.1/socket.io.esm.min.js";
+    const socket = io();
+    
+    const messagesContainer = document.querySelector('.chat-messages');
+    const input = document.querySelector('.chat-input input');
+    const button = document.querySelector('.chat-input button');
+
+    button.addEventListener('click', () => {
+      const message = input.value;
+      if (message.trim() !== '') {
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message');
+        messageElement.innerHTML = `<strong>Tú:</strong> ${message}`;
+        messagesContainer.appendChild(messageElement);
+        socket.emit('chat message', message);
+        input.value = '';
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+      }
+    });
+
+    input.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        button.click();
+      }
+    });
+
+    socket.on('chat message', (msg) => {
+      const messageElement = document.createElement('div');
+      messageElement.classList.add('message');
+      messageElement.innerHTML = `<strong>Otro usuario:</strong> ${msg}`;
+      messagesContainer.appendChild(messageElement);
+      messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    });
+  </script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .chat-container {
+      width: 400px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .chat-messages {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      border-bottom: 1px solid #ddd;
+    }
+    .message {
+      margin-bottom: 10px;
+    }
+    .message strong {
+      color: #333;
+    }
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #ddd;
+    }
+    .chat-input input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      outline: none;
+    }
+    .chat-input button {
+      padding: 10px 15px;
+      background-color: #4CAF50;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+    .chat-input button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="chat-container">
+    <div class="chat-messages">
+      <div class="message"><strong>Ana:</strong> Hola!</div>
+      <div class="message"><strong>Juan:</strong> Hola, ¿cómo estás?</div>
+    </div>
+    <div class="chat-input">
+      <input type="text" placeholder="Escribe un mensaje...">
+      <button>Enviar</button>
+    </div>
+  </div>
+</body>
+</html>
