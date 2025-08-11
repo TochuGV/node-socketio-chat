@@ -7,7 +7,7 @@
   <script type="module">
     import { io } from "https://cdn.socket.io/4.8.1/socket.io.esm.min.js";
     const socket = io();
-    
+
     let mySocketId = null;
 
     socket.on('connect', () => {
@@ -24,7 +24,7 @@
       messageElement.classList.add('message');
       const time = new Date(timestamp).toLocaleTimeString();
       
-      if (isOwn){
+      if (isOwn) {
         messageElement.innerHTML = `<strong>Tú [${time}]:</strong> ${message}`;
       } else {
         messageElement.innerHTML = `<strong>${username || 'Otro usuario'} [${time}]:</strong> ${message}`;
@@ -44,6 +44,13 @@
       addMessage(msgObj, isOwn);
     });
     
+    socket.on('userCount', (count) => {
+      const counterEl = document.getElementById('user-counter')
+      if (counterEl) {
+        counterEl.innerText = `Connected users: ${count}`;
+      }
+    })
+
     button.addEventListener('click', () => {
       const message = input.value;
       if (message.trim() !== '') {
@@ -110,9 +117,25 @@
     .chat-input button:hover {
       background-color: #45a049;
     }
+    .user-counter {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: #4caf50;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: bold;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      user-select: none;
+      z-index: 1000;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
+  <div id="user-counter" class="user-counter">Usuarios conectados: 0</div>
   <div class="chat-container">
     <div class="chat-messages">
       <div class="message"><strong>Ana:</strong> Hola!</div>

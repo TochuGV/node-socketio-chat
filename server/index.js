@@ -13,8 +13,13 @@ const io = new Server(server);
 
 connectDatabase();
 
+let connectedUsers = 0;
+
 io.on('connection', async (socket) => {
-  console.log('A user connected');
+  connectedUsers++;
+  console.log(`A user connected. Total connected: ${connectedUsers}`);
+
+  io.emit('userCount', connectedUsers);
 
   try {
     const lastMessages = await Message.find().sort({ timestamp: 1}).limit(50);
@@ -41,14 +46,16 @@ io.on('connection', async (socket) => {
       });
 
     } catch (error) {
-      console.error('There was an error saving message: ', error);
+      console.error('Error saving message: ', error);
     };
 
     //socket.broadcast.emit('chat message', msg);
   });
 
   socket.on('disconnect', () => {
-    console.log('A user disconnected');
+    connectedUsers--;
+    console.log(`A user disconnected. Total connected: ${connectedUsers}`);
+    io.emit('userCount', connectedUsers);
   });
 });
 
