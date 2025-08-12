@@ -14,13 +14,16 @@ const button = document.querySelector('.chat-input button');
 function addMessage({ username, message, timestamp }, isOwn = false){
   const messageElement = document.createElement('div');
   messageElement.classList.add('message');
+  messageElement.classList.add(isOwn ? 'own-message' : 'other-message');
+  
   const time = new Date(timestamp).toLocaleTimeString();
-      
-  if (isOwn) {
-    messageElement.innerHTML = `<strong>Tú [${time}]:</strong> ${message}`;
-  } else {
-    messageElement.innerHTML = `<strong>${username || 'Otro usuario'} [${time}]:</strong> ${message}`;
-  };
+
+  const headerText = isOwn ? `Tú [${time}]` : `${username || 'Otro usuario'} [${time}]`;
+
+  messageElement.innerHTML = `
+    <div class="message-header">${headerText}</div>
+    <div class="message-body">${message}</div>
+  `;
 
   messagesContainer.appendChild(messageElement);
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
