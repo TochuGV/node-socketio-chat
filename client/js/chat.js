@@ -1,4 +1,5 @@
 import { io } from "https://cdn.socket.io/4.8.1/socket.io.esm.min.js";
+
 const socket = io();
 let mySocketId = null;
 
@@ -17,7 +18,6 @@ function addMessage({ username, message, timestamp }, isOwn = false){
   messageElement.classList.add(isOwn ? 'own-message' : 'other-message');
   
   const time = new Date(timestamp).toLocaleTimeString();
-
   const headerText = isOwn ? `Tú [${time}]` : `${username || 'Otro usuario'} [${time}]`;
 
   messageElement.innerHTML = `
@@ -45,6 +45,7 @@ socket.on('userCount', (count) => {
     counterEl.innerText = `Connected users: ${count}`;
   };
 })
+
 
 button.addEventListener('click', () => {
   const message = input.value;

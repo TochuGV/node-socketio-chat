@@ -34,14 +34,14 @@ body {
   box-sizing: border-box;
 }
 .own-message {
-  background-color: #dcf8c6; /* verde claro típico de WhatsApp */
-  margin-left: auto; /* los empuja a la derecha */
+  background-color: #dcf8c6;
+  margin-left: auto;
   text-align: left;
   border-bottom-right-radius: 0;
 }
 .other-message {
-  background-color: #f1f0f0; /* gris claro */
-  margin-right: auto; /* los empuja a la izquierda */
+  background-color: #f1f0f0;
+  margin-right: auto;
   text-align: left;
   border-bottom-left-radius: 0;
 }
