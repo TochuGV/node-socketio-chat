@@ -89,3 +89,82 @@ body {
   font-family: Arial, sans-serif;
   font-size: 14px;
 }
+
+.volume-control {
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #f9f9f9;
+  border-radius: 0 0 8px 8px;
+}
+
+.volume-control label {
+  font-size: 14px;
+  color: #555;
+  user-select: none;
+  min-width: 60px;
+}
+
+/* Estilos para el slider (input[type=range]) */
+#volume-slider {
+  -webkit-appearance: none; /* Quitar estilos por defecto en WebKit */
+  appearance: none;
+  width: 150px;
+  height: 6px;
+  border-radius: 4px;
+  background: #ddd;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+/* Al pasar mouse, se oscurece el track */
+#volume-slider:hover {
+  background: #ccc;
+}
+
+/* Track del slider */
+#volume-slider::-webkit-slider-runnable-track {
+  height: 6px;
+  background: #4CAF50; /* verde para el track lleno */
+  border-radius: 4px;
+}
+
+#volume-slider::-moz-range-track {
+  height: 6px;
+  background: #4CAF50;
+  border-radius: 4px;
+}
+
+/* Thumb (el circulito) */
+#volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #4CAF50;
+  border-radius: 50%;
+  cursor: pointer;
+  margin-top: -5px; /* para centrar */
+  box-shadow: 0 0 2px rgba(0,0,0,0.3);
+  transition: background 0.3s ease;
+}
+
+#volume-slider::-webkit-slider-thumb:hover {
+  background: #388E3C;
+}
+
+#volume-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #4CAF50;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 0 2px rgba(0,0,0,0.3);
+  transition: background 0.3s ease;
+}
+
+#volume-slider::-moz-range-thumb:hover {
+  background: #388E3C;
+}

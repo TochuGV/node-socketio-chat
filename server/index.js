@@ -62,7 +62,11 @@ io.on('connection', async (socket) => {
 
 app.use(logger('dev'));
 
-app.use(express.static(path.join(process.cwd(), 'client')));
+app.use(express.static(path.join(process.cwd(), 'client'),{
+  etag: false,
+  lastModified: false,
+  maxAge: 0,
+}));
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(process.cwd(), 'client', 'index.html'));
