@@ -1,5 +1,6 @@
 import express from 'express';
 import logger from 'morgan';
+import path from 'path';
 
 import { Server } from 'socket.io';
 import { createServer } from 'http';
@@ -61,8 +62,10 @@ io.on('connection', async (socket) => {
 
 app.use(logger('dev'));
 
+app.use(express.static(path.join(process.cwd(), 'client')));
+
 app.get('/', (req, res) => {
-  res.sendFile(process.cwd() + '/client/index.html');
+  res.sendFile(path.join(process.cwd(), 'client', 'index.html'));
 });
 
 server.listen(port, () => {
