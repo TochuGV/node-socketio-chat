@@ -74,6 +74,28 @@ body {
 .chat-input button:hover {
   background-color: #45a049;
 }
+#send-audio {
+  background-color: #ff4b5c;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s ease;
+}
+
+#send-audio:hover {
+  background-color: #e63946;
+}
+
+#send-audio.recording {
+  background-color: #2a9d8f; /* Verde cuando está grabando */
+}
 .user-counter {
   position: fixed;
   top: 10px;

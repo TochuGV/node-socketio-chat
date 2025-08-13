@@ -23,7 +23,14 @@ io.on('connection', async (socket) => {
   io.emit('userCount', connectedUsers);
 
   try {
-    const lastMessages = await Message.find().sort({ timestamp: 1}).limit(50);
+    const lastMessages = await Message.find().sort({ timestamp: 1 }).limit(50);
+    const messagesToSend = lastMessages.map(msg => ({
+      username: msg.username,
+      message: msg.message || null,
+      audio: msg.audio ? msg.audio.toString('base64') : null,
+      audioType: msg.audioType || null,
+      timestamp: msg.timestamp
+    }));
     socket.emit('chat history', lastMessages);
   } catch (error) {
     console.error('Error fetching chat history:', error);
@@ -35,7 +42,9 @@ io.on('connection', async (socket) => {
     try {
       const newMessage = new Message({
         username: socket.id,
-        message: msg,
+        message: msg.message || null,
+        audio: msg.audio ? Buffer.from(msg.audio, 'base64') : null,
+        audioType: msg.audioType || null,
       });
       await newMessage.save();
       console.log(newMessage.username);
@@ -43,9 +52,11 @@ io.on('connection', async (socket) => {
       io.emit('chat message', {
         username: newMessage.username,
         message: newMessage.message,
+        audio: newMessage.audio ? newMessage.audio.toString('base64') : null,
+        audioType: newMessage.audioType,
         timestamp: newMessage.timestamp,
       });
-
+      
     } catch (error) {
       console.error('Error saving message: ', error);
     };

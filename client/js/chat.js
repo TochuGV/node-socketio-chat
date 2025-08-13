@@ -7,13 +7,14 @@ let mySocketId = null;
 const messagesContainer = document.querySelector('.chat-messages');
 const input = document.querySelector('.chat-input input');
 const button = document.querySelector('.chat-input button');
+const sendAudioButton = document.getElementById('send-audio');
 
 socket.on('connect', () => {
   mySocketId = socket.id;
   console.log('Connected with ID:', mySocketId);
 });
 
-function addMessage({ username, message, timestamp }, isOwn = false){
+function addMessage({ username, message, audio, audioType, timestamp }, isOwn = false){
   const messageElement = document.createElement('div');
   messageElement.classList.add('message');
   messageElement.classList.add(isOwn ? 'own-message' : 'other-message');
@@ -21,9 +22,16 @@ function addMessage({ username, message, timestamp }, isOwn = false){
   const time = new Date(timestamp).toLocaleTimeString();
   const headerText = isOwn ? `Tú [${time}]` : `${username || 'Otro usuario'} [${time}]`;
 
+  let bodyHTML = '';
+  if (message) {
+    bodyHTML = `<div class="message-body">${message}</div>`;
+  } else if (audio && audioType){
+    bodyHTML = `<audio controls src="data:${audioType};base64,${audio}"></audio>`;
+  };
+  
   messageElement.innerHTML = `
     <div class="message-header">${headerText}</div>
-    <div class="message-body">${message}</div>
+    ${bodyHTML}
   `;
 
   messagesContainer.appendChild(messageElement);
@@ -52,7 +60,11 @@ button.addEventListener('click', () => {
   const message = input.value;
   if (message.trim() !== '') {
     //addMessage({ username: 'Tú', message, timestamp: new Date() }, true);
-    socket.emit('chat message', message);
+    socket.emit('chat message', {
+      message: message,
+      audio: null,
+      audioType: null
+    });
     input.value = '';
   };
 });
@@ -62,6 +74,57 @@ input.addEventListener('keypress', (e) => {
     button.click();
   };
 });
+
+let mediaRecorder;
+let audioChunks = [];
+
+sendAudioButton.addEventListener('click', async () => {
+  if(!mediaRecorder || mediaRecorder.state === 'inactive') {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorder = new MediaRecorder(stream);
+      audioChunks = [];
+
+      mediaRecorder.addEventListener('dataavailable', (event) => {
+        if(event.data.size > 0) {
+          audioChunks.push(event.data);
+        };
+      });
+
+      mediaRecorder.addEventListener('stop', async() => {
+        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+        const arrayBuffer = await audioBlob.arrayBuffer();
+        const base64Audio = arrayBufferToBase64(arrayBuffer);
+        
+        socket.emit('chat message', {
+          audioBuffer: base64Audio,
+          audioType: audioBlob.type
+        });
+      });
+
+      mediaRecorder.start();
+      sendAudioButton.classList.add('recording');
+      sendAudioButton.textContent = '🔴 Grabando...';
+    } catch (error) {
+      console.error('Error accessing microphone:', error);
+      alert('No se pudo acceder al micrófono. Asegúrate de que esté conectado y permitido.');
+    };
+  } else {
+    mediaRecorder.stop();
+    sendAudioButton.classList.remove('recording');
+    sendAudioButton.textContent = '🎤';
+  };
+});
+
+function arrayBufferToBase64(buffer) {
+  let binary = '';
+  const bytes = new Uint8Array(buffer);
+  const len = bytes.byteLength;
+  for (let i = 0; i < len; i++) {
+    binary += String.fromCharCode(bytes[i]);
+  };
+  return btoa(binary);
+};
 
 const volumeSlider = document.getElementById('volume-slider');
 
