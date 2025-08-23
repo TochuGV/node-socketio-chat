@@ -6,7 +6,7 @@ let mySocketId = null;
 
 const messagesContainer = document.querySelector('.chat-messages');
 const input = document.querySelector('.chat-input input');
-const button = document.querySelector('.chat-input button');
+const sendBtn = document.getElementById('send-btn');
 const sendAudioButton = document.getElementById('send-audio');
 
 socket.on('connect', () => {
@@ -18,17 +18,25 @@ function addMessage({ username, message, audio, audioType, timestamp }, isOwn = 
   const messageElement = document.createElement('div');
   messageElement.classList.add('message');
   messageElement.classList.add(isOwn ? 'own-message' : 'other-message');
-  
-  const time = new Date(timestamp).toLocaleTimeString();
-  const headerText = isOwn ? `Tú [${time}]` : `${username || 'Otro usuario'} [${time}]`;
+
+  // Format time as HH:MM:SS
+  let time = '';
+  if (timestamp) {
+    const d = new Date(timestamp);
+    time = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  }
+  // Username text
+  let userText = isOwn ? 'You' : (username || 'Other user');
+  let headerText = `<strong>${userText}</strong>`;
+  if (time) headerText += ` <span class="timestamp">[${time}]</span>`;
 
   let bodyHTML = '';
   if (message) {
     bodyHTML = `<div class="message-body">${message}</div>`;
   } else if (audio && audioType){
     bodyHTML = `<audio controls src="data:${audioType};base64,${audio}"></audio>`;
-  };
-  
+  }
+
   messageElement.innerHTML = `
     <div class="message-header">${headerText}</div>
     ${bodyHTML}
@@ -36,7 +44,7 @@ function addMessage({ username, message, audio, audioType, timestamp }, isOwn = 
 
   messagesContainer.appendChild(messageElement);
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
-};
+}
 
 socket.on('chat history', (messages) => {
   messagesContainer.innerHTML = '';
@@ -50,30 +58,47 @@ socket.on('chat message', (msgObj) => {
 });
 
 socket.on('userCount', (count) => {
-  const counterEl = document.getElementById('user-counter')
-  if (counterEl) {
-    counterEl.innerText = `Connected users: ${count}`;
-  };
-})
+  const onlineCount = document.getElementById('online-count');
+  if (onlineCount) {
+    onlineCount.textContent = count;
+  }
+});
 
-button.addEventListener('click', () => {
+sendBtn.addEventListener('click', (e) => {
+  e.preventDefault();
   const message = input.value;
   if (message.trim() !== '') {
-    //addMessage({ username: 'Tú', message, timestamp: new Date() }, true);
     socket.emit('chat message', {
       message: message,
       audio: null,
       audioType: null
     });
     input.value = '';
-  };
+    updateSendButtons();
+  }
 });
 
 input.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
-    button.click();
-  };
+    e.preventDefault();
+    sendBtn.click();
+  }
 });
+
+input.addEventListener('input', updateSendButtons);
+
+function updateSendButtons() {
+  if (input.value.trim().length > 0) {
+    sendBtn.style.display = '';
+    sendAudioButton.style.display = 'none';
+  } else {
+    sendBtn.style.display = 'none';
+    sendAudioButton.style.display = '';
+  }
+}
+
+// Inicializar estado de los botones al cargar
+updateSendButtons();
 
 let mediaRecorder;
 let audioChunks = [];
