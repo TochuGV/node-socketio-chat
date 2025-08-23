@@ -1,4 +1,5 @@
 import { initSocket, onConnect, onChatHistory, onChatMessage, onUserCount, sendTextMessage, sendAudioMessage } from "./sockets/socket.js";
+import { startRecording, stopRecording } from "./audio/audio.js";
 import { playNotification, getVolume, setVolume } from "./notifications/notifications.js";
 
 const socket = initSocket();
@@ -35,7 +36,6 @@ function addMessage({ username, message, audio, audioType, timestamp }, isOwn = 
   messageElement.classList.add('message');
   messageElement.classList.add(isOwn ? 'own-message' : 'other-message');
 
-  // Format time as HH:MM:SS
   let time = '';
   if (timestamp) {
     const date = new Date(timestamp);
@@ -91,60 +91,31 @@ function updateSendButtons() {
   };
 };
 
-// Inicializar estado de los botones al cargar
 updateSendButtons();
 
-let mediaRecorder;
-let audioChunks = [];
+let isRecording = false;
 
-sendAudioButton.addEventListener('click', async () => {
-  if(!mediaRecorder || mediaRecorder.state === 'inactive') {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      mediaRecorder = new MediaRecorder(stream);
-      audioChunks = [];
-
-      mediaRecorder.addEventListener('dataavailable', (event) => {
-        if(event.data.size > 0) {
-          audioChunks.push(event.data);
-        };
-      });
-
-      mediaRecorder.addEventListener('stop', async() => {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
-        const arrayBuffer = await audioBlob.arrayBuffer();
-        const base64Audio = arrayBufferToBase64(arrayBuffer);
-        
-        socket.emit('chat message', {
-          audioBuffer: base64Audio,
-          audioType: audioBlob.type
-        });
-      });
-
-      mediaRecorder.start();
-      sendAudioButton.classList.add('recording');
-      sendAudioButton.textContent = '🔴 Grabando...';
-    } catch (error) {
-      console.error('Error accessing microphone:', error);
-      alert('No se pudo acceder al micrófono. Asegúrate de que esté conectado y permitido.');
-    };
+sendAudioButton.addEventListener('click', () => {
+  if (!isRecording) {
+    isRecording = true;
+    sendAudioButton.classList.add('recording');
+    sendAudioButton.textContent = '🔴 Grabando...';
+    startRecording((base64Audio, audioBlob, error) => {
+      isRecording = false;
+      sendAudioButton.classList.remove('recording');
+      sendAudioButton.innerHTML = '<i class="fa-solid fa-microphone"></i>';;
+      if (error) {
+        alert('No se pudo grabar el audio. ' + error.message);
+        return;
+      };
+      if (base64Audio && audioBlob) sendAudioMessage(socket, base64Audio, audioBlob.type);
+    });
   } else {
-    mediaRecorder.stop();
-    sendAudioButton.classList.remove('recording');
-    sendAudioButton.textContent = '🎤';
+    stopRecording();
   };
 });
 
-function arrayBufferToBase64(buffer) {
-  let binary = '';
-  const bytes = new Uint8Array(buffer);
-  const len = bytes.byteLength;
-  for (let i = 0; i < len; i++) {
-    binary += String.fromCharCode(bytes[i]);
-  };
-  return btoa(binary);
-};
-
+/*
 const volumeSlider = document.getElementById('volume-slider');
 
 if (volumeSlider) {
@@ -154,3 +125,4 @@ if (volumeSlider) {
     setVolume(volume);
   });
 };
+*/
