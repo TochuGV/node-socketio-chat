@@ -6,7 +6,7 @@ export default (io) => {
   io.on('connection', async (socket) => {
     connectedUsers++;
     console.log(`A user connected. Total connected: ${connectedUsers}`);
-    io.emit('userCount', connectedUsers);
+    io.emit('user count', connectedUsers);
 
     try {
       const lastMessages = await Message.find().sort({ timestamp: 1 }).limit(50);
@@ -48,7 +48,7 @@ export default (io) => {
     socket.on('disconnect', () => {
       connectedUsers--;
       console.log(`A user disconnected. Total connected: ${connectedUsers}`);
-      io.emit('userCount', connectedUsers);
+      io.emit('user count', connectedUsers);
     });
   });
 };

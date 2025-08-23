@@ -74,7 +74,6 @@ main {
   overflow-x: hidden;
 }
 
-/* Chat container alineado a la izquierda con margen fijo */
 .chat-container {
   width: 100vw;
   max-width: 1920px;
@@ -88,7 +87,6 @@ main {
   box-sizing: border-box;
 }
 
-/* Mensajes alineados a los costados, no centrados */
 .chat-messages {
   display: flex;
   flex-direction: column;
@@ -98,7 +96,6 @@ main {
   align-items: stretch;
 }
 
-/* Mensajes con margen lateral fijo y alineados a los costados */
 .message {
   display: flex;
   flex-direction: column;
@@ -195,7 +192,7 @@ main {
 }
 
 .chat-input button#send-audio,
-.chat-input button#send-btn {
+.chat-input button#send-text {
   height: 100%;
 }
 .chat-input button:hover {

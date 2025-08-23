@@ -1,17 +1,33 @@
-import { io } from "https://cdn.socket.io/4.8.1/socket.io.esm.min.js";
+import { initSocket, onConnect, onChatHistory, onChatMessage, onUserCount, sendTextMessage, sendAudioMessage } from "./sockets/socket.js";
 import { playNotification, getVolume, setVolume } from "./notifications/notifications.js";
 
-const socket = io();
+const socket = initSocket();
 let mySocketId = null;
 
 const messagesContainer = document.querySelector('.chat-messages');
 const input = document.querySelector('.chat-input input');
-const sendBtn = document.getElementById('send-btn');
+const sendTextButton = document.getElementById('send-text');
 const sendAudioButton = document.getElementById('send-audio');
 
-socket.on('connect', () => {
-  mySocketId = socket.id;
+onConnect(socket, (id) => {
+  mySocketId = id;
   console.log('Connected with ID:', mySocketId);
+});
+
+onChatHistory(socket, (messages) => {
+  messagesContainer.innerHTML = '';
+  messages.forEach(msg => addMessage(msg, msg.username === mySocketId));
+});
+
+onChatMessage(socket, (msgObj) => {
+  const isOwn = msgObj.username === socket.id;
+  addMessage(msgObj, isOwn);
+  if(!isOwn) playNotification();
+});
+
+onUserCount(socket, (count) => {
+  const onlineCount = document.getElementById('online-count');
+  if (onlineCount) onlineCount.textContent = count;
 });
 
 function addMessage({ username, message, audio, audioType, timestamp }, isOwn = false){
@@ -22,10 +38,10 @@ function addMessage({ username, message, audio, audioType, timestamp }, isOwn = 
   // Format time as HH:MM:SS
   let time = '';
   if (timestamp) {
-    const d = new Date(timestamp);
-    time = d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-  }
-  // Username text
+    const date = new Date(timestamp);
+    time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  };
+
   let userText = isOwn ? 'You' : (username || 'Other user');
   let headerText = `<strong>${userText}</strong>`;
   if (time) headerText += ` <span class="timestamp">[${time}]</span>`;
@@ -35,7 +51,7 @@ function addMessage({ username, message, audio, audioType, timestamp }, isOwn = 
     bodyHTML = `<div class="message-body">${message}</div>`;
   } else if (audio && audioType){
     bodyHTML = `<audio controls src="data:${audioType};base64,${audio}"></audio>`;
-  }
+  };
 
   messageElement.innerHTML = `
     <div class="message-header">${headerText}</div>
@@ -44,44 +60,22 @@ function addMessage({ username, message, audio, audioType, timestamp }, isOwn = 
 
   messagesContainer.appendChild(messageElement);
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
-}
+};
 
-socket.on('chat history', (messages) => {
-  messagesContainer.innerHTML = '';
-  messages.forEach(msg => addMessage(msg, msg.username === mySocketId));
-});
-
-socket.on('chat message', (msgObj) => {
-  const isOwn = msgObj.username === socket.id;
-  addMessage(msgObj, isOwn);
-  if(!isOwn) playNotification();
-});
-
-socket.on('userCount', (count) => {
-  const onlineCount = document.getElementById('online-count');
-  if (onlineCount) {
-    onlineCount.textContent = count;
-  }
-});
-
-sendBtn.addEventListener('click', (e) => {
+sendTextButton.addEventListener('click', (e) => {
   e.preventDefault();
   const message = input.value;
   if (message.trim() !== '') {
-    socket.emit('chat message', {
-      message: message,
-      audio: null,
-      audioType: null
-    });
+    sendTextMessage(socket, message);
     input.value = '';
     updateSendButtons();
-  }
+  };
 });
 
 input.addEventListener('keypress', (e) => {
   if (e.key === 'Enter') {
     e.preventDefault();
-    sendBtn.click();
+    sendTextButton.click();
   }
 });
 
@@ -89,13 +83,13 @@ input.addEventListener('input', updateSendButtons);
 
 function updateSendButtons() {
   if (input.value.trim().length > 0) {
-    sendBtn.style.display = '';
+    sendTextButton.style.display = '';
     sendAudioButton.style.display = 'none';
   } else {
-    sendBtn.style.display = 'none';
+    sendTextButton.style.display = 'none';
     sendAudioButton.style.display = '';
-  }
-}
+  };
+};
 
 // Inicializar estado de los botones al cargar
 updateSendButtons();
