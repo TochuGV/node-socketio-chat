@@ -103,7 +103,7 @@ sendAudioButton.addEventListener('click', () => {
     startRecording((base64Audio, audioBlob, error) => {
       isRecording = false;
       sendAudioButton.classList.remove('recording');
-      sendAudioButton.innerHTML = '<i class="fa-solid fa-microphone"></i>';;
+      sendAudioButton.innerHTML = '<i class="fa-solid fa-microphone"></i>';
       if (error) {
         alert('No se pudo grabar el audio. ' + error.message);
         return;

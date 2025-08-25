@@ -92,6 +92,7 @@ main {
   flex-direction: column;
   gap: 48px;
   min-height: 300px;
+  overflow-y: auto;
   margin-bottom: 24px;
   align-items: stretch;
 }
@@ -184,14 +185,15 @@ main {
   padding: 0 48px;
   flex-shrink: 0;
 }
-
 .chat-input button#send-audio,
 .chat-input button#send-text {
+  width: 40px;
   height: 100%;
 }
 .chat-input button:hover {
   background: #357a5c;
 }
+
 .message {
   display: flex;
   flex-direction: column;
