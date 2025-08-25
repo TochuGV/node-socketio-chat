@@ -99,7 +99,7 @@ sendAudioButton.addEventListener('click', () => {
   if (!isRecording) {
     isRecording = true;
     sendAudioButton.classList.add('recording');
-    sendAudioButton.textContent = '🔴 Grabando...';
+    sendAudioButton.innerHTML = '<i class="fa-solid fa-microphone fa-spin"></i>';
     startRecording((base64Audio, audioBlob, error) => {
       isRecording = false;
       sendAudioButton.classList.remove('recording');
