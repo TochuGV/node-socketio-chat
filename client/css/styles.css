@@ -21,7 +21,7 @@ html {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 32px 0 24px 0;
+  padding: 24px;
   background: #489b7a;
   color: #fff;
   font-size: 18px;
