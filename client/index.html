@@ -15,10 +15,10 @@
     <h1>Chat in real time</h1>
     <div class="header-right">
       <span class="online-users">Online: <span id="online-count">0</span></span>
-      <button class="menu-button" aria-label="Menu">
-        <span class="menu-icon"></span>
-        <span class="menu-icon"></span>
-        <span class="menu-icon"></span>
+      <button class="settings-menu-button" aria-label="Menu">
+        <span class="settings-menu-icon"></span>
+        <span class="settings-menu-icon"></span>
+        <span class="settings-menu-icon"></span>
       </button>
     </div>
   </header>
@@ -33,11 +33,11 @@
         <button type="button" id="send-audio" title="Send audio"><i class="fa-solid fa-microphone"></i></button>
       </form>
     </div>
-    <div id="settings-overlay" class="settings-overlay" style="display:none;"></div>
-    <div id="settings-modal" class="settings-modal" style="display:none;">
+    <div id="settings-overlay" class="settings-overlay"></div>
+    <div id="settings-modal" class="settings-modal">
       <div class="settings-header">
       <h2>Options</h2>
-      <button class="close-btn">&times;</button>
+      <button class="close-button">&times;</button>
       </div>
   <div class="settings-content">
     <!-- Preferencias -->
@@ -102,24 +102,6 @@
   </main>
 
   <script type="module" src="js/chat.js"></script>
-  <script>
-    const menuBtn = document.querySelector('.menu-button');
-    const overlay = document.getElementById('settings-overlay');
-    const modal = document.getElementById('settings-modal');
-    const closeBtn = document.querySelector('.close-btn');
-
-    menuBtn.addEventListener('click', () => {
-      overlay.style.display = 'block';
-      modal.style.display = 'block';
-    });
-    closeBtn.addEventListener('click', () => {
-      overlay.style.display = 'none';
-      modal.style.display = 'none';
-    });
-    overlay.addEventListener('click', () => {
-      overlay.style.display = 'none';
-      modal.style.display = 'none';
-    });
-  </script>
+  <script type="module" src="js/settings.js"></script>
 </body>
 </html>

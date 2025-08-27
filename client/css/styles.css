@@ -21,10 +21,21 @@
   border-radius: 25px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
   z-index: 1000;
-  display: flex;
   flex-direction: column;
   overflow: hidden;
   font-family: 'Inter', Arial, sans-serif;
+}
+
+.settings-modal, .settings-overlay {
+  display: none;
+}
+
+.settings-modal.active {
+  display: flex;
+}
+
+.settings-overlay.active {
+  display: block;
 }
 
 .settings-header {
@@ -43,7 +54,7 @@
   margin: 0;
 }
 
-.close-btn {
+.close-button {
   position: absolute;
   right: 16px; /* a la derecha */
   top: 50%;
@@ -231,7 +242,7 @@ html {
   font-weight: 700;
   margin-right: 32px;
 }
-.menu-button {
+.settings-menu-button {
   background: none;
   border: none;
   cursor: pointer;
@@ -242,7 +253,7 @@ html {
   width: 32px;
   padding: 0;
 }
-.menu-icon {
+.settings-menu-icon {
   background-color: #fff;
   height: 3px;
   width: 100%;
