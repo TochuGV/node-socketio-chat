@@ -1,107 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat in real time</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-</head>
-<body>
-  <header class="header">
-    <h1>Chat in real time</h1>
-    <div class="header-right">
-      <span class="online-users">Online: <span id="online-count">0</span></span>
-      <button class="settings-menu-button" aria-label="Menu">
-        <span class="settings-menu-icon"></span>
-        <span class="settings-menu-icon"></span>
-        <span class="settings-menu-icon"></span>
-      </button>
-    </div>
-  </header>
-  <main>
-    <div class="chat-container">
-      <div class="chat-messages" id="chat-messages">
-        <!-- Messages will be dynamically inserted here -->
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat in real time</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/settings.css" />
+  </head>
+  <body>
+    <header class="header">
+      <h1>Chat in real time</h1>
+      <div class="header-right">
+        <span class="online-users">Online: <span id="online-count">0</span></span>
+        <button class="settings-menu-button" aria-label="Menu">
+          <span class="settings-menu-icon"></span>
+          <span class="settings-menu-icon"></span>
+          <span class="settings-menu-icon"></span>
+        </button>
       </div>
-      <form class="chat-input" id="chat-form" autocomplete="off">
-        <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off">
-        <button type="submit" id="send-text" style="display:none;"><i class="fa-solid fa-paper-plane"></i></button>
-        <button type="button" id="send-audio" title="Send audio"><i class="fa-solid fa-microphone"></i></button>
-      </form>
-    </div>
-    <div id="settings-overlay" class="settings-overlay"></div>
-    <div id="settings-modal" class="settings-modal">
-      <div class="settings-header">
-      <h2>Options</h2>
-      <button class="close-button">&times;</button>
+    </header>
+    <main>
+      <div class="chat-container">
+        <div class="chat-messages" id="chat-messages">
+          <!-- Messages will be dynamically inserted here -->
+        </div>
+        <form class="chat-input" id="chat-form" autocomplete="off">
+          <input type="text" id="message-input" placeholder="Type a message..." autocomplete="off">
+          <button type="submit" id="send-text" style="display:none;"><i class="fa-solid fa-paper-plane"></i></button>
+          <button type="button" id="send-audio" title="Send audio"><i class="fa-solid fa-microphone"></i></button>
+        </form>
       </div>
-  <div class="settings-content">
-    <!-- Preferencias -->
-    <div class="settings-section">
-      <h3>Preferencias</h3>
-      <div class="option-group" style="margin-bottom:36px;">
-        <span>Tema</span>
-        <div class="btn-group">
-          <button class="btn left">Claro</button>
-          <button class="btn middle">Oscuro</button>
-          <button class="btn right">Automático</button>
+      <div id="settings-overlay" class="settings-overlay"></div>
+      <div id="settings-modal" class="settings-modal">
+        <div class="settings-header">
+          <h2>Options</h2>
+          <button class="close-button">&times;</button>
+        </div>
+        <div class="settings-content">
+          <div class="settings-section">
+            <h3>Preferencias</h3>
+            <div class="option-group" style="margin-bottom:36px;">
+              <span>Tema</span>
+              <div class="button-group">
+                <button class="button left">Claro</button>
+                <button class="button middle">Oscuro</button>
+                <button class="button right">Automático</button>
+              </div>
+            </div>
+            <div class="option-group" style="margin-top:36px; margin-bottom:36px;">
+              <span>Tamaño de la letra</span>
+              <div class="button-group">
+                <button class="button left">Pequeña</button>
+                <button class="button middle">Mediana</button>
+                <button class="button right">Grande</button>
+              </div>
+            </div>
+            <div class="option-group" style="margin-top:36px;">
+              <span>Idioma</span>
+              <div class="button-group">
+                <button class="button left">Español</button>
+                <button class="button right">English</button>
+              </div>
+            </div>
+          </div>
+          <div class="settings-section">
+            <h3>Notificaciones</h3>
+            <div class="option-group">
+              <span>Volumen de notificaciones</span>
+              <input type="range" min="0" max="100" value="50" disabled>
+            </div>
+            <div class="option-group">
+              <span>Notificaciones de mensajes</span>
+              <label class="switch">
+                <input type="checkbox" disabled>
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+          <div class="settings-section">
+            <h3>Privacidad</h3>
+            <div class="option-group">
+              <span>Mostrar estado en línea</span>
+              <label class="switch">
+                <input type="checkbox" disabled>
+                <span class="slider round"></span>
+              </label>
+            </div>
+          </div>
+          <button class="logout-button">Logout</button>
         </div>
       </div>
-      <div class="option-group" style="margin-top:36px; margin-bottom:36px;">
-        <span>Tamaño de la letra</span>
-        <div class="btn-group">
-          <button class="btn left">Pequeña</button>
-          <button class="btn middle">Mediana</button>
-          <button class="btn right">Grande</button>
-        </div>
-      </div>
-      <div class="option-group" style="margin-top:36px;">
-        <span>Idioma</span>
-        <div class="btn-group">
-          <button class="btn left">Español</button>
-          <button class="btn right">English</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Notificaciones -->
-    <div class="settings-section">
-      <h3>Notificaciones</h3>
-      <div class="option-group">
-        <span>Volumen de notificaciones</span>
-        <input type="range" min="0" max="100" value="50" disabled>
-      </div>
-      <div class="option-group">
-        <span>Notificaciones de mensajes</span>
-        <label class="switch">
-          <input type="checkbox" disabled>
-          <span class="slider round"></span>
-        </label>
-      </div>
-    </div>
-
-    <!-- Privacidad -->
-    <div class="settings-section">
-      <h3>Privacidad</h3>
-      <div class="option-group">
-        <span>Mostrar estado en línea</span>
-        <label class="switch">
-          <input type="checkbox" disabled>
-          <span class="slider round"></span>
-        </label>
-      </div>
-    </div>
-
-    <button class="logout-btn">Logout</button>
-  </div>
-    </div>
-  </main>
-
-  <script type="module" src="js/chat.js"></script>
-  <script type="module" src="js/settings.js"></script>
-</body>
-</html>
+    </main>
+    <script type="module" src="js/chat.js"></script>
+    <script type="module" src="js/settings.js"></script>
+  </body>
+</html>z
