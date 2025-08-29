@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat in real time</title>
+    <title translate-key="appTitle">Chat in real time</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
@@ -14,9 +14,11 @@
   </head>
   <body>
     <header class="header">
-      <h1>Chat in real time</h1>
+      <h1 translate-key="appTitle">Chat in real time</h1>
       <div class="header-right">
-        <span class="online-users">Online: <span id="online-count">0</span></span>
+        <span class="online-users">
+          <span translate-key="usersOnline">Online</span>: <span id="online-count">0</span>
+        </span>
         <button class="settings-menu-button" aria-label="Menu">
           <span class="settings-menu-icon"></span>
           <span class="settings-menu-icon"></span>
@@ -38,30 +40,30 @@
       <div id="settings-overlay" class="settings-overlay"></div>
       <div id="settings-modal" class="settings-modal">
         <div class="settings-header">
-          <h2>Options</h2>
+          <h2 translate-key="optionsTitle">Options</h2>
           <button class="close-button">&times;</button>
         </div>
         <div class="settings-content">
           <div class="settings-section">
-            <h3>Preferencias</h3>
+            <h3 translate-key="preferences">Preferences</h3>
             <div class="option-group" style="margin-bottom:36px;">
-              <span>Tema</span>
+              <span translate-key="theme">Theme</span>
               <div class="button-group">
-                <button class="button left">Claro</button>
-                <button class="button middle">Oscuro</button>
-                <button class="button right">Automático</button>
+                <button class="button left" translate-key="themeLight">Light</button>
+                <button class="button middle" translate-key="themeDark">Dark</button>
+                <button class="button right" translate-key="themeAuto">Automatic</button>
               </div>
             </div>
             <div class="option-group" style="margin-top:36px; margin-bottom:36px;">
-              <span>Tamaño de la letra</span>
+              <span translate-key="fontSize">Tamaño de la letra</span>
               <div class="button-group">
-                <button class="button left">Pequeña</button>
-                <button class="button middle">Mediana</button>
-                <button class="button right">Grande</button>
+                <button class="button left" translate-key="fontSizeSmall">Pequeña</button>
+                <button class="button middle" translate-key="fontSizeMedium">Mediana</button>
+                <button class="button right" translate-key="fontSizeLarge">Grande</button>
               </div>
             </div>
             <div class="option-group" style="margin-top:36px;">
-              <span>Idioma</span>
+              <span translate-key="language">Language</span>
               <div class="button-group">
                 <button id="button-es" class="button left">
                   <span class="fi fi-es"></span> Español
@@ -73,13 +75,13 @@
             </div>
           </div>
           <div class="settings-section">
-            <h3>Notificaciones</h3>
+            <h3 translate-key="notifications">Notificacions</h3>
             <div class="option-group">
-              <span>Volumen de notificaciones</span>
+              <span translate-key="notificationVolume">Notification volume</span>
               <input type="range" min="0" max="100" value="50" disabled>
             </div>
             <div class="option-group">
-              <span>Notificaciones de mensajes</span>
+              <span translate-key="notificationMessages">Notificacion messages</span>
               <label class="switch">
                 <input type="checkbox" disabled>
                 <span class="slider round"></span>
@@ -87,16 +89,16 @@
             </div>
           </div>
           <div class="settings-section">
-            <h3>Privacidad</h3>
+            <h3 translate-key="privacy">Privacy</h3>
             <div class="option-group">
-              <span>Mostrar estado en línea</span>
+              <span translate-key="showOnlineStatus">Show online status</span>
               <label class="switch">
                 <input type="checkbox" disabled>
                 <span class="slider round"></span>
               </label>
             </div>
           </div>
-          <button class="logout-button">Logout</button>
+          <button class="logout-button" translate-key="logoutButton">Logout</button>
         </div>
       </div>
     </main>

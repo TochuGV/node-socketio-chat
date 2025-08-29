@@ -1,3 +1,22 @@
 export default {
+  appTitle: "Conversación en tiempo real",
+  usersOnline: "En línea",
   messagePlaceholder: "Escribe un mensaje...",
+  optionsTitle: "Opciones",
+  preferences: "Preferencias",
+  theme: "Tema",
+  themeLight: "Claro",
+  themeDark: "Oscuro",
+  themeAuto: "Automático",
+  fontSize: "Tamaño de la letra",
+  fontSizeSmall: "Pequeña",
+  fontSizeMedium: "Mediana",
+  fontSizeLarge: "Grande",
+  language: "Idioma",
+  notifications: "Notificationes",
+  notificationVolume: "Volumen de notificaciones",
+  notificationMessages: "Notificationes de mensajes",
+  privacy: "Privacidad",
+  showOnlineStatus: "Mostrar estado en línea",
+  logoutButton: "Cerrar sesión"
 };

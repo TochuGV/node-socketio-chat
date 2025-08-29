@@ -1,3 +1,22 @@
 export default {
+  appTitle: "Chat in real time",
+  usersOnline: "Online",
   messagePlaceholder: "Type a message...",
+  optionsTitle: "Options",
+  preferences: "Preferences",
+  theme: "Theme",
+  themeLight: "Light",
+  themeDark: "Dark",
+  themeAuto: "Automatic",
+  fontSize: "Font size",
+  fontSizeSmall: "Small",
+  fontSizeMedium: "Medium",
+  fontSizeLarge: "Large",
+  language: "Language",
+  notifications: "Notifications",
+  notificationVolume: "Notification volume",
+  notificationMessages: "Notification messages",
+  privacy: "Privacy",
+  showOnlineStatus: "Show online status",
+  logoutButton: "Logout"
 };
