@@ -1,6 +1,9 @@
 import { initSocket, onConnect, onChatHistory, onChatMessage, onUserCount, sendTextMessage, sendAudioMessage } from "./sockets/socket.js";
 import { startRecording, stopRecording } from "./audio/audio.js";
 import { playNotification } from "./notifications/notifications.js";
+import { initSettings } from "./settings/settings.js";
+import { initVolumeSlider } from "./settings/settings-volume.js";
+import { initLanguageButtons } from "./translations/translations-apply.js";
 
 const socket = initSocket();
 let mySocketId = null;
@@ -114,3 +117,7 @@ sendAudioButton.addEventListener('click', () => {
     stopRecording();
   };
 });
+
+initSettings();
+initVolumeSlider();
+initLanguageButtons();

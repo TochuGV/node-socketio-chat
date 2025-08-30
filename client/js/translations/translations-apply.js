@@ -1,4 +1,4 @@
-import { t, setLanguage } from './translations/translations-manager.js';
+import { t, setLanguage } from './translations-manager.js';
 
 const TRANSLATE_ATTRIBUTE = 'translate-key';
 
@@ -25,5 +25,3 @@ export const initLanguageButtons = () => {
 
   applyTranslations();
 };
-
-initLanguageButtons();

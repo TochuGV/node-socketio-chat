@@ -9,7 +9,7 @@ export function t(key){
   return translations[currentLang][key] || key;
 };
 
-export function getLanguage(){
+export function getLanguage(){ //Por ahora, no se usa nunca esta función.
   return currentLang;
 };
 
