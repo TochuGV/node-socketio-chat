@@ -17,8 +17,8 @@
   width: 50%;
   height: 80%;
   background: #f2f2f2;
-  border-radius: 25px;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 1.5rem;
+  box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
   z-index: 1000;
   flex-direction: column;
   overflow: hidden;
@@ -46,47 +46,49 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 30px;
-  font-size: 1.5rem;
+  padding: 2rem;
   font-weight: bold;
   position: relative;
 }
 
 .settings-header h2 {
+  font-size: 2.5rem;
+  height: 3rem;
   margin: 0;
 }
 
 .close-button {
   position: absolute;
-  right: 16px;
+  right: 1rem;
   top: 50%;
   transform: translateY(-50%);
   background: none;
   border: none;
   color: #fff;
-  font-size: 1.8rem;
+  font-size: 2rem;
   cursor: pointer;
 }
 
 .settings-content {
-  padding: 27px;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 27px;
+  gap: 1rem;
   overflow-y: auto;
 }
 
 .settings-section {
   background: #cdcdcd;
-  padding: 18px;
-  border-radius: 25px;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  padding: 1rem;
+  border-radius: 1.5rem;
+  box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
 }
 
 .settings-section h3 {
   margin-top: 0;
-  margin-bottom: 12px;
-  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  height: 2rem;
 }
 
 .option-group {
@@ -94,39 +96,34 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin-top: 18px;
-  width: 100%;
-  max-width: 420px;
-  height: 40.5px;
+  /*margin-top: 1rem;*/
+  height: 2.5rem;
   margin-left: auto;
   margin-right: auto;
-  font-size: 1rem;
 }
 
 .option-group > span {
   text-align: left;
-  min-width: 120px;
-  margin-right: 24px;
+  /*min-width: 7.5rem;*/
+  font-size: 1.25rem;
 }
 
 .button-group {
   display: flex;
-  width: 320px;
-  min-width: 320px;
-  max-width: 320px;
+  width: 27rem;
 }
 
 .button {
   background: #b4b4b4;
   border: none;
-  padding: 12px 0;
+  padding: 0.5rem 0;
   cursor: pointer;
   flex: 1;
-  font-size: 1rem;
+  font-size: 1.25rem;
 }
 
 .button.left {
-  border-radius: 25px 0 0 25px;
+  border-radius: 1.5rem 0 0 1.5rem;
 }
 
 .button.middle {
@@ -134,7 +131,7 @@
 }
 
 .button.right {
-  border-radius: 0 25px 25px 0;
+  border-radius: 0 1.5rem 1.5rem 0;
 }
 
 .button:hover {
@@ -145,16 +142,17 @@
   background: #e14a4a;
   color: white;
   border: none;
-  padding: 18px;
-  font-size: 1.2rem;
+  padding: 1rem;
+  font-size: 2rem;
   font-weight: bold;
-  border-radius: 25px;
+  border-radius: 1.5rem;
   cursor: pointer;
   width: 50%;
+  height: 4rem;
   margin: 0 auto 0 auto;
   display: block;
   text-align: center;
-  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+  box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
 }
 
 .logout-button:hover {
@@ -164,8 +162,8 @@
 .switch {
   position: relative;
   display: inline-block;
-  width: 44px;
-  height: 20px;
+  width: 9rem;
+  height: 2.5rem;
 }
 
 .switch input { 
@@ -178,19 +176,19 @@
   top: 0; left: 0; right: 0; bottom: 0;
   background-color: #9a9a9a;
   transition: .4s;
-  border-radius: 25px;
+  border-radius: 1.5rem;
 }
 
 .slider:before {
   position: absolute;
   content: "";
-  height: 14px;
-  width: 14px;
-  left: 3px;
-  bottom: 3px;
+  height: 2rem;
+  width: 2rem;
+  left: 0.25rem;
+  bottom: 0.25rem;
   background-color: #e6e6e6;
   transition: .4s;
-  border-radius: 50%;
+  border-radius: 1.5rem;
 }
 
 input:checked + .slider {
@@ -198,5 +196,5 @@ input:checked + .slider {
 }
 
 input:checked + .slider:before {
-  transform: translateX(24px);
+  transform: translateX(6.5rem);
 }
