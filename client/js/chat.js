@@ -1,6 +1,6 @@
 import { initSocket, onConnect, onChatHistory, onChatMessage, onUserCount, sendTextMessage, sendAudioMessage } from "./sockets/socket.js";
 import { startRecording, stopRecording } from "./audio/audio.js";
-import { playNotification, getVolume, setVolume } from "./notifications/notifications.js";
+import { playNotification } from "./notifications/notifications.js";
 
 const socket = initSocket();
 let mySocketId = null;
@@ -114,15 +114,3 @@ sendAudioButton.addEventListener('click', () => {
     stopRecording();
   };
 });
-
-/*
-const volumeSlider = document.getElementById('volume-slider');
-
-if (volumeSlider) {
-  volumeSlider.value = getVolume();
-  volumeSlider.addEventListener('input', (e) => {
-    const volume = parseFloat(e.target.value);
-    setVolume(volume);
-  });
-};
-*/

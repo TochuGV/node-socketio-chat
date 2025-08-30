@@ -1,3 +1,5 @@
+import { getVolume, setVolume } from "./notifications/notifications.js";
+
 const overlay = document.getElementById('settings-overlay');
 const modal = document.getElementById('settings-modal');
 const menuButton = document.querySelector('.settings-menu-button');
@@ -16,3 +18,13 @@ function closeSettingsModal(){
 menuButton.addEventListener('click', openSettingsModal);
 closeButton.addEventListener('click', closeSettingsModal);
 overlay.addEventListener('click', closeSettingsModal);
+
+const volumeSlider = document.getElementById('volume-slider');
+
+if (volumeSlider) {
+  volumeSlider.value = getVolume();
+  volumeSlider.addEventListener('input', (e) => {
+    const volume = Number(e.target.value);
+    setVolume(volume);
+  });
+};

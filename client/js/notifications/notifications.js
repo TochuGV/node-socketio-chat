@@ -9,11 +9,11 @@ export function playNotification(){
 };
 
 export function getVolume(){
-  return notificationSound.volume;
+  return notificationSound.volume * 100;
 };
 
 export function setVolume(value){
-  const volume = Math.min(Math.max(value, 0), 1);
+  const volume = Math.min(Math.max(value, 0), 100) / 100;
   notificationSound.volume = volume;
-  localStorage.setItem('notificationVolume', volume);
+  localStorage.setItem('notificationVolume', value);
 };
