@@ -8,10 +8,26 @@ import { initLanguageButtons } from "./translations/translations-apply.js";
 const socket = initSocket();
 let mySocketId = null;
 
+let unreadCount = 0;
+const originalTitle = document.title;
+
 const messagesContainer = document.querySelector('.chat-messages');
 const input = document.querySelector('.chat-input input');
 const sendTextButton = document.getElementById('send-text');
 const sendAudioButton = document.getElementById('send-audio');
+
+const updateTitle = () => {
+  if (unreadCount > 0) {
+    document.title = `(${unreadCount}) ${originalTitle}`;
+  } else {
+    document.title = originalTitle;
+  };
+};
+
+window.addEventListener("focus", () => {
+  unreadCount = 0;
+  updateTitle();
+})
 
 onConnect(socket, (id) => {
   mySocketId = id;
@@ -26,7 +42,11 @@ onChatHistory(socket, (messages) => {
 onChatMessage(socket, (msgObj) => {
   const isOwn = msgObj.username === socket.id;
   addMessage(msgObj, isOwn);
-  if(!isOwn) playNotification();
+  if (!isOwn) {
+    playNotification();
+    unreadCount++;
+    updateTitle();
+  };
 });
 
 onUserCount(socket, (count) => {
