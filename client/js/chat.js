@@ -4,29 +4,18 @@ import { playNotification } from "./notifications/notifications.js";
 import { initSettings } from "./settings/settings.js";
 import { initVolumeSlider } from "./settings/settings-volume.js";
 import { initLanguageButtons } from "./translations/translations-apply.js";
+import { incrementCounter, resetCounter } from "./notifications/unread-message-counter.js";
 
 const socket = initSocket();
 let mySocketId = null;
-
-let unreadCount = 0;
-const originalTitle = document.title;
 
 const messagesContainer = document.querySelector('.chat-messages');
 const input = document.querySelector('.chat-input input');
 const sendTextButton = document.getElementById('send-text');
 const sendAudioButton = document.getElementById('send-audio');
 
-const updateTitle = () => {
-  if (unreadCount > 0) {
-    document.title = `(${unreadCount}) ${originalTitle}`;
-  } else {
-    document.title = originalTitle;
-  };
-};
-
 window.addEventListener("focus", () => {
-  unreadCount = 0;
-  updateTitle();
+  resetCounter();
 })
 
 onConnect(socket, (id) => {
@@ -44,8 +33,7 @@ onChatMessage(socket, (msgObj) => {
   addMessage(msgObj, isOwn);
   if (!isOwn) {
     playNotification();
-    unreadCount++;
-    updateTitle();
+    incrementCounter();
   };
 });
 

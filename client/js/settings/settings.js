@@ -1,3 +1,5 @@
+import { getUnreadMessageCount, resetCounter } from "../notifications/unread-message-counter.js";
+
 const overlay = document.getElementById('settings-overlay');
 const modal = document.getElementById('settings-modal');
 const menuButton = document.querySelector('.settings-menu-button');
@@ -11,6 +13,7 @@ const openSettingsModal = () => {
 const closeSettingsModal = () =>{
   overlay.classList.remove('active');
   modal.classList.remove('active');
+  if (getUnreadMessageCount() > 0) resetCounter();
 };
 
 export const initSettings = () => {
