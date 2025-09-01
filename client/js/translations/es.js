@@ -13,9 +13,9 @@ export default {
   fontSizeMedium: "Mediana",
   fontSizeLarge: "Grande",
   language: "Idioma",
-  notifications: "Notificationes",
+  notifications: "Notificaciones",
   notificationVolume: "Volumen de notificaciones",
-  notificationMessages: "Notificationes de mensajes",
+  notificationMessages: "Notificaciones de mensajes",
   privacy: "Privacidad",
   showOnlineStatus: "Mostrar estado en línea",
   logoutButton: "Cerrar sesión"
