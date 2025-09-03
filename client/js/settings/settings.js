@@ -13,7 +13,7 @@ const openSettingsModal = () => {
 const closeSettingsModal = () =>{
   overlay.classList.remove('active');
   modal.classList.remove('active');
-  if (getUnreadMessageCount() > 0) resetCounter();
+  if (getUnreadMessageCount() > 0) resetCounter(); // Revisar esto en un futuro
 };
 
 export const initSettings = () => {

@@ -1,13 +1,13 @@
-export const initToggleNotifications = () => {
-  const toggleNotifications = document.getElementById("toggle-notification-messages");
+export const initToggleUnreadMessagesCounter = () => {
+  const toggleUnreadMessagesCounter = document.getElementById("toggle-number-unread-messages");
 
-  let notificationsEnabled = localStorage.getItem("notificationsEnabled") !== "false";
-  toggleNotifications.checked = notificationsEnabled;
+  let showUnreadMessagesCount = localStorage.getItem("showUnreadMessagesCount") !== "false";
+  toggleUnreadMessagesCounter.checked = showUnreadMessagesCount;
 
-  toggleNotifications.addEventListener("change", () => {
-    notificationsEnabled = toggleNotifications.checked;
-    localStorage.setItem("notificationsEnabled", notificationsEnabled);
+  toggleUnreadMessagesCounter.addEventListener("change", () => {
+    showUnreadMessagesCount = toggleUnreadMessagesCounter.checked;
+    localStorage.setItem("showUnreadMessagesCount", showUnreadMessagesCount);
   });
 
-  return () => notificationsEnabled;
+  return () => showUnreadMessagesCount;
 };
