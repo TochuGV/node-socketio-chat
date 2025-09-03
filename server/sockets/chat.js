@@ -4,9 +4,9 @@ let connectedUsers = 0;
 
 export default (io) => {
   io.on('connection', async (socket) => {
-    connectedUsers++;
-    console.log(`A user connected. Total connected: ${connectedUsers}`);
-    io.emit('user count', connectedUsers);
+    socket.showOnline = true;
+    console.log(`A user connected. Socket ID: ${socket.id}`);
+    updateVisibleUsers(io);
 
     try {
       const lastMessages = await Message.find().sort({ timestamp: 1 }).limit(50);
@@ -45,10 +45,20 @@ export default (io) => {
       };
     });
 
+    socket.on('toggle online visibility', (showOnline) => {
+      socket.showOnline = !!showOnline;
+      console.log(`User ${socket.id} set showOnline = ${socket.showOnline}`);
+      updateVisibleUsers(io);
+    });
+
     socket.on('disconnect', () => {
-      connectedUsers--;
-      console.log(`A user disconnected. Total connected: ${connectedUsers}`);
-      io.emit('user count', connectedUsers);
+      console.log(`A user disconnected. Socket ID: ${socket.id}`);
+      updateVisibleUsers(io);
     });
   });
+};
+
+const updateVisibleUsers = (io) => {
+  const visibleCount = Array.from(io.sockets.sockets.values()).filter(s => s.showOnline).length;
+  io.emit('user count', visibleCount);
 };
