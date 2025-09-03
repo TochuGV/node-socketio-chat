@@ -42,3 +42,7 @@ export const sendAudioMessage = (socket, audioBuffer, audioType) => {
     audioType,
   });
 };
+
+export const toggleOnlineVisibility = (socket, showOnline) => {
+  socket.emit("toggle online visibility", showOnline);
+};

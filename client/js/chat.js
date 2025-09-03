@@ -4,6 +4,7 @@ import { playNotification } from "./notifications/notifications.js";
 import { initSettings } from "./settings/settings.js";
 import { initVolumeSlider } from "./settings/settings-volume.js";
 import { initLanguageButtons } from "./translations/translations-apply.js";
+import { initToggleOnlineStatus } from "./settings/settings-online-status.js"
 import { incrementCounter, resetCounter } from "./notifications/unread-message-counter.js";
 
 const socket = initSocket();
@@ -129,3 +130,4 @@ sendAudioButton.addEventListener('click', () => {
 initSettings();
 initVolumeSlider();
 initLanguageButtons();
+initToggleOnlineStatus(socket);
