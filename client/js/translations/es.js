@@ -15,7 +15,7 @@ export default {
   language: "Idioma",
   notifications: "Notificaciones",
   notificationVolume: "Volumen de notificaciones",
-  notificationMessages: "Notificaciones de mensajes",
+  showUnreadMessages: "Mostrar número de mensajes no leídos",
   privacy: "Privacidad",
   showOnlineStatus: "Mostrar estado en línea",
   logoutButton: "Cerrar sesión"
