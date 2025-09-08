@@ -64,7 +64,6 @@ body {
   margin-right: 32px;
 }
 
-/* hamburger */
 .settings-menu-button {
   background: none;
   border: none;
@@ -97,7 +96,6 @@ main {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  gap: 54px;
   padding: 27px var(--page-pad-x);
   box-sizing: border-box;
   max-width: 1920px;
@@ -111,20 +109,22 @@ main {
 .chat-messages {
   display: flex;
   flex-direction: column;
-  gap: 48px;
+  gap: 27px;
   flex: 1 1 auto;
-  overflow-y: auto;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  overflow-y: scroll;
+  padding-top: 27px;
+  padding-bottom: 27px;
+  padding-left: 32px;
+  padding-right: 32px;
   min-height: 0; /* clave cuando se usa flex en ancestros */
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
 }
 
 /* Ocultar scrollbar visual (mantener scroll funcional) */
-.chat-messages::-webkit-scrollbar { height: 8px; width: 8px; background: transparent; }
+.chat-messages::-webkit-scrollbar { /*height: 8px; width: 8px; background: transparent;*/ display: none; }
 .chat-messages::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.08); border-radius: 8px; }
-.chat-messages { -ms-overflow-style: none; scrollbar-width: thin; }
+.chat-messages { -ms-overflow-style: none; scrollbar-width: none; }
 
 /* ========== Cada mensaje (globos) ========== */
 .message {
@@ -163,9 +163,9 @@ main {
 }
 .message .timestamp {
   font-weight: 700;
-  font-size: 0.95rem;
-  margin-left: 6px;
-  opacity: .9;
+  font-size: 1.1rem;
+  margin-left: 8px;
+  opacity: .9; /* Necesario? */
 }
 
 /* ========== Input (composer) ========== */
@@ -185,10 +185,10 @@ main {
 /* Input interior */
 .chat-input input {
   flex: 1 1 auto;
-  padding: 0 28px;
+  padding-left: 32px;
   border: none;
   outline: none;
-  background: transparent;
+  background: #cdcdcd;
   font-size: 1.5rem;
   color: var(--text);
   min-width: 0; /* importante en flex para que el input no obligue a expandir */
@@ -197,14 +197,12 @@ main {
   align-items: center;
 }
 
-/* Placeholder */
 .chat-input input::placeholder {
   color: rgba(0,0,0,0.6);
   opacity: 0.9;
   font-size: 1.5rem;
 }
 
-/* Botones del lado derecho (micro + plane) */
 .chat-input button {
   border: none;
   background: var(--brand);
@@ -212,23 +210,20 @@ main {
   font-size: 2rem;
   height: 100%;
   cursor: pointer;
-  padding: 0 24px;
+  padding: 0 48px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  transition: background 0.2s;
   flex: 0 0 auto;
 }
 
-.chat-input button#send-audio {
-  width: 72px;
-  border-radius: 0 16px 16px 0;
-  background: var(--brand);
-}
-.chat-input button#send-text {
-  width: 72px;
-  border-radius: 0 16px 16px 0;
+.chat-input button:hover {
   background: var(--brand-dark);
 }
 
-/* Alternativa: icono grande */
-.chat-input button i { font-size: 1.4rem; }
+.chat-input button#send-audio,
+.chat-input button#send-text {
+  width: 72px;
+  border-radius: 0 16px 16px 0;
+}
