@@ -62,7 +62,7 @@ function addMessage({ username, message, audio, audioType, timestamp }, isOwn = 
 
   let bodyHTML = '';
   if (message) {
-    bodyHTML = `<div class="message-body">${message}</div>`;
+    bodyHTML = `<div class="body">${message}</div>`;
   } else if (audio && audioType){
     bodyHTML = `<audio controls src="data:${audioType};base64,${audio}"></audio>`;
   };
