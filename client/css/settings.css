@@ -16,7 +16,7 @@
   transform: translate(-50%, -50%);
   width: 50%;
   height: 80%;
-  background: #f2f2f2;
+  background: var(--background);
   border-radius: 1.5rem;
   box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
   z-index: 1000;
@@ -41,8 +41,8 @@
 }
 
 .settings-header {
-  background: #4a9b79;
-  color: #fff;
+  background: var(--green-dark);
+  color: var(--background);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -78,7 +78,7 @@
 }
 
 .settings-section {
-  background: #cdcdcd;
+  background: var(--gray);
   padding: 1rem;
   border-radius: 1.5rem;
   box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
@@ -114,7 +114,7 @@
 }
 
 .button {
-  background: #b4b4b4;
+  background: var(--gray-dark);
   border: none;
   padding: 0.5rem 0;
   cursor: pointer;
@@ -135,12 +135,12 @@
 }
 
 .button:hover {
-  background: #9a9a9a;
+  background: var(--gray-hover);
 }
 
 .logout-button {
   background: #e14a4a;
-  color: white;
+  color: var(--background);
   border: none;
   padding: 1rem;
   font-size: 2rem;
@@ -174,7 +174,7 @@
   position: absolute;
   cursor: pointer;
   top: 0; left: 0; right: 0; bottom: 0;
-  background-color: #9a9a9a;
+  background-color: var(--gray-hover);
   transition: .4s;
   border-radius: 1.5rem;
 }
@@ -186,13 +186,13 @@
   width: 2rem;
   left: 0.25rem;
   bottom: 0.25rem;
-  background-color: #e6e6e6;
+  background-color: var(--gray-light);
   transition: .4s;
   border-radius: 1.5rem;
 }
 
 input:checked + .slider {
-  background-color: #4a9b79;
+  background-color: var(--green-dark);
 }
 
 input:checked + .slider:before {
