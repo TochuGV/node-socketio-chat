@@ -13,6 +13,18 @@
   --page-pad-x: 48px;
 }
 
+body.dark-theme {
+  --green-light: #2D6A4F;
+  --green: #40916C;
+  --green-dark: #52B788;
+  --gray-light: #2B2B2B;
+  --gray: #3C3C3C;
+  --gray-dark: #4D4D4D;
+  --gray-hover: #5E5E5E; /* Buscar otro nombre para este en particular */
+  --background: #121212;
+  --text: #E6E6E6;
+}
+
 /* Reset / base */
 *,
 *::before,

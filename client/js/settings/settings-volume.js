@@ -1,4 +1,3 @@
-
 import { getVolume, setVolume } from "../notifications/notifications.js";
 
 export const initVolumeSlider = () => {

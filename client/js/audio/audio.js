@@ -1,4 +1,3 @@
-
 let mediaRecorder = null;
 let audioChunks = [];
 let stream = null;

@@ -6,6 +6,8 @@ import { initVolumeSlider } from "./settings/settings-volume.js";
 import { initToggleUnreadMessagesCounter } from "./settings/settings-notifications.js";
 import { initLanguageButtons } from "./translations/translations-apply.js";
 import { initToggleOnlineStatus } from "./settings/settings-online-status.js"
+import { initTheme } from "./theme/theme.js";
+import { initThemeButtons } from "./settings/settings-theme.js";
 import { incrementCounter, resetCounter } from "./notifications/unread-message-counter.js";
 
 const socket = initSocket();
@@ -133,3 +135,5 @@ initSettings();
 initVolumeSlider();
 initLanguageButtons();
 initToggleOnlineStatus(socket);
+initTheme();
+initThemeButtons();
