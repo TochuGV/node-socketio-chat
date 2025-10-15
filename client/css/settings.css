@@ -319,3 +319,9 @@ input:checked + .slider {
 input:checked + .slider:before {
   transform: translateX(6.5rem);
 }
+
+.button.active-option {
+  background: var(--green-dark);
+  color: var(--background);
+  transition: background 0.2s, color 0.2s;
+}

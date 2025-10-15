@@ -1,34 +1,40 @@
 import { setTheme, getStoredPreference } from '../theme/theme.js';
-
-const updateActiveButton = (preference) => {
-  // Selecciona todos los botones del grupo de tema que tienen IDs con el prefijo 'theme-'
-  const themeButtons = document.querySelectorAll('.button-group button[id^="theme-"]');
-  themeButtons.forEach(button => button.classList.remove('active-theme'));
-  const targetId = `theme-${preference}`;
-  const activeButton = document.getElementById(targetId);
-  if (activeButton) activeButton.classList.add('active-theme');
-};
+import setActiveButton from '../utils/setActiveButton.js';
 
 export function initThemeButtons(){
-  const lightButton = document.getElementById('theme-light');
-  const darkButton = document.getElementById('theme-dark');
-  const autoButton = document.getElementById('theme-auto');
+  const groupSelector = '.button-group';
+  const buttons = {
+    light: document.getElementById('theme-light'),
+    dark: document.getElementById('theme-dark'),
+    auto: document.getElementById('theme-auto')
+  }
 
-  if(!lightButton || !darkButton || !autoButton) return;
-
+  if(!buttons.light && !buttons.dark && !buttons.auto) return; // Si faltan todos, nada que hacer. Si falta alguno, los inicializamos igual.
+  //if(!buttons.light || !buttons.dark || !buttons.auto) return; // Si falta alguno, nada que hacer
+  const updateActiveButton = (preference) => setActiveButton(groupSelector, `#theme-${preference}`);
   const storedPreference = getStoredPreference();
   updateActiveButton(storedPreference);
 
-  lightButton?.addEventListener('click', () => {
+  /*
+  buttons.light?.addEventListener('click', () => {
     setTheme('light');
     updateActiveButton('light');
   });
-  darkButton?.addEventListener('click', () => {
+  buttons.dark?.addEventListener('click', () => {
     setTheme('dark');
     updateActiveButton('dark');
   });
-  autoButton?.addEventListener('click', () => {
+  buttons.auto?.addEventListener('click', () => {
     setTheme('auto');
     updateActiveButton('auto');
+  });
+  */
+
+  Object.entries(buttons).forEach(([mode, button]) => { //'Object.entries' crea un vector con pares [clave, valor] de un objeto
+    if(!button) return;
+    button.addEventListener('click', () => {
+      setTheme(mode);
+      updateActiveButton(mode);
+    });
   });
 };
