@@ -66,7 +66,16 @@ function addMessage({ username, message, audio, audioType, timestamp }, isOwn = 
   if (message) {
     bodyHTML = `<div class="body">${message}</div>`;
   } else if (audio && audioType){
-    bodyHTML = `<audio controls src="data:${audioType};base64,${audio}"></audio>`;
+    bodyHTML = `
+      <div class="audio-body">
+        <div class="custom-audio-player">
+          <button class="audio-control-button"><i class="fa-solid fa-play"></i></button>
+          <div class="audio-progress-bar"></div>
+          <span class="audio-time-display">0:00</span>
+          <audio preload="metadata" src="data:${audioType};base64,${audio}"></audio>
+        </div>
+      </div>
+    `; // <button class="audio-control-button"><i class="fa-solid fa-ellipsis-vertical"></i></button>
   };
 
   messageElement.innerHTML = `
@@ -76,7 +85,91 @@ function addMessage({ username, message, audio, audioType, timestamp }, isOwn = 
 
   messagesContainer.appendChild(messageElement);
   messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  
+  if (audio && audioType) initCustomAudioPlayer(messageElement.querySelector('.custom-audio-player'));
 };
+
+// =========================================================
+// NUEVA FUNCIÓN: Lógica de Reproducción de Audio Personalizado
+// Esta función debe ser añadida al final de chat.js
+// =========================================================
+
+const formatTime = (seconds) => {
+  const minutes = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+};
+
+const initCustomAudioPlayer = (messageElement) => {
+  const audioEl = messageElement.querySelector('audio');
+  const playButton = messageElement.querySelector('.audio-control-button i');
+  const timeDisplay = messageElement.querySelector('.audio-time-display');
+  const progressBar = messageElement.querySelector('.audio-progress-bar');
+
+  if (!audioEl || !playButton || !timeDisplay) return;
+
+  // 1. Mostrar la duración inicial
+  audioEl.addEventListener('loadedmetadata', () => {
+    timeDisplay.textContent = formatTime(audioEl.duration);
+  });
+
+  // 2. Controlar Play/Pause
+  playButton.parentElement.addEventListener('click', () => {
+    if (audioEl.paused) {
+      audioEl.play().catch(error => console.error("Error playing audio:", error));
+      playButton.classList.remove('fa-play');
+      playButton.classList.add('fa-pause');
+    } else {
+      audioEl.pause();
+      playButton.classList.remove('fa-pause');
+      playButton.classList.add('fa-play');
+    }
+  });
+
+  // 3. Actualizar tiempo y barra de progreso (Puntos 2 y 3)
+  audioEl.addEventListener('timeupdate', () => {
+    const elapsed = audioEl.currentTime;
+    const duration = audioEl.duration;
+
+    // Mostrar el tiempo transcurrido (sumando desde 0:00)
+    timeDisplay.textContent = formatTime(elapsed); 
+
+    // Actualizar la barra de progreso (relleno)
+    if (isFinite(duration) && duration > 0) {
+      const progressPercent = (elapsed / duration) * 100;
+      progressBar.style.setProperty('--audio-progress', `${progressPercent}%`);
+    }
+  });
+
+    // 4. Salto de Tiempo (Seeking) - ¡Funcionalidad Solicitada!
+  progressBar.addEventListener('click', (e) => {
+      // Asegúrate de que la duración esté disponible y sea válida
+      if (!isFinite(audioEl.duration) || audioEl.duration <= 0) return;
+
+      // Calcula la posición del clic como porcentaje del ancho de la barra
+      const clickPosition = e.offsetX;
+      const totalWidth = progressBar.offsetWidth;
+      const clickPercent = clickPosition / totalWidth;
+
+      // Calcula el nuevo tiempo y lo establece en el elemento de audio
+      audioEl.currentTime = audioEl.duration * clickPercent;
+        
+      // No es necesario actualizar el display ni el progreso manualmente, 
+      // el evento 'timeupdate' se dispara automáticamente al cambiar currentTime.
+  });
+
+  // 4. Resetear al finalizar
+  audioEl.addEventListener('ended', () => {
+    playButton.classList.remove('fa-pause');
+    playButton.classList.add('fa-play');
+    audioEl.currentTime = 0; // Opcional: reiniciar a 0
+    timeDisplay.textContent = formatTime(audioEl.duration); // Muestra duración total al finalizar
+    progressBar.style.setProperty('--audio-progress', `0%`);
+  });
+};
+
+// ... Asegúrate de añadir `initCustomAudioPlayer` al final de chat.js si no la tienes
+// La función `addMessage` ya llama a `initCustomAudioPlayer` al insertar el mensaje.
 
 sendTextButton.addEventListener('click', (e) => {
   e.preventDefault();
