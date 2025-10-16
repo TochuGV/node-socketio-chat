@@ -36,9 +36,10 @@ export const sendTextMessage = (socket, message) => {
   });
 };
 
-export const sendAudioMessage = (socket, audioBuffer, audioType) => {
+export const sendAudioMessage = (socket, audio, audioType) => {
   socket.emit('chat message', {
-    audioBuffer,
+    message: null,
+    audio,
     audioType,
   });
 };
