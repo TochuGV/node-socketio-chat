@@ -8,12 +8,12 @@ export default function addMessage({ username, message, audio, audioType, timest
   let time = '';
   if (timestamp) {
     const date = new Date(timestamp);
-    time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
   let userText = isOwn ? 'You' : (username || 'Other user');
   let headerText = `<strong>${userText}</strong>`;
-  if (time) headerText += ` <span class="timestamp">[${time}]</span>`;
+  if (time) headerText += ` <span class="timestamp">${time}</span>`;
 
   let bodyHTML = '';
   if (message) {
