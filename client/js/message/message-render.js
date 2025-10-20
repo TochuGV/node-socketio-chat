@@ -11,7 +11,7 @@ export default function addMessage({ username, message, audio, audioType, timest
     time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
-  let userText = isOwn ? 'You' : (username || 'Other user');
+  let userText = username || 'Other user';
   let headerText = `<strong>${userText}</strong>`;
   if (time) headerText += ` <span class="timestamp">${time}</span>`;
 
