@@ -84,3 +84,19 @@
   font-size: 1.25rem;
   color: var(--background);
 }
+
+/* client/css/styles.css o login.css */
+
+/* Clase de utilidad para ocultar elementos de forma limpia */
+.hidden {
+  display: none !important;
+}
+
+/* El modal y el overlay de login deben usar esta clase para ocultarse */
+#login-modal.hidden {
+    display: none !important;
+}
+
+#login-overlay.hidden {
+    display: none !important;
+}
