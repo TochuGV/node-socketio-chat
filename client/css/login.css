@@ -65,27 +65,58 @@
   height: 2rem;
 }
 
-.login-button {
-  background: var(--gray-dark);
+.login-form .username {
+  display: flex;
+  align-items: stretch;
+  background: var(--background);
+  border-radius: 20px;
+  box-shadow: 0.25rem 0.25rem 0.25rem rgba(0,0,0,0.25);
+  overflow: hidden;
+  flex: 0 0 auto; /* que no crezca, que no se reduzca */
+  height: var(--pill-h);
+}
+
+.login-form .username input {
+  flex: 1 1 auto;
+  padding-left: 32px;
   border: none;
-  padding: 0.5rem 0;
+  outline: none;
+  background: var(--background);
+  font-size: 1.5rem;
+  color: var(--text);
+  min-width: 0; /* importante en flex para que el input no obligue a expandir */
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+}
+
+.login-form .username input::placeholder {
+  color: var(--text);
+  opacity: 0.7;
+  font-size: 1.5rem;
+}
+
+.login-form .login-button {
+  background: var(--gray-light);
+  border: none;
+  border-radius: 1rem;
+  cursor: pointer;
+  flex: 1;
+  box-shadow: 0.25rem 0.25rem 0.25rem rgba(0,0,0,0.25);
+  font-size: 2rem;
+  color: var(--text);
+  padding: 1rem 3rem;
+}
+
+.login-form .username button {
+  background: var(--green-light);
+  border: none;
+  padding: 0.25rem 0;
   cursor: pointer;
   flex: 1;
   font-size: 1.25rem;
   color: var(--text);
 }
-
-.login-username-button {
-  background: var(--green-dark);
-  border: none;
-  padding: 0.5rem 0;
-  cursor: pointer;
-  flex: 1;
-  font-size: 1.25rem;
-  color: var(--background);
-}
-
-/* client/css/styles.css o login.css */
 
 /* Clase de utilidad para ocultar elementos de forma limpia */
 .hidden {
