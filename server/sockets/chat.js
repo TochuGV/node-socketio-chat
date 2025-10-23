@@ -8,6 +8,11 @@ export default (io) => {
     console.log(`A user connected. Socket ID: ${socket.id}`);
     updateVisibleUsers(io);
 
+    socket.on('register username', (username) => {
+      socket.username = username;
+      console.log(`User ${socket.id} registered as: ${username}`);
+    })
+
     try {
       const lastMessages = await Message.find().sort({ timestamp: 1 }).limit(50);
       socket.emit('chat history', lastMessages.map(msg => ({
@@ -22,10 +27,16 @@ export default (io) => {
     };
 
     socket.on('chat message', async (msg) => {
-      console.log('Message: ' + msg.message);
+      const clientUsername = msg.username;
+      if (!clientUsername) {
+        console.error('Received message without username, dropping message: ', msg);
+        return;
+      };
+
+      console.log(`Message from ${clientUsername}: ` + msg.message);
       try {
         const newMessage = new Message({
-          username: socket.id,
+          username: clientUsername,
           message: msg.message || null,
           audio: msg.audio ? Buffer.from(msg.audio, 'base64') : null,
           audioType: msg.audioType || null,
@@ -47,12 +58,12 @@ export default (io) => {
 
     socket.on('toggle online visibility', (showOnline) => {
       socket.showOnline = !!showOnline;
-      console.log(`User ${socket.id} set showOnline = ${socket.showOnline}`);
+      console.log(`User ${socket.username || socket.id} set showOnline = ${socket.showOnline}`);
       updateVisibleUsers(io);
     });
 
     socket.on('disconnect', () => {
-      console.log(`A user disconnected. Socket ID: ${socket.id}`);
+      console.log(`A user disconnected. Socket ID: ${socket.id} (Username: ${socket.username || 'N/A'})`);
       updateVisibleUsers(io);
     });
   });

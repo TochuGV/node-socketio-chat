@@ -28,16 +28,22 @@ export const onUserCount = (socket, callback) => {
   });
 };
 
-export const sendTextMessage = (socket, message) => {
+export const registerUsername = (socket, username) => {
+  socket.emit('register username', username);
+};
+
+export const sendTextMessage = (socket, username, message) => {
   socket.emit('chat message', {
+    username,
     message,
     audio: null,
     audioType: null,
   });
 };
 
-export const sendAudioMessage = (socket, audio, audioType) => {
+export const sendAudioMessage = (socket, username, audio, audioType) => {
   socket.emit('chat message', {
+    username,
     message: null,
     audio,
     audioType,

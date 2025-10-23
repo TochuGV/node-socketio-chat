@@ -1,4 +1,4 @@
-import { initSocket, onConnect, onChatHistory, onChatMessage, onUserCount, sendTextMessage, sendAudioMessage } from "./sockets/socket.js";
+import { initSocket, onConnect, onChatHistory, onChatMessage, onUserCount, registerUsername, sendTextMessage, sendAudioMessage } from "./sockets/socket.js";
 import { startRecording, stopRecording } from "./audio/audio.js";
 import { playNotification } from "./notifications/notifications.js";
 import { initSettings } from "./settings/settings.js";
@@ -29,15 +29,16 @@ export const initializeChat = (username) => {
   onConnect(socket, (id) => {
     mySocketId = id;
     console.log('Connected with ID:', mySocketId);
+    registerUsername(socket, username)
   });
 
   onChatHistory(socket, (messages) => {
     messagesContainer.innerHTML = '';
-    messages.forEach(msg => addMessage(msg, msg.username === mySocketId));
+    messages.forEach(msg => addMessage(msg, msg.username === username));
   });
 
   onChatMessage(socket, (msgObj) => {
-    const isOwn = msgObj.username === socket.id;
+    const isOwn = msgObj.username === username;
     addMessage(msgObj, isOwn);
     if (!isOwn) {
       playNotification();
@@ -54,7 +55,7 @@ export const initializeChat = (username) => {
     e.preventDefault();
     const message = input.value;
     if (message.trim() !== '') {
-      sendTextMessage(socket, message);
+      sendTextMessage(socket, username, message);
       input.value = '';
       updateSendButtons();
     };
@@ -96,7 +97,7 @@ export const initializeChat = (username) => {
           alert('No se pudo grabar el audio. ' + error.message);
           return;
         };
-        if (base64Audio && audioBlob) sendAudioMessage(socket, base64Audio, audioBlob.type);
+        if (base64Audio && audioBlob) sendAudioMessage(socket, username, base64Audio, audioBlob.type);
       });
     } else {
       stopRecording();
