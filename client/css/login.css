@@ -93,10 +93,31 @@
 }
 
 /* El modal y el overlay de login deben usar esta clase para ocultarse */
-#login-modal.hidden {
-    display: none !important;
+.login-modal.hidden {
+  display: none !important;
 }
 
-#login-overlay.hidden {
-    display: none !important;
+.login-overlay.hidden {
+  display: none !important;
+}
+
+/* Fondo atractivo para la vista de login */
+.login-active {
+  background-color: var(--gray-dark); /* Color sólido oscuro por defecto */
+  /* Aquí va la imagen de fondo: USANDO PLACEHOLDER */
+  background-image: url('https://placehold.co/1920x1080/4f6d7a/ffffff/jpg?text=.');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+/* Ocultar elementos del chat cuando el login está activo */
+.login-active .header {
+  display: none; /* Oculta completamente el encabezado del chat */
+}
+
+/* Asegurar que el modal de login se vea por encima de todo */
+.login-active .login-modal,
+.login-active .login-overlay {
+  display: block; /* Debe ser manejado por JS, pero asegura visibilidad */
 }
