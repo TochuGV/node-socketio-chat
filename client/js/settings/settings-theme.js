@@ -1,5 +1,5 @@
 import { setTheme, getStoredPreference } from '../theme/theme.js';
-import setActiveButton from '../utils/setActiveButton.js';
+import setActiveButton from '../utils/set-active-button.js';
 
 export function initThemeButtons(){
   const groupSelector = '.button-group';

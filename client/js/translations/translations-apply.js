@@ -1,5 +1,5 @@
 import { t, setLanguage, getLanguage } from './translations-manager.js';
-import setActiveButton from '../utils/setActiveButton.js';
+import setActiveButton from '../utils/set-active-button.js';
 
 const TRANSLATE_ATTRIBUTE = 'translate-key';
 

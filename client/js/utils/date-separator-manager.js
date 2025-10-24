@@ -4,7 +4,7 @@ const formatDateToDay = (timestamp) => {
   if (!timestamp) return null;
   const date = new Date(timestamp);
   return date.toLocaleDateString('en-CA', { year: 'numeric', month: '2-digit', day: '2-digit' });
-}
+};
 
 const formatDisplayDate = (timestamp) => {
   if (!timestamp) return '';
