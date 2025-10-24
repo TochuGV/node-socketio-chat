@@ -11,6 +11,7 @@ import { initThemeButtons } from "./settings/settings-theme.js";
 import { incrementCounter, resetCounter } from "./notifications/unread-message-counter.js";
 import addMessage from "./message/message-render.js";
 import { initFlow } from "./flow-manager.js";
+import { getSeparatorIfNewDay, resetLastDisplayedDate } from "./utils/date-separator-manager.js";
 
 export const initializeChat = (username) => {
   const socket = initSocket();
@@ -34,12 +35,17 @@ export const initializeChat = (username) => {
 
   onChatHistory(socket, (messages) => {
     messagesContainer.innerHTML = '';
-    messages.forEach(msg => addMessage(msg, msg.username === username));
+    resetLastDisplayedDate();
+    messages.forEach(msg => {
+      const separator = getSeparatorIfNewDay(msg.timestamp);
+      addMessage(msg, msg.username === username, separator);
+    });
   });
 
   onChatMessage(socket, (msgObj) => {
+    const separator = getSeparatorIfNewDay(msgObj.timestamp);
     const isOwn = msgObj.username === username;
-    addMessage(msgObj, isOwn);
+    addMessage(msgObj, isOwn, separator);
     if (!isOwn) {
       playNotification();
       if (areUnreadMessagesCounterEnabled()) incrementCounter();

@@ -1,6 +1,14 @@
 import { initCustomAudioPlayer } from "../audio/audio-player.js";
 
-export default function addMessage({ username, message, audio, audioType, timestamp }, isOwn = false){
+export default function addMessage({ username, message, audio, audioType, timestamp }, isOwn = false, dateSeparatorElement = null){
+  const messagesContainer = document.querySelector('.chat-messages');
+  if (!messagesContainer) {
+    console.warn('addMessage: .chat-messages container not found');
+    return;
+  };
+
+  if (dateSeparatorElement) messagesContainer.appendChild(dateSeparatorElement);
+  
   const messageElement = document.createElement('div');
   messageElement.classList.add('message');
   messageElement.classList.add(isOwn ? 'own-message' : 'other-message');
@@ -35,12 +43,9 @@ export default function addMessage({ username, message, audio, audioType, timest
     <div class="message-header">${headerText}</div>
     ${bodyHTML}
   `;
-  
-  const messagesContainer = document.querySelector('.chat-messages');
-  if (messagesContainer) {
-    messagesContainer.appendChild(messageElement);
-    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-  } else console.warn('addMessage: .chat-messages container not found');
+
+  messagesContainer.appendChild(messageElement);
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
   
   if (audio && audioType) initCustomAudioPlayer(messageElement.querySelector('.custom-audio-player'));
 };
