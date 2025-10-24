@@ -1,4 +1,12 @@
 export default {
+  loginTitle: "Comienza a conversar ahora!",
+  signInHeader: "Inicia sesión para continuar",
+  createUsernameHeader: "Crea un nombre de usuario",
+  createUsernamePlaceholder: "Ingresa un nombre de usuario",
+  createUsernameButton: "Continuar",
+  guestHeader: "Continuar como invitado",
+  guestButton: "Invitado",
+  guestUsername: "Usuario invitado",
   appTitle: "Conversación en tiempo real",
   usersOnline: "En línea",
   messagePlaceholder: "Escribe un mensaje...",

@@ -1,4 +1,12 @@
 export default {
+  loginTitle: "Start chatting now!",
+  signInHeader: "Sign in to continue",
+  createUsernameHeader: "Create a username",
+  createUsernamePlaceholder: "Enter a username...",
+  createUsernameButton: "Continue",
+  guestHeader: "Continue as a guest",
+  guestButton: "Guest",
+  guestUsername: "Guest user",
   appTitle: "Chat in real time",
   usersOnline: "Online",
   messagePlaceholder: "Type a message...",

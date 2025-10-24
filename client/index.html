@@ -108,12 +108,12 @@
     <div id="login-overlay" class="login-overlay"></div>
     <div id="login-modal" class="login-modal" aria-hidden="false" role="dialog" aria-labelledby="login-title">
       <div class="login-header">
-        <h2>Start chatting now!</h2>
+        <h2 translate-key="loginTitle">Start chatting now!</h2>
       </div>
       <div class="login-content">
         <form id="login-form" class="login-form">
           <div class="login-section">
-            <h3>Sign in to continue</h3>
+            <h3 translate-key="signInHeader">Sign in to continue</h3>
             <div class="...">
               <button type="button" id="login-google" class="login-button">
                 <span class="fa-brands fa-google"></span> Google
@@ -122,14 +122,14 @@
                 <span class="fa-brands fa-github"></span> Github
               </button>
             </div>
-            <h3>Create a username</h3>
+            <h3 translate-key="createUsernameHeader">Create a username</h3>
             <div class="username">
-              <input id="login-username" type="text" minlength="3" maxlength="20" placeholder="Enter a username..." autocomplete="off">
-              <button type="button" class="login-username-button">Continue</button>
+              <input id="login-username" type="text" minlength="3" maxlength="20" translate-key="createUsernamePlaceholder" placeholder="Enter a username..." autocomplete="off">
+              <button type="button" class="login-username-button" translate-key="createUsernameButton">Continue</button>
             </div>
-            <h3>Continue as a guest</h3>
+            <h3 translate-key="guestHeader">Continue as a guest</h3>
             <button type="button" id="login-guest" class="login-button">
-              <span class="fa-solid fa-user-secret"></span> Guest
+              <span class="fa-solid fa-user-secret"></span> <span translate-key="guestButton">Guest</span>
             </button>
           </div>
         </form>
