@@ -14,7 +14,7 @@ export default (io) => {
     })
 
     try {
-      const lastMessages = await Message.find().sort({ timestamp: 1 }).limit(50);
+      const lastMessages = (await Message.find().sort({ timestamp: -1 }).limit(100)).reverse();
       socket.emit('chat history', lastMessages.map(msg => ({
         username: msg.username,
         message: msg.message || null,
