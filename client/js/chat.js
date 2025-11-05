@@ -74,9 +74,7 @@ export const initializeChat = (username) => {
     }
   });
 
-  input.addEventListener('input', updateSendButtons);
-
-  function updateSendButtons() {
+  const updateSendButtons = () => {
     if (input.value.trim().length > 0) {
       sendTextButton.style.display = '';
       sendAudioButton.style.display = 'none';
@@ -87,6 +85,8 @@ export const initializeChat = (username) => {
   };
 
   updateSendButtons();
+
+  input.addEventListener('input', updateSendButtons);
 
   let isRecording = false;
 

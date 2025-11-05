@@ -1,7 +1,7 @@
 import { setTheme, getStoredPreference } from '../theme/theme.js';
 import setActiveButton from '../utils/set-active-button.js';
 
-export function initThemeButtons(){
+export const initThemeButtons = () => {
   const groupSelector = '.button-group';
   const buttons = {
     light: document.getElementById('theme-light'),

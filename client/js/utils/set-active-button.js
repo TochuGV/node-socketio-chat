@@ -1,4 +1,4 @@
-export default function setActiveButton(groupSelector, activeId){
+const setActiveButton = (groupSelector, activeId) => {
   const activeButton = document.querySelector(activeId);
   if (!activeButton) return;
   const group = activeButton.closest(groupSelector);
@@ -7,3 +7,5 @@ export default function setActiveButton(groupSelector, activeId){
   buttons.forEach(b => b.classList.remove('active-option'));
   activeButton.classList.add('active-option');
 };
+
+export default setActiveButton;

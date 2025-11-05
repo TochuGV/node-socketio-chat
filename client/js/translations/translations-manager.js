@@ -5,15 +5,15 @@ const translations = { es, en };
 
 let currentLang = localStorage.getItem("lang") || "es";
 
-export function t(key){
+export const t = (key) => {
   return translations[currentLang][key] || key;
 };
 
-export function getLanguage(){ //Por ahora, no se usa nunca esta función.
+export const getLanguage = () => { //Por ahora, no se usa nunca esta función.
   return currentLang;
 };
 
-export function setLanguage(lang){
+export const setLanguage = (lang) => {
   if (translations[lang]) {
     currentLang = lang;
     localStorage.setItem("lang", lang);

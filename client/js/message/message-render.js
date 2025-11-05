@@ -1,6 +1,6 @@
 import { initCustomAudioPlayer } from "../audio/audio-player.js";
 
-export default function addMessage({ username, message, audio, audioType, timestamp }, isOwn = false, dateSeparatorElement = null){
+const addMessage = ({ username, message, audio, audioType, timestamp }, isOwn = false, dateSeparatorElement = null) => {
   const messagesContainer = document.querySelector('.chat-messages');
   if (!messagesContainer) {
     console.warn('addMessage: .chat-messages container not found');
@@ -49,3 +49,5 @@ export default function addMessage({ username, message, audio, audioType, timest
   
   if (audio && audioType) initCustomAudioPlayer(messageElement.querySelector('.custom-audio-player'));
 };
+
+export default addMessage;
