@@ -1,5 +1,6 @@
 import { initAuthManager } from "./auth/auth-manager.js";
 import { initializeChat } from "./chat.js";
+import { applyTranslations } from "./translations/translations-apply.js";
 
 let currentSessionUsername = null;
 
@@ -22,6 +23,7 @@ export const initFlow = () => {
   const chatViewMain = document.querySelector('main');
   document.body.classList.add('login-active');
   if (chatViewMain) chatViewMain.classList.add('hidden');
+  applyTranslations();
   initAuthManager();
 };
 

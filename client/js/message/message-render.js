@@ -1,4 +1,7 @@
 import { initCustomAudioPlayer } from "../audio/audio-player.js";
+import { t } from "../translations/translations-manager.js";
+
+const GUEST_INTERNAL_KEY = 'GUEST_USER';
 
 const addMessage = ({ username, message, audio, audioType, timestamp }, isOwn = false, dateSeparatorElement = null) => {
   const messagesContainer = document.querySelector('.chat-messages');
@@ -19,8 +22,17 @@ const addMessage = ({ username, message, audio, audioType, timestamp }, isOwn = 
     time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
 
-  let userText = username || 'Other user';
-  let headerText = `<strong>${userText}</strong>`;
+  let userText = '';
+  let headerText = '';
+  
+  if (username === GUEST_INTERNAL_KEY) {
+    userText = t('guestUsername');
+    headerText = `<strong translate-key="guestUsername">${userText}</strong>`;
+  } else {
+    userText = username || 'Other user';
+    headerText = `<strong>${userText}</strong>`;
+  }
+  
   if (time) headerText += ` <span class="timestamp">${time}</span>`;
 
   let bodyHTML = '';

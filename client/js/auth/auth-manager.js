@@ -1,5 +1,7 @@
 import { startChatSession } from "../flow-manager.js";
 
+const GUEST_INTERNAL_KEY = 'GUEST_USER';
+
 const handleLoginUsername = (e) => {
   e.preventDefault();
   const usernameInput = document.getElementById('login-username');
@@ -10,19 +12,15 @@ const handleLoginUsername = (e) => {
 
 const handleLoginGuest = (e) => {
   e.preventDefault();
-  const username = "Other user";
-  startChatSession(username);
+  startChatSession(GUEST_INTERNAL_KEY);
 };
 
 export const initAuthManager = () => {
   const loginForm = document.getElementById('login-form');
-  const guestButton = document.getElementById('login-guest-button');
+  const guestButton = document.getElementById('login-guest');
+  const usernameButton = document.querySelector('.login-username-button');
 
-  if (loginForm) {
-    loginForm.addEventListener('submit', handleLoginUsername);
-  }
-
-  if (guestButton) {
-    guestButton.addEventListener('click', handleLoginGuest);
-  }
+  if (loginForm) loginForm.addEventListener('submit', handleLoginUsername);
+  if (usernameButton) usernameButton.addEventListener('click', handleLoginUsername);
+  if (guestButton) guestButton.addEventListener('click', handleLoginGuest);
 };
