@@ -38,6 +38,17 @@ html, body {
   color: var(--text);
 }
 
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+* {
+  font-family: 'Inter', Arial, sans-serif;
+}
+
 /* HERRAMIENTA CLAVE: usamos layout flex en body para que header + main se distribuyan correctamente */
 body {
   display: flex;

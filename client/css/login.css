@@ -14,15 +14,15 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 60%;
-  max-width: 75rem;
+  width: 90%;
+  max-width: 60rem;
   background: var(--background);
   border-radius: 1.5rem;
-  box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0.5rem 2rem rgba(0, 0, 0, 0.3);
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  max-height: 85vh; /* keep vh for viewport-relative height */
+  max-height: 85vh;
   overflow: hidden;
 }
 
@@ -33,92 +33,156 @@
   justify-content: center;
   align-items: center;
   padding: 2rem;
-  position: relative;
+  border-radius: 1.5rem 1.5rem 0 0;
 }
 
 .login-header h2 {
   font-size: 2.5rem;
-  height: 3rem;
   margin: 0;
+  font-weight: 700;
 }
 
 .login-content {
-  padding: 2rem 2rem 1rem 2rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   overflow: auto;
   flex: 1 1 auto;
 }
 
 .login-section {
   background: var(--gray);
-  padding: 1rem;
+  padding: 2.5rem 2rem;
   border-radius: 1.5rem;
-  box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .login-section h3 {
-  margin-top: 0;
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
-  height: 2rem;
+  margin: 0 0 1rem 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
 }
 
-.login-form .username {
+.login-section h3:not(:first-child) {
+  padding-top: 2rem;
+  border-top: 2px solid var(--background);
+  margin-top: 2rem;
+  margin-left: -2rem;
+  margin-right: -2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  position: relative;
+}
+
+.login-section h3:not(:first-child)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--background);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+/* Botones de login social (Google, GitHub) */
+.login-buttons {
   display: flex;
-  align-items: stretch;
+  gap: 1rem;
+  width: 100%;
+}
+
+.login-button {
   background: var(--background);
-  border-radius: 20px;
-  box-shadow: 0.25rem 0.25rem 0.25rem rgba(0,0,0,0.25);
-  overflow: hidden;
-  flex: 0 0 auto; /* que no crezca, que no se reduzca */
-  height: var(--pill-h);
-}
-
-.login-form .username input {
-  flex: 1 1 auto;
-  padding-left: 32px;
-  border: none;
-  outline: none;
-  background: var(--background);
-  font-size: 1.5rem;
-  color: var(--text);
-  min-width: 0; /* importante en flex para que el input no obligue a expandir */
-  height: 100%;
-  display: inline-flex;
-  align-items: center;
-}
-
-.login-form .username input::placeholder {
-  color: var(--text);
-  opacity: 0.7;
-  font-size: 1.5rem;
-}
-
-.login-form .login-button {
-  background: var(--gray-light);
   border: none;
   border-radius: 1rem;
   cursor: pointer;
   flex: 1;
-  box-shadow: 0.25rem 0.25rem 0.25rem rgba(0,0,0,0.25);
-  font-size: 2rem;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
+  font-size: 1.5rem;
   color: var(--text);
-  padding: 1rem 3rem;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  transition: all 0.2s ease;
+  font-weight: 600;
 }
 
-.login-form .username button {
-  background: var(--green-light);
+.login-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.35rem 0.75rem rgba(0, 0, 0, 0.2);
+}
+
+.login-button:active {
+  transform: translateY(0);
+}
+
+.login-button span {
+  font-size: 1.75rem;
+}
+
+/* Sección de username */
+.username {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  background: var(--background);
+  border-radius: 1rem;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  height: 4rem;
+}
+
+.username input {
+  flex: 1 1 auto;
+  padding: 0 1.5rem;
   border: none;
-  padding: 0.25rem 0;
-  cursor: pointer;
-  flex: 1;
+  outline: none;
+  background: transparent;
   font-size: 1.25rem;
   color: var(--text);
+  min-width: 0;
 }
 
-/* Clase de utilidad para ocultar elementos de forma limpia */
+.username input::placeholder {
+  color: var(--text);
+  opacity: 0.6;
+  font-size: 1.25rem;
+}
+
+.username .login-username-button {
+  background: var(--green-light);
+  border: none;
+  padding: 0 2rem;
+  cursor: pointer;
+  font-size: 1.25rem;
+  color: var(--text);
+  font-weight: 600;
+  transition: background 0.2s ease;
+  white-space: nowrap;
+}
+
+.username .login-username-button:hover {
+  background: var(--green-dark);
+  color: var(--background);
+}
+
+/* Botón de guest */
+#login-guest {
+  width: 100%;
+  max-width: 25rem;
+  margin: 0 auto;
+  font-weight: 600;
+}
+
+/* Clase de utilidad para ocultar elementos */
 .hidden {
   display: none !important;
 }
@@ -134,8 +198,7 @@
 
 /* Fondo atractivo para la vista de login */
 .login-active {
-  background-color: var(--gray-dark); /* Color sólido oscuro por defecto */
-  /* Aquí va la imagen de fondo: USANDO PLACEHOLDER */
+  background-color: var(--gray-dark);
   background-image: url('https://placehold.co/1920x1080/4f6d7a/ffffff/jpg?text=.');
   background-size: cover;
   background-position: center;
@@ -144,11 +207,35 @@
 
 /* Ocultar elementos del chat cuando el login está activo */
 .login-active .header {
-  display: none; /* Oculta completamente el encabezado del chat */
+  display: none;
 }
 
-/* Asegurar que el modal de login se vea por encima de todo */
-.login-active .login-modal,
-.login-active .login-overlay {
-  display: block; /* Debe ser manejado por JS, pero asegura visibilidad */
+/* Responsive */
+@media (max-width: 768px) {
+  .login-modal {
+    width: 95%;
+    max-height: 90vh;
+  }
+  
+  .login-header h2 {
+    font-size: 2rem;
+  }
+  
+  .login-buttons {
+    flex-direction: column;
+  }
+  
+  .login-button {
+    font-size: 1.25rem;
+  }
+  
+  .username {
+    flex-direction: column;
+    height: auto;
+  }
+  
+  .username input,
+  .username .login-username-button {
+    height: 3.5rem;
+  }
 }
