@@ -1,11 +1,11 @@
-const body = document.body;
+const root = document.documentElement;
 const STORAGE_KEY = "chat-theme-preference";
 
 const applyTheme = (theme) => {
   if(theme === 'dark'){
-    body.classList.add('dark-theme');
+    root.classList.add('dark-theme');
   } else {
-    body.classList.remove('dark-theme');
+    root.classList.remove('dark-theme');
   };
 };
 
@@ -34,11 +34,9 @@ export const initTheme = () => {
   setTheme(storedPreference);
 
   if(storedPreference === 'auto'){
-
     const systemChangeListener = () => {
       setTheme('auto');
     };
-
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     mediaQuery.addEventListener('change', systemChangeListener);
     return () => mediaQuery.removeEventListener('change', systemChangeListener);

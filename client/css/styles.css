@@ -13,7 +13,7 @@
   --page-pad-x: 48px;
 }
 
-body.dark-theme {
+:root.dark-theme {
   --green-light: #2D6A4F;
   --green: #40916C;
   --green-dark: #52B788;
