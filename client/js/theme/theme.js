@@ -1,16 +1,13 @@
-const root = document.documentElement;
-const STORAGE_KEY = "chat-theme-preference";
+const { STORAGE_KEY, getSystemPreference, applyTheme } = window.ThemeUtils;
 
-const applyTheme = (theme) => {
-  if(theme === 'dark'){
-    root.classList.add('dark-theme');
-  } else {
-    root.classList.remove('dark-theme');
+const applyThemeByPreference = (theme) => {
+  let isDark = false;
+  if (theme === 'dark') {
+    isDark = true;
+  } else if (theme === 'auto') {
+    isDark = getSystemPreference();
   };
-};
-
-const getSystemPreference = () => {
-  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  applyTheme(isDark);
 };
 
 export const getStoredPreference = () => {
@@ -19,19 +16,19 @@ export const getStoredPreference = () => {
 
 export const setTheme = (preference) => {
   localStorage.setItem(STORAGE_KEY, preference);
-  let finalTheme;
-  if(preference === 'auto'){
-    finalTheme = getSystemPreference();
-  } else {
-    finalTheme = preference;
-  };
-
-  applyTheme(finalTheme);
+  applyThemeByPreference(preference);
 };
+
+let systemThemeListener = null;
 
 export const initTheme = () => {
   const storedPreference = getStoredPreference();
   setTheme(storedPreference);
+
+  if (systemThemeListener) {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaQuery.removeEventListener('change', systemThemeListener);
+  };
 
   if(storedPreference === 'auto'){
     const systemChangeListener = () => {
@@ -39,6 +36,5 @@ export const initTheme = () => {
     };
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     mediaQuery.addEventListener('change', systemChangeListener);
-    return () => mediaQuery.removeEventListener('change', systemChangeListener);
   };
 };
