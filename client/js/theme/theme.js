@@ -1,4 +1,4 @@
-const { STORAGE_KEY, getSystemPreference, applyTheme } = window.ThemeUtils;
+const { STORAGE_KEY, MEDIA_QUERY_DARK, getSystemPreference, applyTheme } = window.ThemeUtils;
 
 const applyThemeByPreference = (theme) => {
   let isDark = false;
@@ -26,7 +26,7 @@ export const initTheme = () => {
   setTheme(storedPreference);
 
   if (systemThemeListener) {
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const mediaQuery = window.matchMedia(MEDIA_QUERY_DARK);
     mediaQuery.removeEventListener('change', systemThemeListener);
   };
 
@@ -34,7 +34,7 @@ export const initTheme = () => {
     const systemChangeListener = () => {
       setTheme('auto');
     };
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const mediaQuery = window.matchMedia(MEDIA_QUERY_DARK);
     mediaQuery.addEventListener('change', systemChangeListener);
   };
 };

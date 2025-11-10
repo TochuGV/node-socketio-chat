@@ -1,5 +1,5 @@
 (function() {
-  const { STORAGE_KEY, getSystemPreference, applyTheme } = window.ThemeUtils;
+  const { STORAGE_KEY, MEDIA_QUERY_DARK, getSystemPreference, applyTheme } = window.ThemeUtils;
   
   const updateTheme = () => {
     const preference = localStorage.getItem(STORAGE_KEY) || 'auto';
@@ -16,7 +16,7 @@
   
   updateTheme();
   
-  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+  const mediaQuery = window.matchMedia(MEDIA_QUERY_DARK);
   mediaQuery.addEventListener('change', () => {
     const preference = localStorage.getItem(STORAGE_KEY) || 'auto';
     if (preference === 'auto') {
