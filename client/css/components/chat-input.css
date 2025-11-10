@@ -1,0 +1,61 @@
+/*
+  ============================================
+  CHAT INPUT - Message composer
+  ============================================
+*/
+
+.chat-input {
+  display: flex;
+  align-items: stretch;
+  background: var(--gray-light);
+  border-radius: 20px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  flex: 0 0 auto;
+  height: var(--pill-h);
+}
+
+.chat-input input {
+  flex: 1 1 auto;
+  padding-left: 32px;
+  border: none;
+  outline: none;
+  background: var(--gray);
+  font-size: 1.5rem;
+  color: var(--text);
+  min-width: 0;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+}
+
+.chat-input input::placeholder {
+  color: var(--text);
+  opacity: 0.7;
+  font-size: 1.5rem;
+}
+
+.chat-input button {
+  border: none;
+  background: var(--green-light);
+  color: var(--background);
+  font-size: 2rem;
+  height: 100%;
+  cursor: pointer;
+  padding: 0 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  flex: 0 0 auto;
+}
+
+.chat-input button:hover {
+  background: var(--green-dark);
+}
+
+.chat-input button#send-audio,
+.chat-input button#send-text {
+  width: 72px;
+  border-radius: 0 16px 16px 0;
+}

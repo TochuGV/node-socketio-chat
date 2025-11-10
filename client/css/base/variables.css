@@ -1,0 +1,35 @@
+/*
+  ============================================
+  CSS VARIABLES - Design tokens
+  ============================================
+*/
+
+:root {
+  /* Colors - Light theme */
+  --green-light: #52B788;
+  --green: #7AC69D;
+  --green-dark: #40916C;
+  --gray-light: #E6E6E6;
+  --gray: #CDCDCD;
+  --gray-dark: #B4B4B4;
+  --gray-hover: #9A9A9A;
+  --background: #F2F2F2;
+  --text: #222222;
+  
+  /* Spacing */
+  --pill-h: 72px;
+  --page-pad-x: 48px;
+}
+
+:root.dark-theme {
+  /* Colors - Dark theme */
+  --green-light: #2D6A4F;
+  --green: #40916C;
+  --green-dark: #52B788;
+  --gray-light: #2B2B2B;
+  --gray: #3C3C3C;
+  --gray-dark: #4D4D4D;
+  --gray-hover: #5E5E5E;
+  --background: #121212;
+  --text: #E6E6E6;
+}

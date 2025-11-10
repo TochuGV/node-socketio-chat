@@ -1,0 +1,60 @@
+/*
+  ============================================
+  MESSAGE - Individual message bubbles
+  ============================================
+*/
+
+.message {
+  display: flex;
+  flex-direction: column;
+  padding: 18px 24px;
+  border-radius: 24px;
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  max-width: min(60ch, 600px);
+  word-break: break-word;
+}
+
+.own-message {
+  margin-left: auto;
+  background: var(--green);
+  color: var(--text);
+  align-self: flex-end;
+  text-align: left;
+}
+
+.other-message {
+  margin-right: auto;
+  background: var(--gray-light);
+  color: var(--text);
+  align-self: flex-start;
+  text-align: left;
+}
+
+.message strong {
+  font-size: 1.25rem;
+  font-weight: 700;
+  display: inline-block;
+  margin-bottom: 6px;
+}
+
+.message .timestamp {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-left: 8px;
+  opacity: 0.75;
+}
+
+.message .body {
+  font-size: 1.5rem;
+}
+
+.message .audio-body {
+  padding: 0;
+  width: 300px;
+}
+
+@media (max-width: 40rem) {
+  .message .audio-body {
+    width: 250px;
+  }
+}

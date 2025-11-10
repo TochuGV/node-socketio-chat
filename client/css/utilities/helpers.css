@@ -1,0 +1,19 @@
+/*
+  ============================================
+  HELPERS - Utility classes
+  ============================================
+*/
+
+/* Hide elements */
+.hidden {
+  display: none !important;
+}
+
+/* Specific modal hiding */
+.login-modal.hidden {
+  display: none !important;
+}
+
+.login-overlay.hidden {
+  display: none !important;
+}

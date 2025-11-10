@@ -1,0 +1,305 @@
+/*
+  ============================================
+  SETTINGS MODAL - Configuration panel
+  ============================================
+*/
+
+.settings-modal {
+  width: 60%;
+  max-width: 75rem;
+  box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
+}
+
+.settings-modal,
+.settings-modal * {
+  font-family: 'Inter', Arial, sans-serif !important;
+}
+
+.settings-modal,
+.settings-overlay {
+  display: none;
+}
+
+.settings-modal.active {
+  display: flex;
+}
+
+.settings-overlay.active {
+  display: block;
+}
+
+.settings-header {
+  position: relative;
+}
+
+.settings-header h2 {
+  height: 3rem;
+}
+
+.close-button {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--background);
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.settings-content {
+  gap: 1rem;
+  padding: 2rem 2rem 1rem 2rem;
+}
+
+.settings-section {
+  background: var(--gray);
+  padding: 1rem;
+  border-radius: 1.5rem;
+  box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
+}
+
+.settings-section h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  height: 2rem;
+}
+
+/* Option groups inside settings */
+.option-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 2.5rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.option-group > span {
+  text-align: left;
+  font-size: 1.25rem;
+}
+
+/* Button groups (Theme, Font Size, Language) */
+.button-group {
+  display: flex;
+  width: 27rem;
+}
+
+.button {
+  background: var(--gray-dark);
+  border: none;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  flex: 1;
+  font-size: 1.25rem;
+  color: var(--text);
+}
+
+.button.left {
+  border-radius: 1.5rem 0 0 1.5rem;
+}
+
+.button.middle {
+  border-radius: 0;
+}
+
+.button.right {
+  border-radius: 0 1.5rem 1.5rem 0;
+}
+
+.button:hover {
+  background: var(--gray-hover);
+}
+
+.button.active-option {
+  background: var(--green-dark);
+  color: var(--background);
+  transition: background 0.2s, color 0.2s;
+}
+
+/* Volume slider */
+#volume-slider {
+  width: 27rem;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  --slider-fill-percent: 50%;
+}
+
+#volume-slider::-webkit-slider-runnable-track {
+  background: linear-gradient(
+    to right,
+    var(--green-dark) 0%,
+    var(--green-dark) var(--slider-fill-percent, 50%),
+    var(--gray-hover) var(--slider-fill-percent, 50%),
+    var(--gray-hover) 100%
+  );
+  height: 2rem;
+  border-radius: 1.5rem;
+  transition: background 0.3s;
+}
+
+#volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 2rem;
+  width: 2rem;
+  background: var(--gray-light);
+  border-radius: 50%;
+}
+
+#volume-slider::-moz-range-track {
+  background: linear-gradient(
+    to right,
+    var(--green-dark) 0%,
+    var(--green-dark) var(--slider-fill-percent, 50%),
+    var(--gray-hover) var(--slider-fill-percent, 50%),
+    var(--gray-hover) 100%
+  );
+  height: 0.75rem;
+  border-radius: 0.5rem;
+}
+
+#volume-slider::-moz-range-thumb {
+  height: 1.5rem;
+  width: 1.5rem;
+  background: var(--background);
+  border-radius: 50%;
+  border: none;
+}
+
+:root.dark-theme #volume-slider::-webkit-slider-thumb,
+:root.dark-theme #volume-slider::-moz-range-thumb {
+  background: var(--gray-light);
+}
+
+:root.dark-theme #volume-slider::-webkit-slider-runnable-track,
+:root.dark-theme #volume-slider::-moz-range-track {
+  background: linear-gradient(
+    to right,
+    var(--green-light) 0%,
+    var(--green-light) var(--slider-fill-percent, 50%),
+    var(--gray-dark) var(--slider-fill-percent, 50%),
+    var(--gray-dark) 100%
+  );
+}
+
+/* Toggle switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 9rem;
+  height: 2.5rem;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--gray-hover);
+  transition: 0.4s;
+  border-radius: 1.5rem;
+}
+
+.slider:before {
+  position: absolute;
+  content: '';
+  height: 2rem;
+  width: 2rem;
+  left: 0.25rem;
+  bottom: 0.25rem;
+  background-color: var(--gray-light);
+  transition: 0.4s;
+  border-radius: 1.5rem;
+}
+
+input:checked + .slider {
+  background-color: var(--green-dark);
+}
+
+input:checked + .slider:before {
+  transform: translateX(6.5rem);
+}
+
+/* Footer with logout button */
+.settings-footer {
+  padding: 1rem 2rem 2rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  flex: 0 0 auto;
+}
+
+.logout-button {
+  background: #e14a4a;
+  color: var(--background);
+  border: none;
+  padding: 1rem;
+  font-size: 2rem;
+  font-weight: bold;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  width: 50%;
+  height: 4rem;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+  box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
+}
+
+.logout-button:hover {
+  transform: translateY(-2px);
+  background: #c63d3d;
+}
+
+/* Flexible sections */
+.settings-section.fill-vertical {
+  flex: 1 1 auto;
+  min-height: 6rem;
+}
+
+/* Responsive */
+@media (min-width: 2000px) {
+  .settings-modal {
+    width: 48%;
+    max-width: 100rem;
+  }
+
+  .settings-section {
+    min-height: 7.5rem;
+  }
+
+  .settings-section.fill-vertical {
+    min-height: 12rem;
+  }
+}
+
+@media (max-width: 40rem) {
+  .settings-modal {
+    width: 94%;
+    max-width: none;
+    max-height: 92vh;
+    border-radius: 1rem;
+  }
+
+  .button-group {
+    width: 100%;
+  }
+
+  .option-group > span {
+    font-size: 1rem;
+  }
+}

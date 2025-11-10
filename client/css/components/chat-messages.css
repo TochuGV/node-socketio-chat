@@ -1,0 +1,54 @@
+/*
+  ============================================
+  CHAT MESSAGES - Scrollable messages area
+  ============================================
+*/
+
+main {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chat-container {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 27px var(--page-pad-x);
+  box-sizing: border-box;
+  max-width: 1920px;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 0;
+}
+
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 27px;
+  flex: 1 1 auto;
+  overflow-y: scroll;
+  padding-top: 27px;
+  padding-bottom: 27px;
+  padding-left: 32px;
+  padding-right: 32px;
+  min-height: 0;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+/* Hide scrollbar but keep functionality */
+.chat-messages::-webkit-scrollbar {
+  display: none;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.08);
+  border-radius: 8px;
+}
+
+.chat-messages {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

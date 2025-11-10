@@ -1,0 +1,31 @@
+/*
+  ============================================
+  MAIN CSS - Imports all stylesheets
+  ============================================
+  
+  This file orchestrates the loading order of all CSS.
+  Order matters: base styles first, components next,
+  then modals, and utilities last.
+  ============================================
+*/
+
+/* 1. BASE - Foundation styles */
+@import './base/variables.css';
+@import './base/reset.css';
+@import './base/typography.css';
+
+/* 2. COMPONENTS - Individual UI elements */
+@import './components/header.css';
+@import './components/chat-messages.css';
+@import './components/message.css';
+@import './components/chat-input.css';
+@import './components/audio-player.css';
+@import './components/date-separator.css';
+
+/* 3. MODALS - Overlay components */
+@import './modals/modal-base.css';
+@import './modals/login.css';
+@import './modals/settings.css';
+
+/* 4. UTILITIES - Helper classes (load last to ensure they override) */
+@import './utilities/helpers.css';

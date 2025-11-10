@@ -1,0 +1,23 @@
+/*
+  ============================================
+  TYPOGRAPHY - Font definitions
+  ============================================
+*/
+
+html,
+body {
+  font-family: 'Inter', Arial, sans-serif;
+}
+
+/* Force font inheritance for form elements */
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+/* Ensure all elements use Inter */
+* {
+  font-family: 'Inter', Arial, sans-serif;
+}
