@@ -9,10 +9,6 @@
   max-width: 60rem;
 }
 
-.login-header h2 {
-  font-size: 2.5rem;
-}
-
 .login-content {
   gap: 1rem;
 }
@@ -70,7 +66,7 @@
   border-radius: 1rem;
   cursor: pointer;
   flex: 1;
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
+  box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
   font-size: 1.5rem;
   color: var(--text);
   padding: 1rem 2rem;
@@ -80,11 +76,12 @@
   gap: 0.75rem;
   transition: all 0.2s ease;
   font-weight: 600;
+  height: 4rem
 }
 
 .login-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 0.35rem 0.75rem rgba(0, 0, 0, 0.2);
+  box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
 }
 
 .login-button:active {
@@ -102,7 +99,7 @@
   gap: 0;
   background: var(--background);
   border-radius: 1rem;
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15);
+  box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
   overflow: hidden;
   height: 4rem;
 }

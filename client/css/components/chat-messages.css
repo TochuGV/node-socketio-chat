@@ -39,16 +39,11 @@ main {
 }
 
 /* Hide scrollbar but keep functionality */
-.chat-messages::-webkit-scrollbar {
-  display: none;
-}
-
-.chat-messages::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.08);
-  border-radius: 8px;
-}
-
 .chat-messages {
   -ms-overflow-style: none;
   scrollbar-width: none;
+}
+
+.chat-messages::-webkit-scrollbar {
+  display: none;
 }

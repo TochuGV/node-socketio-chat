@@ -7,12 +7,6 @@
 .settings-modal {
   width: 60%;
   max-width: 75rem;
-  box-shadow: 0.25rem 0.25rem 0.25rem rgba(0, 0, 0, 0.25);
-}
-
-.settings-modal,
-.settings-modal * {
-  font-family: 'Inter', Arial, sans-serif !important;
 }
 
 .settings-modal,
@@ -30,10 +24,6 @@
 
 .settings-header {
   position: relative;
-}
-
-.settings-header h2 {
-  height: 3rem;
 }
 
 .close-button {
@@ -74,8 +64,6 @@
   align-items: center;
   justify-content: space-between;
   height: 2.5rem;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .option-group > span {
