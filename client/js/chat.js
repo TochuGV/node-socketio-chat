@@ -8,6 +8,7 @@ import { initLanguageButtons } from "./translations/translations-apply.js";
 import { initToggleOnlineStatus } from "./settings/settings-online-status.js"
 import { initTheme } from "./theme/theme.js";
 import { initThemeButtons } from "./settings/settings-theme.js";
+import { initFontSizeButtons } from "./settings/settings-font-size.js";
 import { incrementCounter, resetCounter } from "./notifications/unread-message-counter.js";
 import addMessage from "./message/message-render.js";
 import { initFlow } from "./flow-manager.js";
@@ -116,6 +117,7 @@ export const initializeChat = (username) => {
   initToggleOnlineStatus(socket);
   initTheme();
   initThemeButtons();
+  initFontSizeButtons();
 };
 
 document.addEventListener('DOMContentLoaded', () => {
