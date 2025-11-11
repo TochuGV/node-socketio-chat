@@ -47,7 +47,7 @@
 
 .settings-header h2,
 .login-header h2 {
-  font-size: 2.5rem;
+  font-size: var(--font-size-xxxl);
   margin: 0;
   font-weight: 700;
   height: 3rem;

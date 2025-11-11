@@ -34,7 +34,7 @@
   background: none;
   border: none;
   color: var(--background);
-  font-size: 2rem;
+  font-size: var(--font-size-xxl);
   cursor: pointer;
 }
 
@@ -53,7 +53,7 @@
 .settings-section h3 {
   margin-top: 0;
   margin-bottom: 1rem;
-  font-size: 1.5rem;
+  font-size: var(--font-size-lg);
   height: 2rem;
 }
 
@@ -68,7 +68,7 @@
 
 .option-group > span {
   text-align: left;
-  font-size: 1.25rem;
+  font-size: var(--font-size-md);
 }
 
 /* Button groups (Theme, Font Size, Language) */
@@ -83,7 +83,7 @@
   padding: 0.5rem 0;
   cursor: pointer;
   flex: 1;
-  font-size: 1.25rem;
+  font-size: var(--font-size-md);
   color: var(--text);
 }
 
@@ -236,7 +236,7 @@ input:checked + .slider:before {
   color: var(--background);
   border: none;
   padding: 1rem;
-  font-size: 2rem;
+  font-size: var(--font-size-xxl);
   font-weight: bold;
   border-radius: 1.5rem;
   cursor: pointer;
@@ -288,6 +288,6 @@ input:checked + .slider:before {
   }
 
   .option-group > span {
-    font-size: 1rem;
+    font-size: var(--font-size-sm);
   }
 }

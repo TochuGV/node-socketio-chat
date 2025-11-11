@@ -19,6 +19,16 @@
   /* Spacing */
   --pill-h: 72px;
   --page-pad-x: 48px;
+
+  /* Typography */
+  --font-scale-factor: 1;
+  --font-size-xs: calc(0.75rem * var(--font-scale-factor, 1));
+  --font-size-sm: calc(1rem * var(--font-scale-factor, 1));
+  --font-size-md: calc(1.25rem * var(--font-scale-factor, 1));
+  --font-size-lg: calc(1.5rem * var(--font-scale-factor, 1));
+  --font-size-xl: calc(1.75rem * var(--font-scale-factor, 1));
+  --font-size-xxl: calc(2rem * var(--font-scale-factor, 1));
+  --font-size-xxxl: calc(2.5rem * var(--font-scale-factor, 1));
 }
 
 :root.dark-theme {

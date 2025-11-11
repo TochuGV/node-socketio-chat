@@ -17,7 +17,7 @@
 
 .header h1 {
   margin: 0 0 0 48px;
-  font-size: 2rem;
+  font-size: var(--font-size-xxxl);
   font-weight: bold;
 }
 
@@ -29,7 +29,7 @@
 }
 
 .online-users {
-  font-size: 1.5rem;
+  font-size: var(--font-size-lg);
   font-weight: 700;
   margin-right: 32px;
 }

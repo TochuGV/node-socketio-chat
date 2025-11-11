@@ -20,7 +20,7 @@
   border: none;
   outline: none;
   background: var(--gray);
-  font-size: 1.5rem;
+  font-size: var(--font-size-lg);
   color: var(--text);
   min-width: 0;
   height: 100%;
@@ -31,14 +31,14 @@
 .chat-input input::placeholder {
   color: var(--text);
   opacity: 0.7;
-  font-size: 1.5rem;
+  font-size: var(--font-size-lg);
 }
 
 .chat-input button {
   border: none;
   background: var(--green-light);
   color: var(--background);
-  font-size: 2rem;
+  font-size: var(--font-size-xxl);
   height: 100%;
   cursor: pointer;
   padding: 0 48px;
