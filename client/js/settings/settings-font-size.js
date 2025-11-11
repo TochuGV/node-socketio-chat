@@ -5,9 +5,9 @@ const groupSelector = ".button-group";
 const root = document.documentElement;
 
 const sizeMap = {
-  small: '0.9', // Ver 0.75
+  small: '0.8', // Ver 0.75
   medium: '1',
-  large: '1.1' // Ver 1.25
+  large: '1.2' // Ver 1.25
 };
 
 const applyFontSize = (size = 'medium') => {

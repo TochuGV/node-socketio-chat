@@ -92,6 +92,10 @@
   font-size: var(--font-size-xl);
 }
 
+.login-header h2 {
+  height: 3rem;
+}
+
 /* Username input section */
 .username {
   display: flex;
