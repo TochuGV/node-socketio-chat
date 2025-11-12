@@ -4,7 +4,7 @@ import { playNotification } from "./notifications/notifications.js";
 import { initSettings } from "./settings/settings.js";
 import { initVolumeSlider } from "./settings/settings-volume.js";
 import { initToggleUnreadMessagesCounter } from "./settings/settings-notifications.js";
-import { initLanguageButtons } from "./translations/translations-apply.js";
+import { initLanguageButtons } from "./settings/settings-language.js";
 import { initToggleOnlineStatus } from "./settings/settings-online-status.js"
 import { initTheme } from "./theme/theme.js";
 import { initThemeButtons } from "./settings/settings-theme.js";
