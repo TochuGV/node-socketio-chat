@@ -1,7 +1,6 @@
-import setActiveButton from "../utils/set-active-button.js"
+import { initSettingsGroup } from "../utils/button-group-helper.js";
 
 const STORAGE_KEY = "chat-font-size";
-const groupSelector = ".button-group";
 const root = document.documentElement;
 
 const sizeMap = {
@@ -16,24 +15,20 @@ const applyFontSize = (size = 'medium') => {
   localStorage.setItem(STORAGE_KEY, size);
 };
 
+const getStoredFontSize = () => {
+  return localStorage.getItem(STORAGE_KEY);
+}
+
 export const initFontSizeButtons = () => {
-  const buttons = {
-    small: document.getElementById('font-size-small'),
-    medium: document.getElementById('font-size-medium'),
-    large: document.getElementById('font-size-large'),
-  };
-
-  if (!buttons.small || !buttons.medium || !buttons.large) return;
-
-  const updateActiveButton = (size) => setActiveButton(groupSelector, `#font-size-${size}`);
-  const storedPreference = localStorage.getItem(STORAGE_KEY) || 'medium';
-  applyFontSize(storedPreference);
-  updateActiveButton(storedPreference);
-
-  Object.entries(buttons).forEach(([size, button]) => {
-    button.addEventListener('click', () => {
-      applyFontSize(size);
-      updateActiveButton(size);
-    });
+  initSettingsGroup({
+    buttons: {
+      small: document.getElementById('font-size-small'),
+      medium: document.getElementById('font-size-medium'),
+      large: document.getElementById('font-size-large')
+    },
+    buttonIdPrefix: 'font-size',
+    onSelect: applyFontSize,
+    getStoredValue: getStoredFontSize,
+    defaultValue: 'medium'
   });
 };
