@@ -1,4 +1,4 @@
-import { initSettingsGroup } from "../utils/button-group-helper.js";
+import initSettingsGroup from "../utils/button-group-helper.js";
 
 const STORAGE_KEY = "chat-font-size";
 const root = document.documentElement;

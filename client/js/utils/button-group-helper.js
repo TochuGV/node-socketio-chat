@@ -1,6 +1,6 @@
 import setActiveButton from "./set-active-button.js";
 
-export const initSettingsGroup = ({
+const initSettingsGroup = ({
   buttons,
   groupSelector = '.button-group',
   buttonIdPrefix,
@@ -29,3 +29,5 @@ export const initSettingsGroup = ({
     });
   });
 };
+
+export default initSettingsGroup;

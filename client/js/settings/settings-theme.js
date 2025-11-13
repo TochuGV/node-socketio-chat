@@ -1,5 +1,5 @@
 import { setTheme, getStoredPreference } from '../theme/theme.js';
-import { initSettingsGroup } from '../utils/button-group-helper.js';
+import initSettingsGroup from '../utils/button-group-helper.js';
 
 export const initThemeButtons = () => {
   initSettingsGroup({
