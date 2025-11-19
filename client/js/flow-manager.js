@@ -11,6 +11,7 @@ export const startChatSession = (username) => {
   const loginOverlay = document.getElementById('login-overlay');
   const chatViewMain = document.querySelector('main');
 
+  localStorage.setItem('chat-username', username);
   document.body.classList.remove('login-active');
 
   if (loginModal) loginModal.classList.add('hidden');
@@ -24,10 +25,15 @@ export const startChatSession = (username) => {
 
 export const initFlow = () => {
   const chatViewMain = document.querySelector('main');
-  document.body.classList.add('login-active');
-  if (chatViewMain) chatViewMain.classList.add('hidden');
+  const storedUsername = localStorage.getItem('chat-username');
   applyTranslations();
-  initAuthManager();
+  if (storedUsername) {
+    startChatSession(storedUsername);
+  } else {
+    document.body.classList.add('login-active');
+    if (chatViewMain) chatViewMain.classList.add('hidden');
+    initAuthManager();
+  }
 };
 
 export const getCurrentSessionUsername = () => currentSessionUsername;
