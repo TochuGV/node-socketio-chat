@@ -1,7 +1,7 @@
 import { startRecording, stopRecording } from "../audio/audio.js";
 import { sendAudioMessage } from "../sockets/socket.js";
 
-const setupAudioHandler = (socket, username) => {
+const setupAudioHandler = (socket, userId, username) => {
   const sendAudioButton = document.getElementById('send-audio');
   let isRecording = false;
 
@@ -19,7 +19,7 @@ const setupAudioHandler = (socket, username) => {
           alert('No se pudo grabar el audio. ' + error.message);
           return;
         }
-        if (base64Audio && audioBlob) sendAudioMessage(socket, username, base64Audio, audioBlob.type);
+        if (base64Audio && audioBlob) sendAudioMessage(socket, userId, username, base64Audio, audioBlob.type);
       });
     } else {
       stopRecording();

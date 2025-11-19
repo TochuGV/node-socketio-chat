@@ -8,14 +8,20 @@ export default (io) => {
     console.log(`A user connected. Socket ID: ${socket.id}`);
     updateVisibleUsers(io);
 
-    socket.on('register username', (username) => {
-      socket.username = username;
-      console.log(`User ${socket.id} registered as: ${username}`);
-    })
+    socket.on('register username', (data) => {
+      if (typeof data === 'object' && data.userId) {
+        socket.userId = data.userId;
+        socket.username = data.username;
+      } else {
+        socket.username = data;
+      }
+      console.log(`User ${socket.id} registered. ID: ${socket.userId || 'N/A'}, Username: ${socket.username}`);
+    });
 
     try {
       const lastMessages = (await Message.find().sort({ timestamp: -1 }).limit(100)).reverse();
       socket.emit('chat history', lastMessages.map(msg => ({
+        userId: msg.userId,
         username: msg.username,
         message: msg.message || null,
         audio: msg.audio ? msg.audio.toString('base64') : null,
@@ -27,15 +33,18 @@ export default (io) => {
     };
 
     socket.on('chat message', async (msg) => {
+      const clientUserId = msg.userId;
       const clientUsername = msg.username;
-      if (!clientUsername) {
+      if (!clientUserId || !clientUsername) {
         console.error('Received message without username, dropping message: ', msg);
         return;
       };
 
-      console.log(`Message from ${clientUsername}: ` + msg.message);
+      console.log(`Message from ${clientUsername} (${clientUserId}): ` + msg.message);
+      
       try {
         const newMessage = new Message({
+          userId: clientUserId,
           username: clientUsername,
           message: msg.message || null,
           audio: msg.audio ? Buffer.from(msg.audio, 'base64') : null,
@@ -45,6 +54,7 @@ export default (io) => {
         console.log(newMessage.username);
 
         io.emit('chat message', {
+          userId: newMessage.userId,
           username: newMessage.username,
           message: newMessage.message,
           audio: newMessage.audio ? newMessage.audio.toString('base64') : null,

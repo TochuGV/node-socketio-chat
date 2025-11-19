@@ -1,6 +1,6 @@
 import { sendTextMessage } from "../sockets/socket.js";
 
-const setupInputHandler = (socket, username) => {
+const setupInputHandler = (socket, userId, username) => {
   const input = document.querySelector('.chat-input input');
   const sendTextButton = document.getElementById('send-text');
   const sendAudioButton = document.getElementById('send-audio');
@@ -20,7 +20,7 @@ const setupInputHandler = (socket, username) => {
     e.preventDefault();
     const message = input.value;
     if (message.trim() !== '') {
-      sendTextMessage(socket, username, message);
+      sendTextMessage(socket, userId, username, message);
       input.value = '';
       updateSendButtons();
     }

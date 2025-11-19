@@ -13,7 +13,7 @@ import setupSocketHandler from "./chat/socket-handler.js";
 import setupInputHandler from "./chat/input-handler.js";
 import setupAudioHandler from "./chat/audio-handler.js";
 
-export const initializeChat = (username) => {
+export const initializeChat = (userId, username) => {
   const socket = initSocket();
   const areUnreadMessagesCounterEnabled = initToggleUnreadMessagesCounter();
 
@@ -23,12 +23,12 @@ export const initializeChat = (username) => {
 
   onConnect(socket, (id) => {
     console.log('Connected with ID:', id);
-    registerUsername(socket, username)
+    registerUsername(socket, userId, username)
   });
 
-  setupSocketHandler(socket, username, areUnreadMessagesCounterEnabled);
-  setupInputHandler(socket, username);
-  setupAudioHandler(socket, username);
+  setupSocketHandler(socket, userId, username, areUnreadMessagesCounterEnabled);
+  setupInputHandler(socket, userId, username);
+  setupAudioHandler(socket, userId, username);
 
   initSettings();
   initVolumeSlider();

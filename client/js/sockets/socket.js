@@ -28,12 +28,13 @@ export const onUserCount = (socket, callback) => {
   });
 };
 
-export const registerUsername = (socket, username) => {
-  socket.emit('register username', username);
+export const registerUsername = (socket, userId, username) => {
+  socket.emit('register username', { userId, username });
 };
 
-export const sendTextMessage = (socket, username, message) => {
+export const sendTextMessage = (socket, userId, username, message) => {
   socket.emit('chat message', {
+    userId,
     username,
     message,
     audio: null,
@@ -41,8 +42,9 @@ export const sendTextMessage = (socket, username, message) => {
   });
 };
 
-export const sendAudioMessage = (socket, username, audio, audioType) => {
+export const sendAudioMessage = (socket, userId, username, audio, audioType) => {
   socket.emit('chat message', {
+    userId,
     username,
     message: null,
     audio,

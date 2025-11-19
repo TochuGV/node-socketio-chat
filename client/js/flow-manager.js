@@ -1,7 +1,9 @@
 import { initAuthManager } from "./auth/auth-manager.js";
+import { getOrCreateUserId } from "./auth/user-session.js";
 import { initializeChat } from "./chat.js";
 import { applyTranslations } from "./translations/translations-apply.js";
 
+let currentSessionUserId = null;
 let currentSessionUsername = null;
 
 export const startChatSession = (username) => {
@@ -15,8 +17,9 @@ export const startChatSession = (username) => {
   if (loginOverlay) loginOverlay.classList.add('hidden');
   if (chatViewMain) chatViewMain.classList.remove('hidden');
 
+  currentSessionUserId = getOrCreateUserId();
   currentSessionUsername = username;
-  initializeChat(username);
+  initializeChat(currentSessionUserId, currentSessionUsername);
 };
 
 export const initFlow = () => {
