@@ -3,6 +3,7 @@ import { getSeparatorIfNewDay, resetLastDisplayedDate } from "../utils/date-sepa
 import addMessage from "../message/message-render.js";
 import { playNotification } from "../notifications/notifications.js";
 import { incrementCounter } from "../notifications/unread-message-counter.js";
+import { applyTranslations } from "../translations/translations-apply.js";
 
 const setupSocketHandler = (socket, currentUserId, username, areUnreadMessagesCounterEnabled) => {
   const messagesContainer = document.querySelector('.chat-messages');
@@ -49,13 +50,14 @@ const setupSocketHandler = (socket, currentUserId, username, areUnreadMessagesCo
       main.innerHTML = `
         <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; text-align:center; padding:2rem;">
           <i class="fa-solid fa-triangle-exclamation" style="font-size: 4rem; color: var(--text); margin-bottom: 1rem;"></i>
-          <h2 style="font-size: var(--font-size-xxl); margin-bottom: 1rem;">Sesión desconectada</h2>
-          <p style="font-size: var(--font-size-lg);">Has abierto el chat en otra pestaña o dispositivo.</p>
-          <button onclick="location.reload()" style="margin-top: 2rem; padding: 1rem 2rem; border-radius: 1rem; border: none; background: var(--green-light); cursor: pointer; font-size: var(--font-size-lg);">
-            Usar aquí
+          <h2 style="font-size: var(--font-size-xxl); margin-bottom: 1rem;" translate-key="sessionDisconnectedTitle">Session disconnected</h2>
+          <p style="font-size: var(--font-size-lg);" translate-key="sessionDisconnectedMessage">You have opened the chat in another tab or device.</p>
+          <button onclick="location.reload()" style="margin-top: 2rem; padding: 1rem 2rem; border-radius: 1rem; border: none; background: var(--green-light); cursor: pointer; font-size: var(--font-size-lg);" translate-key="useHereButton">
+            Use here
           </button>
         </div>
       `;
+      applyTranslations();
     };
   });
 };

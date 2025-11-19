@@ -26,5 +26,8 @@ export default {
   showUnreadMessages: "Mostrar número de mensajes no leídos",
   privacy: "Privacidad",
   showOnlineStatus: "Mostrar estado en línea",
-  logoutButton: "Cerrar sesión"
+  logoutButton: "Cerrar sesión",
+  sessionDisconnectedTitle: "Sesión desconectada",
+  sessionDisconnectedMessage: "Has abierto el chat en otra pestaña o dispositivo.",
+  useHereButton: "Usar aquí"
 };
