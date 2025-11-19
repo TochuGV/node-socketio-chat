@@ -1,6 +1,6 @@
 import Message from '../models/message.js';
 
-let connectedUsers = 0;
+const userSessions = new Map();
 
 export default (io) => {
   io.on('connection', async (socket) => {
@@ -12,9 +12,23 @@ export default (io) => {
       if (typeof data === 'object' && data.userId) {
         socket.userId = data.userId;
         socket.username = data.username;
+
+        if (userSessions.has(socket.userId)) {
+          const oldSocketId = userSessions.get(socket.userId);
+          io.to(oldSocketId).emit('force disconnect', {
+            reason: 'New session started in another tab/window'
+          });
+
+          const oldSocket = io.sockets.sockets.get(oldSocketId);
+          if (oldSocket) {
+            oldSocket.disconnect(true);
+            console.log(`Force disconnected duplicate session for user: ${socket.userId}`);
+          };
+        };
+        userSessions.set(socket.userId, socket.id);
       } else {
         socket.username = data;
-      }
+      };
       console.log(`User ${socket.id} registered. ID: ${socket.userId || 'N/A'}, Username: ${socket.username}`);
     });
 
@@ -74,6 +88,7 @@ export default (io) => {
 
     socket.on('disconnect', () => {
       console.log(`A user disconnected. Socket ID: ${socket.id} (Username: ${socket.username || 'N/A'})`);
+      if (socket.userId && userSessions.get(socket.userId) === socket.id) userSessions.delete(socket.userId);
       updateVisibleUsers(io);
     });
   });

@@ -28,6 +28,12 @@ export const onUserCount = (socket, callback) => {
   });
 };
 
+export const onForceDisconnect = (socket, callback) => {
+  socket.on('force disconnect', (data) => {
+    callback(data);
+  });
+};
+
 export const registerUsername = (socket, userId, username) => {
   socket.emit('register username', { userId, username });
 };

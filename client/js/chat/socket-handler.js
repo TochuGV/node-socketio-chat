@@ -1,4 +1,4 @@
-import { onChatHistory, onChatMessage, onUserCount } from "../sockets/socket.js";
+import { onChatHistory, onChatMessage, onForceDisconnect, onUserCount } from "../sockets/socket.js";
 import { getSeparatorIfNewDay, resetLastDisplayedDate } from "../utils/date-separator-manager.js";
 import addMessage from "../message/message-render.js";
 import { playNotification } from "../notifications/notifications.js";
@@ -35,6 +35,28 @@ const setupSocketHandler = (socket, currentUserId, username, areUnreadMessagesCo
   onUserCount(socket, (count) => {
     const onlineCount = document.getElementById('online-count');
     if (onlineCount) onlineCount.textContent = count;
+  });
+
+  onForceDisconnect(socket, (data) => {
+    console.warn('Disconnected by server:', data.reason);
+    socket.disconnect();
+    const headerRight = document.querySelector('.header-right');
+    if (headerRight) headerRight.style.display = 'none';
+    //alert(`You have been disconnected by the server. Reason: ${data.reason}`);
+
+    const main = document.querySelector('main');
+    if (main) {
+      main.innerHTML = `
+        <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; text-align:center; padding:2rem;">
+          <i class="fa-solid fa-triangle-exclamation" style="font-size: 4rem; color: var(--text); margin-bottom: 1rem;"></i>
+          <h2 style="font-size: var(--font-size-xxl); margin-bottom: 1rem;">Sesión desconectada</h2>
+          <p style="font-size: var(--font-size-lg);">Has abierto el chat en otra pestaña o dispositivo.</p>
+          <button onclick="location.reload()" style="margin-top: 2rem; padding: 1rem 2rem; border-radius: 1rem; border: none; background: var(--green-light); cursor: pointer; font-size: var(--font-size-lg);">
+            Usar aquí
+          </button>
+        </div>
+      `;
+    };
   });
 };
 
