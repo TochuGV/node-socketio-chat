@@ -18,9 +18,15 @@ const closeSettingsModal = () =>{
   if (getUnreadMessageCount() > 0) resetCounter(); // Revisar esto en un futuro
 };
 
-const handleLogout = () => {
+const handleLogout = async () => {
   clearUserSession();
   localStorage.removeItem('chat-username');
+
+  try {
+    await fetch('/auth/logout', { method: 'POST' });
+  } catch (error) {
+    console.error("Hubo un error cerrando la sesión en el servidor:", error);
+  }
   window.location.reload();
 };
 

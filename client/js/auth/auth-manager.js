@@ -2,6 +2,10 @@ import { startChatSession } from "../flow-manager.js";
 
 const GUEST_INTERNAL_KEY = 'GUEST_USER';
 
+const handleLoginGoogle = () => {
+  window.location.href = '/auth/google';
+};
+
 const handleLoginUsername = (e) => {
   e.preventDefault();
   const usernameInput = document.getElementById('login-username');
@@ -16,10 +20,12 @@ const handleLoginGuest = (e) => {
 };
 
 export const initAuthManager = () => {
+  const googleButton = document.getElementById('login-google');
+  const usernameButton = document.querySelector('.login-username-button');
   const loginForm = document.getElementById('login-form');
   const guestButton = document.getElementById('login-guest');
-  const usernameButton = document.querySelector('.login-username-button');
 
+  if (googleButton) googleButton.addEventListener('click', handleLoginGoogle);
   if (loginForm) loginForm.addEventListener('submit', handleLoginUsername);
   if (usernameButton) usernameButton.addEventListener('click', handleLoginUsername);
   if (guestButton) guestButton.addEventListener('click', handleLoginGuest);
