@@ -2,7 +2,7 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import app from './app.js';
 import connectDatabase from './database/connection.js';
-import { PORT } from './config.js/env.js';
+import { PORT } from './config/env.js';
 import chatHandler from './sockets/chat.js';
 
 connectDatabase();
