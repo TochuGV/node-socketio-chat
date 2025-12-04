@@ -1,7 +1,8 @@
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from './env.js';
-import User from '../models/user.js';
+import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from './env.config.js';
+import User from '../models/user.model.js';
+import { findOrCreateUser } from '../services/auth.service.js';
 
 passport.use(new GoogleStrategy({
     clientID: GOOGLE_CLIENT_ID,
@@ -10,19 +11,11 @@ passport.use(new GoogleStrategy({
   },
   async (accessToken, refreshToken, profile, done) => {
     try {
-      let user = await User.findOne({ googleId: profile.id });
-      if (user) return done(null, user);
-      
-      user = new User({
-        username: profile.displayName,
-        googleId: profile.id,
-      });
-      
-      await user.save();
+      const user = await findOrCreateUser(profile);
       done(null, user);
     } catch (error) {
       done(error, null);
-    }
+    };
   }
 ));
 
