@@ -1,6 +1,8 @@
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
-import { MONGODB_URI, SESSION_SECRET } from './env.config.js';
+import { MONGODB_URI, SESSION_SECRET, NODE_ENV } from './env.config.js';
+
+const isProduction = NODE_ENV === 'production';
 
 const sessionConfig = session({
   secret: SESSION_SECRET, // Frase secreta para firmar la cookie de sesión
@@ -10,7 +12,7 @@ const sessionConfig = session({
   cookie: { 
     maxAge: 1000 * 60 * 60 * 24, // La sesión dura un día
     httpOnly: true, // La cookie no es accesible desde JavaScript del lado del cliente
-    secure: false // Cambiar a 'true' si se usa HTTPS
+    secure: isProduction // Cambiar a 'true' si se usa HTTPS
   }
 });
 
