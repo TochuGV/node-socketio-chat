@@ -6,6 +6,10 @@ const handleLoginGoogle = () => {
   window.location.href = '/auth/google';
 };
 
+const handleLoginGithub = () => {
+  window.location.href = '/auth/github';
+};
+
 const handleLoginUsername = (e) => {
   e.preventDefault();
   const usernameInput = document.getElementById('login-username');
@@ -21,11 +25,13 @@ const handleLoginGuest = (e) => {
 
 export const initAuthManager = () => {
   const googleButton = document.getElementById('login-google');
+  const githubButton = document.getElementById('login-github');
   const usernameButton = document.querySelector('.login-username-button');
   const loginForm = document.getElementById('login-form');
   const guestButton = document.getElementById('login-guest');
 
   if (googleButton) googleButton.addEventListener('click', handleLoginGoogle);
+  if (githubButton) githubButton.addEventListener('click', handleLoginGithub);
   if (loginForm) loginForm.addEventListener('submit', handleLoginUsername);
   if (usernameButton) usernameButton.addEventListener('click', handleLoginUsername);
   if (guestButton) guestButton.addEventListener('click', handleLoginGuest);

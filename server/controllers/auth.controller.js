@@ -1,5 +1,5 @@
 // Maneja la respuesta exitosa de autenticación de Google
-export const googleCallback = (req, res) => {
+export const loginCallback = (req, res) => {
   // Successful authentication, redirect home.
   res.redirect('/');
 };

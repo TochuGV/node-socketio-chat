@@ -12,9 +12,22 @@ router.get('/google',
 
 router.get('/google/callback',
   passport.authenticate('google', {
-    failureRedirect: '/' 
+    failureRedirect: '/'
   }),
-  AuthController.googleCallback
+  AuthController.loginCallback
+);
+
+router.get('/github',
+  passport.authenticate('github', {
+    scope: ['user:email']
+  })
+);
+
+router.get('/github/callback',
+  passport.authenticate('github', {
+    failureRedirect: '/'
+  }),
+  AuthController.loginCallback
 );
 
 router.get('/me', AuthController.getMe);
