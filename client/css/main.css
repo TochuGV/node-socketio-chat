@@ -21,6 +21,7 @@
 @import './components/chat-input.css';
 @import './components/audio-player.css';
 @import './components/date-separator.css';
+@import './components/loader.css';
 
 /* 3. MODALS - Overlay components */
 @import './modals/modal-base.css';

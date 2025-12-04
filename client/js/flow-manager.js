@@ -31,9 +31,17 @@ export const startChatSession = (username, userId = null) => {
 };
 
 export const initFlow = async () => {
+  const loader = document.getElementById('app-loader');
   const chatViewMain = document.querySelector('main');
   applyTranslations();
   
+  const removeLoader = () => {
+    if (loader) {
+      loader.classList.add('fade-out');
+      setTimeout(() => loader.remove(), 500);
+    };
+  };
+
   try {
     const response = await fetch('/auth/me');
     if (response.ok) {
@@ -41,6 +49,7 @@ export const initFlow = async () => {
       if (data.isAuthenticated) {
         console.log("Sesión autenticada encontrada:", data.user.username);
         startChatSession(data.user.username, data.user.id);
+        removeLoader();
         return;
       }
     }
@@ -57,6 +66,8 @@ export const initFlow = async () => {
     if (chatViewMain) chatViewMain.classList.add('hidden');
     initAuthManager();
   }
+
+  removeLoader();
 };
 
 export const getCurrentSessionUsername = () => currentSessionUsername;
