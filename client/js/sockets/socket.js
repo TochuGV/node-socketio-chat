@@ -40,8 +40,6 @@ export const registerUsername = (socket, userId, username) => {
 
 export const sendTextMessage = (socket, userId, username, message) => {
   socket.emit('chat message', {
-    userId,
-    username,
     message,
     audio: null,
     audioType: null,
@@ -50,8 +48,6 @@ export const sendTextMessage = (socket, userId, username, message) => {
 
 export const sendAudioMessage = (socket, userId, username, audio, audioType) => {
   socket.emit('chat message', {
-    userId,
-    username,
     message: null,
     audio,
     audioType,

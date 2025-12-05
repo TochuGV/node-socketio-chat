@@ -20,7 +20,7 @@ const setupInputHandler = (socket, userId, username) => {
     e.preventDefault();
     const message = input.value;
     if (message.trim() !== '') {
-      sendTextMessage(socket, userId, username, message);
+      sendTextMessage(socket, null, null, message);
       input.value = '';
       updateSendButtons();
     }

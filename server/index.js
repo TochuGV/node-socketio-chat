@@ -4,12 +4,15 @@ import app from './app.js';
 import connectDatabase from './database/connection.js';
 import { PORT } from './config/env.config.js';
 import chatHandler from './sockets/chat.js';
+import sessionConfig from './config/session.config.js';
 
 const startServer = async () => {
   await connectDatabase();
 
   const server = createServer(app);
   const io = new Server(server);
+
+  io.engine.use(sessionConfig);
 
   chatHandler(io);
 

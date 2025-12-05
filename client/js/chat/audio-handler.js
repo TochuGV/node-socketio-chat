@@ -19,7 +19,7 @@ const setupAudioHandler = (socket, userId, username) => {
           alert('No se pudo grabar el audio. ' + error.message);
           return;
         }
-        if (base64Audio && audioBlob) sendAudioMessage(socket, userId, username, base64Audio, audioBlob.type);
+        if (base64Audio && audioBlob) sendAudioMessage(socket, null, null, base64Audio, audioBlob.type);
       });
     } else {
       stopRecording();

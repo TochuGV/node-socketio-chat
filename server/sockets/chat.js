@@ -1,36 +1,79 @@
 import Message from '../models/message.model.js';
+import User from '../models/user.model.js';
 
 const userSessions = new Map();
 
 export default (io) => {
   io.on('connection', async (socket) => {
+    const session = socket.request.session;
+
+    let userId;
+    let username;
+    let isGuest = false;
+
     socket.showOnline = true;
     console.log(`A user connected. Socket ID: ${socket.id}`);
-    updateVisibleUsers(io);
 
     socket.on('register username', (data) => {
-      if (typeof data === 'object' && data.userId) {
-        socket.userId = data.userId;
-        socket.username = data.username;
-
-        if (userSessions.has(socket.userId)) {
-          const oldSocketId = userSessions.get(socket.userId);
-          io.to(oldSocketId).emit('force disconnect', {
-            reason: 'New session started in another tab/window'
-          });
-
-          const oldSocket = io.sockets.sockets.get(oldSocketId);
-          if (oldSocket) {
-            oldSocket.disconnect(true);
-            console.log(`Force disconnected duplicate session for user: ${socket.userId}`);
-          };
-        };
-        userSessions.set(socket.userId, socket.id);
-      } else {
-        socket.username = data;
+      if (session?.passport?.user) {
+        console.log('User already authenticated, ignoring "register username"');
+        return;
       };
-      console.log(`User ${socket.id} registered. ID: ${socket.userId || 'N/A'}, Username: ${socket.username}`);
+
+      if (typeof data === 'object' && data.userId && data.username) {
+        if (!isValidUUID(data.userId)) {
+          socket.emit('error', { message: 'Invalid user ID format' });
+          socket.disconnect();
+          return;
+        };
+
+        session.guestUserId = data.userId;
+        session.guestUsername = data.username;
+        session.save();
+
+        userId = data.userId;
+        username = data.username;
+        isGuest = true;
+
+        checkAndHandleDuplicateSession(io, userId, socket);
+        console.log(`Guest user registered: ${username} (${userId})`);
+      } else if (typeof data === 'string') {
+        session.guestUsername = data;
+        session.save();
+        username = data;
+        isGuest = true;
+        console.log(`Guest user registered (legacy): ${username}`);
+      };
+
     });
+
+    if (session?.passport?.user) {
+      try {
+        const user = await User.findById(session.passport.user);
+        if (user) {
+          userId = user._id.toString();
+          username = user.username;
+          socket.userId = userId;
+          socket.username = username;
+
+          checkAndHandleDuplicateSession(io, userId, socket);
+          console.log(`Authenticated user connected: ${username} (${userId})`);
+        };
+      } catch (error) {
+        console.error('Error fetching authenticated user:', error);
+      };
+    } else if (session?.guestUserId) {
+      userId = session.guestUserId;
+      username = session.guestUsername;
+      socket.userId = userId;
+      socket.username = username;
+      isGuest = true;
+
+      checkAndHandleDuplicateSession(io, userId, socket);
+      console.log(`Guest user reconnected: ${username} (${userId})`);
+    };
+
+    updateVisibleUsers(io);
 
     try {
       const lastMessages = (await Message.find().sort({ timestamp: -1 }).limit(100)).reverse();
@@ -47,19 +90,46 @@ export default (io) => {
     };
 
     socket.on('chat message', async (msg) => {
-      const clientUserId = msg.userId;
-      const clientUsername = msg.username;
-      if (!clientUserId || !clientUsername) {
-        console.error('Received message without username, dropping message: ', msg);
+      let messageUserId;
+      let messageUsername;
+
+      if (session?.passport?.user) {
+        // Usuario autenticado OAuth
+        try {
+          const user = await User.findById(session.passport.user);
+          if (!user) {
+            console.error('Authenticated user not found in database');
+            return;
+          };
+          messageUserId = user._id.toString();
+          messageUsername = user.username;
+        } catch (error) {
+          console.error('Error fetching user for message:', error);
+          return;
+        };
+      } else if (session?.guestUserId && session?.guestUsername) {
+        // Usuario invitado
+        messageUserId = session.guestUserId;
+        messageUsername = session.guestUsername;
+      } else {
+        console.error('User not identified, dropping message');
+        socket.emit('error', { message: 'Not authenticated' });
         return;
       };
 
-      console.log(`Message from ${clientUsername} (${clientUserId}): ` + msg.message);
+      if (msg.userId || msg.username) {
+        console.warn(`⚠️ Client attempted to send userId/username (IGNORED):`, {
+          attempted: { userId: msg.userId, username: msg.username },
+          actual: { userId: messageUserId, username: messageUsername }
+        });
+      };
+
+      console.log(`Message from ${messageUsername} (${messageUserId}): ${msg.message || '[audio]'}`);      
       
       try {
         const newMessage = new Message({
-          userId: clientUserId,
-          username: clientUsername,
+          userId: messageUserId,
+          username: messageUsername,
           message: msg.message || null,
           audio: msg.audio ? Buffer.from(msg.audio, 'base64') : null,
           audioType: msg.audioType || null,
@@ -76,7 +146,7 @@ export default (io) => {
           timestamp: newMessage.timestamp,
         });
       } catch (error) {
-        console.error('Error saving message: ', error);
+        console.error('Error saving message:', error);
       };
     });
 
@@ -92,6 +162,30 @@ export default (io) => {
       updateVisibleUsers(io);
     });
   });
+};
+
+// Función para verificar y manejar sesiones duplicadas
+const checkAndHandleDuplicateSession = (io, userId, newSocket) => {
+  if (userSessions.has(userId)) {
+    const oldSocketId = userSessions.get(userId);
+    io.to(oldSocketId).emit('force disconnect', {
+      reason: 'New session started in another tab/window'
+    });
+
+    const oldSocket = io.sockets.sockets.get(oldSocketId);
+    if (oldSocket) {
+      oldSocket.disconnect(true);
+      console.log(`Force disconnected duplicate session for user: ${userId}`);
+    };
+  };
+  userSessions.set(userId, newSocket.id);
+  newSocket.userId = userId;
+};
+
+// Validar UUID v4
+const isValidUUID = (uuid) => {
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+  return uuidRegex.test(uuid);
 };
 
 const updateVisibleUsers = (io) => {
