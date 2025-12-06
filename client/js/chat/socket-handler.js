@@ -1,4 +1,12 @@
-import { onChatHistory, onChatMessage, onForceDisconnect, onUserCount } from "../sockets/socket.js";
+import {
+  onChatHistory,
+  onChatMessage,
+  onForceDisconnect,
+  onUserCount,
+  onRateLimitError,
+  onValidationError,
+  onError
+} from "../sockets/socket.js";
 import { getSeparatorIfNewDay, resetLastDisplayedDate } from "../utils/date-separator-manager.js";
 import addMessage from "../message/message-render.js";
 import { playNotification } from "../notifications/notifications.js";
@@ -38,6 +46,19 @@ const setupSocketHandler = (socket, currentUserId, username, areUnreadMessagesCo
     if (onlineCount) onlineCount.textContent = count;
   });
 
+  onRateLimitError(socket, (data) => {
+    alert(`⏱️ ${data.message}\nPuedes enviar otro mensaje en ${data.retryAfter} segundos.`); //REVISAR DE CREAR UNA NOTIFICACIÓN MÁS ELABORADA
+  });
+
+  onValidationError(socket, (data) => {
+    alert(`❌ Validation error: ${data.message}`);
+  });
+
+  onError(socket, (error) => {
+    console.error('Socket error:', error);
+    alert(`❌ Error: ${error.message}`);
+  });
+  
   onForceDisconnect(socket, (data) => {
     console.warn('Disconnected by server:', data.reason);
     socket.disconnect();

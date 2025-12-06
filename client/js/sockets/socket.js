@@ -34,6 +34,24 @@ export const onForceDisconnect = (socket, callback) => {
   });
 };
 
+export const onRateLimitError = (socket, callback) => {
+  socket.on('rate limit error', (data) => {
+    callback(data);
+  });
+};
+
+export const onValidationError = (socket, callback) => {
+  socket.on('validation error', (data) => {
+    callback(data);
+  });
+};
+
+export const onError = (socket, callback) => {
+  socket.on('error', (error) => {
+    callback(error);
+  });
+};
+
 export const registerUsername = (socket, userId, username) => {
   socket.emit('register username', { userId, username });
 };

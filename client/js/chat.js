@@ -15,6 +15,7 @@ import setupAudioHandler from "./chat/audio-handler.js";
 
 export const initializeChat = (userId, username) => {
   const socket = initSocket();
+  window.debugSocket = socket; // Para depuración en consola
   const areUnreadMessagesCounterEnabled = initToggleUnreadMessagesCounter();
 
   window.addEventListener("focus", () => {

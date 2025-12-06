@@ -2,6 +2,27 @@ import Message from '../models/message.model.js';
 import User from '../models/user.model.js';
 
 const userSessions = new Map();
+const messageRateLimits = new Map();
+
+const MESSAGE_LIMIT = 10;
+const TIME_WINDOW = 60 * 1000;
+
+const checkMessageRateLimit = (userId) => {
+  const now = Date.now();
+  const userLimit = messageRateLimits.get(userId);
+
+  if (!userLimit || now > userLimit.resetTime) {
+    messageRateLimits.set(userId, {
+      count: 1,
+      resetTime: now + TIME_WINDOW
+    });
+    return true;
+  };
+
+  if (userLimit.count >= MESSAGE_LIMIT) return false;
+  userLimit.count++;
+  return true;
+};
 
 export default (io) => {
   io.on('connection', async (socket) => {
@@ -114,6 +135,15 @@ export default (io) => {
       } else {
         console.error('User not identified, dropping message');
         socket.emit('error', { message: 'Not authenticated' });
+        return;
+      };
+
+      if (!checkMessageRateLimit(messageUserId)) {
+        console.warn(`Rate limit exceeded for user: ${messageUsername} (${messageUserId})`);
+        socket.emit('rate limit error', { 
+          message: 'Message rate limit exceeded. Please wait a moment.',
+          retryAfter: Math.ceil((messageRateLimits.get(messageUserId).resetTime - Date.now()) / 1000)
+        });
         return;
       };
 
