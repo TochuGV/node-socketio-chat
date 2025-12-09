@@ -1,9 +1,11 @@
 import express from 'express';
+import cors from 'cors';
 import logger from 'morgan';
 import path from 'path';
 import passport from './config/passport.config.js';
 import authRoutes from './routes/auth.route.js';
 import sessionConfig from './config/session.config.js';
+import corsOptions from './config/cors.config.js';
 import { generalLimiter, authLimiter } from './middlewares/rate-limit.middleware.js';
 
 const app = express();
@@ -12,6 +14,7 @@ app.set('trust proxy', 1);
 
 app.use(logger('dev'));
 
+app.use(cors(corsOptions));
 app.use(generalLimiter);
 
 app.use(express.json());
