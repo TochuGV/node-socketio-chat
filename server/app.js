@@ -7,6 +7,7 @@ import authRoutes from './routes/auth.route.js';
 import sessionConfig from './config/session.config.js';
 import corsOptions from './config/cors.config.js';
 import { generalLimiter, authLimiter } from './middlewares/rate-limit.middleware.js';
+import helmetConfig from './config/helmet.config.js';
 
 const app = express();
 
@@ -14,6 +15,7 @@ app.set('trust proxy', 1);
 
 app.use(logger('dev'));
 
+app.use(helmetConfig);
 app.use(cors(corsOptions));
 app.use(generalLimiter);
 
