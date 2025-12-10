@@ -1,5 +1,6 @@
 import Message from '../models/message.model.js';
 import User from '../models/user.model.js';
+import { validateMessage, validateUsername, validateAudio } from '../utils/validation.util.js';
 
 const userSessions = new Map();
 const messageRateLimits = new Map();
@@ -48,20 +49,34 @@ export default (io) => {
           return;
         };
 
+        const usernameValidation = validateUsername(data.username);
+        if (!usernameValidation.valid) {
+          socket.emit('validation error', { message: usernameValidation.error });
+          socket.disconnect();
+          return;
+        }
+
         session.guestUserId = data.userId;
-        session.guestUsername = data.username;
+        session.guestUsername = usernameValidation.value;
         session.save();
 
         userId = data.userId;
-        username = data.username;
+        username = usernameValidation.value;
         isGuest = true;
 
         checkAndHandleDuplicateSession(io, userId, socket);
         console.log(`Guest user registered: ${username} (${userId})`);
       } else if (typeof data === 'string') {
-        session.guestUsername = data;
+        const usernameValidation = validateUsername(data);
+        if (!usernameValidation.valid) {
+          socket.emit('validation_error', { message: usernameValidation.error });
+          socket.disconnect();
+          return;
+        };
+
+        session.guestUsername = usernameValidation.value;
         session.save();
-        username = data;
+        username = usernameValidation.value;
         isGuest = true;
         console.log(`Guest user registered (legacy): ${username}`);
       };
@@ -111,8 +126,30 @@ export default (io) => {
     };
 
     socket.on('chat message', async (msg) => {
+      console.log('📥 Received chat message event'); // ← AGREGAR ESTE LOG
+      console.log('📦 Message has audio:', !!msg.audio); // ← AGREGAR ESTE LOG
+      console.log('📏 Audio length:', msg.audio?.length); // ← AGREGAR ESTE LOG
+      
       let messageUserId;
       let messageUsername;
+
+
+      /*
+        if (msg.audio && msg.audioType) {
+    console.log('🔍 Validating audio...'); // ← AGREGAR ESTE LOG
+    const audioValidation = validateAudio(msg.audio, msg.audioType);
+    console.log('🔍 Validation result:', audioValidation); // ← AGREGAR ESTE LOG
+    
+    if (!audioValidation.valid) {
+      console.log('❌ Audio validation failed, emitting error'); // ← AGREGAR ESTE LOG
+      socket.emit('validation error', { message: audioValidation.error });
+      return;
+    };
+    validatedAudio = msg.audio;
+    validatedAudioType = msg.audioType;
+  }*/
+
+
 
       if (session?.passport?.user) {
         // Usuario autenticado OAuth
@@ -120,6 +157,7 @@ export default (io) => {
           const user = await User.findById(session.passport.user);
           if (!user) {
             console.error('Authenticated user not found in database');
+            socket.emit('error', { message: 'User not found' });
             return;
           };
           messageUserId = user._id.toString();
@@ -154,15 +192,39 @@ export default (io) => {
         });
       };
 
+      let validatedMessage = null;
+      let validatedAudio = null;
+      let validatedAudioType = null;
+
+      if (msg.message) {
+        const messageValidation = validateMessage(msg.message);
+        if (!messageValidation.valid) {
+          socket.emit('validation error', { message: messageValidation.error });
+          return;
+        };
+        validatedMessage = messageValidation.value;
+      } else if (msg.audio && msg.audioType) {
+        const audioValidation = validateAudio(msg.audio, msg.audioType);
+        if (!audioValidation.valid) {
+          socket.emit('validation error', { message: audioValidation.error });
+          return;
+        };
+        validatedAudio = msg.audio;
+        validatedAudioType = msg.audioType;
+      } else {
+        socket.emit('validation error', { message: 'Message must contain either text or audio' });
+        return;
+      };
+
       console.log(`Message from ${messageUsername} (${messageUserId}): ${msg.message || '[audio]'}`);      
       
       try {
         const newMessage = new Message({
           userId: messageUserId,
           username: messageUsername,
-          message: msg.message || null,
-          audio: msg.audio ? Buffer.from(msg.audio, 'base64') : null,
-          audioType: msg.audioType || null,
+          message: validatedMessage,
+          audio: validatedAudio ? Buffer.from(validatedAudio, 'base64') : null,
+          audioType: validatedAudioType,
         });
         await newMessage.save();
         console.log(newMessage.username);
