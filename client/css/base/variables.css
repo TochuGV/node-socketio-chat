@@ -43,3 +43,11 @@
   --background: #121212;
   --text: #E6E6E6;
 }
+
+@media (max-width: 768px) {
+  :root {
+    --page-pad-x: 16px; /* Reducir márgenes laterales de la página */
+    --pill-h: 60px; /* Barra de chat más baja */
+    --font-scale-factor: 0.85; /* Reducir todas las fuentes un 15% */
+  }
+}

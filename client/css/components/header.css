@@ -52,3 +52,33 @@
   width: 100%;
   border-radius: 2px;
 }
+
+@media (max-width: 768px) {
+  .header {
+    padding: 10px 15px; /* Reducir padding drásticamente */
+    height: auto; /* Permitir que se ajuste, o fijarlo en 60px si prefieres */
+    flex-wrap: wrap; /* Permitir que los elementos bajen si no caben */
+  }
+
+  .header h1 {
+    margin: 0; /* Eliminar el margen izquierdo de 48px */
+    font-size: 1.25rem; /* Achicar la letra (antes era xxxl) */
+    line-height: 1.2;
+    flex: 1; /* Que ocupe el espacio disponible */
+  }
+
+  .header-right {
+    margin-right: 0; /* Eliminar margen derecho de 48px */
+    gap: 10px;
+  }
+
+  .online-users {
+    font-size: 0.85rem; /* Un poco más pequeño para que quepa bien */
+    margin-right: 8px;
+    display: flex;
+    flex-direction: row; /* ¡Horizontal! */
+    align-items: center;
+    gap: 4px; /* Espacio entre el texto y el número */
+    white-space: nowrap; /* Evita que se rompa en dos líneas */
+  }
+}

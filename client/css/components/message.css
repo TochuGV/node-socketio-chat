@@ -54,7 +54,32 @@
 }
 
 @media (max-width: 40rem) {
+/* Reducir el padding general de los globos de mensaje */
+  .message {
+    padding: 10px 14px; /* Antes era 18px 24px (demasiado aire) */
+    border-radius: 18px; /* Bordes un poco menos redondeados para ahorrar espacio */
+    max-width: 85%; /* Que no ocupen toda la pantalla, dejando aire al lado */
+  }
+
+  /* Ajustar el reproductor de audio */
   .message .audio-body {
-    width: 250px;
+    width: 100%; /* Que ocupe el ancho disponible del globo */
+    min-width: 200px; /* Evitar que se aplaste demasiado */
+  }
+
+  .custom-audio-player {
+    height: 2.5rem; /* Un poco más bajito y elegante */
+    gap: 0.25rem; /* Menos espacio entre botón y barra */
+  }
+
+  .audio-control-button {
+    width: 1.8rem;
+    height: 1.8rem;
+    font-size: 1rem; /* Icono de Play más chico */
+  }
+
+  .audio-time-display {
+    font-size: 0.75rem; /* Tiempo más discreto */
+    min-width: 2rem;
   }
 }

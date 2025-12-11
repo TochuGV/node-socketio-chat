@@ -34,14 +34,30 @@ export const onForceDisconnect = (socket, callback) => {
   });
 };
 
+export const onRateLimitError = (socket, callback) => {
+  socket.on('rate limit error', (data) => {
+    callback(data);
+  });
+};
+
+export const onValidationError = (socket, callback) => {
+  socket.on('validation error', (data) => {
+    callback(data);
+  });
+};
+
+export const onError = (socket, callback) => {
+  socket.on('error', (error) => {
+    callback(error);
+  });
+};
+
 export const registerUsername = (socket, userId, username) => {
   socket.emit('register username', { userId, username });
 };
 
 export const sendTextMessage = (socket, userId, username, message) => {
   socket.emit('chat message', {
-    userId,
-    username,
     message,
     audio: null,
     audioType: null,
@@ -50,8 +66,6 @@ export const sendTextMessage = (socket, userId, username, message) => {
 
 export const sendAudioMessage = (socket, userId, username, audio, audioType) => {
   socket.emit('chat message', {
-    userId,
-    username,
     message: null,
     audio,
     audioType,

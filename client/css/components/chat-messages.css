@@ -47,3 +47,15 @@ main {
 .chat-messages::-webkit-scrollbar {
   display: none;
 }
+
+@media (max-width: 768px) {
+  .chat-container {
+    padding: 10px var(--page-pad-x); /* Usar variable ajustada */
+  }
+
+  .chat-messages {
+    padding-left: 0;
+    padding-right: 0;
+    gap: 16px; /* Menos espacio entre mensajes */
+  }
+}
