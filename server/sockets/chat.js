@@ -42,23 +42,63 @@ export default (io) => {
         return;
       };
 
-      if (typeof data === 'object' && data.userId && data.username) {
-        if (!isValidUUID(data.userId)) {
-          socket.emit('error', { message: 'Invalid user ID format' });
-          socket.disconnect();
-          return;
-        };
+      let proposedUserId = null;
+      let proposedUsername = '';
 
-        const usernameValidation = validateUsername(data.username);
-        if (!usernameValidation.valid) {
-          socket.emit('validation error', { message: usernameValidation.error });
-          socket.disconnect();
-          return;
-        }
+      if (typeof data === 'object' && data !== null) {
+        proposedUserId = data.userId;
+        proposedUsername = data.username;
+      } else if (typeof data === 'string') {
+        proposedUsername = data;
+      };
 
-        session.guestUserId = data.userId;
-        session.guestUsername = usernameValidation.value;
-        session.save();
+      const usernameValidation = validateUsername(proposedUsername);
+      if (!usernameValidation.valid) {
+        console.log(`Intento de registro inválido: ${proposedUsername}`);
+        socket.emit('validation error', { message: usernameValidation.error });
+        socket.disconnect(); // Desconectamos por seguridad
+        return;
+      };
+
+      if (proposedUserId && !isValidUUID(data.userId)) {
+        socket.emit('error', { message: 'Invalid user ID format' });
+        socket.disconnect();
+        return;
+      };
+
+      session.guestUsername = usernameValidation.value;
+      if (proposedUserId) session.guestUserId = proposedUserId;
+      session.save();
+
+      username = usernameValidation.value;
+      userId = proposedUserId || userId;
+      isGuest = true;
+
+      if (userId) {
+        checkAndHandleDuplicateSession(io, userId, socket);
+        console.log(`Guest user registered: ${username} (${userId})`);
+      } else {
+        console.log(`Guest user registered (no ID): ${username}`);
+      };
+
+      updateVisibleUsers(io);
+
+      /*
+      if (!usernameValidation.valid) {
+        socket.emit('validation error', { message: usernameValidation.error });
+        socket.disconnect();
+        return;
+      };
+
+      if (proposedUserId && !isValidUUID(proposedUserId)) {
+        socket.emit('error', { message: 'Invalid user ID format' });
+        socket.disconnect();
+        return;
+      };
+
+      if (proposedUserId) session.guestUserId = proposedUserId;
+      session.guestUsername = usernameValidation.value;
+      session.save();
 
         userId = data.userId;
         username = usernameValidation.value;
@@ -80,9 +120,10 @@ export default (io) => {
         isGuest = true;
         console.log(`Guest user registered (legacy): ${username}`);
       };
-
+*/
     });
 
+    ////////////////////////
     if (session?.passport?.user) {
       try {
         const user = await User.findById(session.passport.user);

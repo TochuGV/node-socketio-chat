@@ -1,41 +1,17 @@
-export const LIMITS = {
-  MESSAGE_MIN_LENGTH: 1,
-  MESSAGE_MAX_LENGTH: 500,
-  USERNAME_MIN_LENGTH: 3,
-  USERNAME_MAX_LENGTH: 20,
-  AUDIO_MAX_SIZE: 5 * 1024 * 1024, // 5MB
-  AUDIO_MAX_DURATION: 300, // 5 Minutos
-  ALLOWED_AUDIO_TYPES: ['audio/webm', 'audio/wav', 'audio/mp3', 'audio/ogg', 'audio/mpeg']
-};
-
-export const validateMessage = (message) => {
-  if (!message || typeof message !== 'string') {
-    return {
-      valid: false,
-      error: 'Message must be a non-empty string'
-    };
-  };
-
-  const trimmed = message.trim();
-
-  if (trimmed.length < LIMITS.MESSAGE_MIN_LENGTH) {
-    return {
-      valid: false,
-      error: 'Message is too short'
-    };
-  };
-
-  if (trimmed.length > LIMITS.MESSAGE_MAX_LENGTH) {
-    return {
-      valid: false,
-      error: `Message is too long (Max ${LIMITS.MESSAGE_MAX_LENGTH} characters)`
-    };
-  };
-
-  return {
-    valid: true,
-    value: trimmed
-  };
+export const VALIDATION_RULES = {
+  username: {
+    min: 3,
+    max: 20,
+    regex: /^[a-zA-Z0-9_ áéíóúñÁÉÍÓÚÑ-]+$/ // Letras, números, espacios, guiones, guiones bajos, y acentos
+  },
+  message: {
+    min: 1,
+    max: 500
+  },
+  audio: {
+    maxSize: 5 * 1024 * 1024, // 5MB
+    allowedTypes: ['audio/webm', 'audio/wav', 'audio/mp3', 'audio/ogg', 'audio/mpeg']
+  }
 };
 
 export const validateUsername = (username) => {
@@ -47,26 +23,57 @@ export const validateUsername = (username) => {
   };
 
   const trimmed = username.trim();
+  const { min, max, regex } = VALIDATION_RULES.username;
 
-  if (trimmed.length < LIMITS.USERNAME_MIN_LENGTH) {
+  if (trimmed.length < min) {
     return {
       valid: false,
-      error: `Username too short (Min ${LIMITS.USERNAME_MIN_LENGTH} characters)`
+      error: `Username too short (Min ${min} characters)`
     };
   };
 
-  if (trimmed.length > LIMITS.USERNAME_MAX_LENGTH) {
+  if (trimmed.length > max) {
     return {
       valid: false,
-      error: `Username too long (Max ${LIMITS.USERNAME_MAX_LENGTH} characters)`
+      error: `Username too long (Max ${max} characters)`
     };
   };
 
-  const validUsernameRegex = /^[a-zA-Z0-9_ áéíóúñÁÉÍÓÚÑ-]+$/; // Letras, números, espacios, guiones, guiones bajos, y acentos
-  if (!validUsernameRegex.test(trimmed)) {
+  if (!regex.test(trimmed)) {
     return {
       valid: false,
       error: 'Username contains invalid characters. Only letters, numbers, spaces, hyphens and underscores are allowed.'
+    };
+  };
+
+  return {
+    valid: true,
+    value: trimmed
+  };
+};
+
+export const validateMessage = (message) => {
+  if (!message || typeof message !== 'string') {
+    return {
+      valid: false,
+      error: 'Message must be a non-empty string'
+    };
+  };
+
+  const trimmed = message.trim();
+  const { min, max } = VALIDATION_RULES.message;
+
+  if (trimmed.length < min) {
+    return {
+      valid: false,
+      error: 'Message is too short'
+    };
+  };
+
+  if (trimmed.length > max) {
+    return {
+      valid: false,
+      error: `Message is too long (Max ${max} characters)`
     };
   };
 
@@ -83,7 +90,7 @@ export const validateAudio = (audioBase64, audioType) => {
       error: 'Audio data is invalid or missing'
     };
   };
-
+  
   if (!audioType || typeof audioType !== 'string') {
     return {
       valid: false,
@@ -91,17 +98,20 @@ export const validateAudio = (audioBase64, audioType) => {
     };
   };
 
-  if (!LIMITS.ALLOWED_AUDIO_TYPES.includes(audioType)) {
+  const { maxSize, allowedTypes } = VALIDATION_RULES.audio;
+
+  if (!allowedTypes.includes(audioType)) {
     return {
       valid: false,
-      error: `Audio type "${audioType}" not allowed. Allowed types: ${LIMITS.ALLOWED_AUDIO_TYPES.join(', ')}`
+      error: `Audio type "${audioType}" not allowed. Allowed types: ${allowedTypes.join(', ')}`
     };
   };
 
-  const audioSizeBytes = (audioBase64.length * 3) / 4;
+  const padding = (audioBase64.endsWith('==')) ? 2 : (audioBase64.endsWith('=') ? 1 : 0);
+  const audioSizeBytes = (audioBase64.length * 3) / 4 - padding;
 
-  if (audioSizeBytes > LIMITS.AUDIO_MAX_SIZE) {
-    const maxSizeMB = (LIMITS.AUDIO_MAX_SIZE / (1024 * 1024)).toFixed(1);
+  if (audioSizeBytes > maxSize) {
+    const maxSizeMB = (maxSize / (1024 * 1024)).toFixed(1);
     const actualSizeMB = (audioSizeBytes / (1024 * 1024)).toFixed(1);
     return {
       valid: false,
