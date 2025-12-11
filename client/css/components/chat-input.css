@@ -58,3 +58,42 @@
   width: 72px;
   border-radius: 0 16px 16px 0;
 }
+
+@media (max-width: 768px) {
+/* 1. Contenedor de la barra */
+  .chat-input {
+    height: 50px; /* Altura compacta */
+    border-radius: 25px; /* Estilo cápsula */
+  }
+
+  /* 2. Campo de texto */
+  .chat-input input {
+    font-size: 0.95rem; /* Tamaño de letra equilibrado */
+    padding-left: 16px; /* Menos espacio a la izquierda */
+  }
+
+  .chat-input input::placeholder {
+    font-size: 0.9rem;
+    opacity: 0.6;
+  }
+
+  /* 3. Botones (General y Específicos) */
+  /* Unificamos todo aquí para evitar conflictos */
+  .chat-input button {
+    font-size: 1.2rem;
+    padding: 0; /* Centrado perfecto sin padding lateral */
+  }
+
+  /* Forzamos el ancho cuadrado para que coincida con la altura (50px) */
+  .chat-input button#send-audio,
+  .chat-input button#send-text {
+    width: 50px; 
+    border-radius: 0 25px 25px 0; /* Ajustamos la curva del borde derecho */
+  }
+
+  /* 4. Contador de caracteres */
+  .char-count {
+    right: 55px; /* Ajustado para que no se pegue al botón nuevo de 50px */
+    font-size: 0.7rem; /* Un pelín más chico para que no moleste */
+  }
+}
