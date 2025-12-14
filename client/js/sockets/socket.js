@@ -52,6 +52,18 @@ export const onError = (socket, callback) => {
   });
 };
 
+export const onUserTyping = (socket, callback) => {
+  socket.on('typing', (data) => {
+    callback(data);
+  });
+};
+
+export const onUserStoppedTyping = (socket, callback) => {
+  socket.on('stop typing', (data) => {
+    callback(data);
+  });
+};
+
 export const registerUsername = (socket, userId, username) => {
   socket.emit('register username', { userId, username });
 };
@@ -74,4 +86,12 @@ export const sendAudioMessage = (socket, userId, username, audio, audioType) => 
 
 export const toggleOnlineVisibility = (socket, showOnline) => {
   socket.emit("toggle online visibility", showOnline);
+};
+
+export const sendTyping = (socket) => {
+  socket.emit('typing');
+};
+
+export const sendStopTyping = (socket) => {
+  socket.emit('stop typing');
 };

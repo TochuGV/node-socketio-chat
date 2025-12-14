@@ -22,6 +22,7 @@
 @import './components/audio-player.css';
 @import './components/date-separator.css';
 @import './components/loader.css';
+@import './components/typing-indicator.css';
 
 /* 3. MODALS - Overlay components */
 @import './modals/modal-base.css';

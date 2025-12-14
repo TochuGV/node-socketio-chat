@@ -5,17 +5,44 @@ import {
   onUserCount,
   onRateLimitError,
   onValidationError,
-  onError
+  onError,
+  onUserTyping,
+  onUserStoppedTyping
 } from "../sockets/socket.js";
 import { getSeparatorIfNewDay, resetLastDisplayedDate } from "../utils/date-separator-manager.js";
 import addMessage from "../message/message-render.js";
 import { playNotification } from "../notifications/notifications.js";
 import { incrementCounter } from "../notifications/unread-message-counter.js";
 import { applyTranslations } from "../translations/translations-apply.js";
+import { t } from "../translations/translations-manager.js";
+
+const GUEST_INTERNAL_KEY = 'GUEST_USER';
 
 const setupSocketHandler = (socket, currentUserId, username, areUnreadMessagesCounterEnabled) => {
   const messagesContainer = document.querySelector('.chat-messages');
+  const typingIndicator = document.getElementById('typing-indicator');
+
+  const typingMap = new Map();
   
+  const updateTypingUI = () => {
+    console.log('🔄 Updating typing UI, map size:', typingMap.size);
+    if (!typingIndicator) return;
+
+    if(typingMap.size > 0) {
+      const users = Array.from(typingMap.values());
+      let text = '';
+
+      if (users.length === 1) text = `${users[0]} is typing...`;
+      else if (users.length === 2) text = `${users[0]} and ${users[1]} are typing...`;
+      else text = `${users[0]}, ${users[1]} and others are typing...`;
+
+      typingIndicator.textContent = text;
+      typingIndicator.classList.add('visible');
+    } else {
+      typingIndicator.classList.remove('visible');
+    };
+  };
+
   // Manejo de historial
   onChatHistory(socket, (messages) => {
     messagesContainer.innerHTML = '';
@@ -37,7 +64,24 @@ const setupSocketHandler = (socket, currentUserId, username, areUnreadMessagesCo
     if (!isOwn) {
       playNotification();
       if (areUnreadMessagesCounterEnabled()) incrementCounter();
+
+      if (typingMap.has(msgObj.userId)) {
+        typingMap.delete(msgObj.userId);
+        updateTypingUI();
+      };
     };
+  });
+
+  onUserTyping(socket, (data) => {
+    console.log('👤 User typing event received:', data);
+    const name = data.username === GUEST_INTERNAL_KEY ? t('guestUsername') : data.username;
+    typingMap.set(data.userId, name);
+    updateTypingUI();
+  });
+
+  onUserStoppedTyping(socket, (data) => {
+    typingMap.delete(data.userId);
+    updateTypingUI();
   });
 
   // Manejo de contador de usuarios

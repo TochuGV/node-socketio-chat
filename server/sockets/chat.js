@@ -74,6 +74,9 @@ export default (io) => {
       userId = proposedUserId || userId;
       isGuest = true;
 
+      socket.username = username;
+      socket.userId = userId;
+
       if (userId) {
         checkAndHandleDuplicateSession(io, userId, socket);
         console.log(`Guest user registered: ${username} (${userId})`);
@@ -82,48 +85,8 @@ export default (io) => {
       };
 
       updateVisibleUsers(io);
-
-      /*
-      if (!usernameValidation.valid) {
-        socket.emit('validation error', { message: usernameValidation.error });
-        socket.disconnect();
-        return;
-      };
-
-      if (proposedUserId && !isValidUUID(proposedUserId)) {
-        socket.emit('error', { message: 'Invalid user ID format' });
-        socket.disconnect();
-        return;
-      };
-
-      if (proposedUserId) session.guestUserId = proposedUserId;
-      session.guestUsername = usernameValidation.value;
-      session.save();
-
-        userId = data.userId;
-        username = usernameValidation.value;
-        isGuest = true;
-
-        checkAndHandleDuplicateSession(io, userId, socket);
-        console.log(`Guest user registered: ${username} (${userId})`);
-      } else if (typeof data === 'string') {
-        const usernameValidation = validateUsername(data);
-        if (!usernameValidation.valid) {
-          socket.emit('validation_error', { message: usernameValidation.error });
-          socket.disconnect();
-          return;
-        };
-
-        session.guestUsername = usernameValidation.value;
-        session.save();
-        username = usernameValidation.value;
-        isGuest = true;
-        console.log(`Guest user registered (legacy): ${username}`);
-      };
-*/
     });
 
-    ////////////////////////
     if (session?.passport?.user) {
       try {
         const user = await User.findById(session.passport.user);
@@ -173,24 +136,6 @@ export default (io) => {
       
       let messageUserId;
       let messageUsername;
-
-
-      /*
-        if (msg.audio && msg.audioType) {
-    console.log('🔍 Validating audio...'); // ← AGREGAR ESTE LOG
-    const audioValidation = validateAudio(msg.audio, msg.audioType);
-    console.log('🔍 Validation result:', audioValidation); // ← AGREGAR ESTE LOG
-    
-    if (!audioValidation.valid) {
-      console.log('❌ Audio validation failed, emitting error'); // ← AGREGAR ESTE LOG
-      socket.emit('validation error', { message: audioValidation.error });
-      return;
-    };
-    validatedAudio = msg.audio;
-    validatedAudioType = msg.audioType;
-  }*/
-
-
 
       if (session?.passport?.user) {
         // Usuario autenticado OAuth
@@ -287,6 +232,25 @@ export default (io) => {
       socket.showOnline = !!showOnline;
       console.log(`User ${socket.username || socket.id} set showOnline = ${socket.showOnline}`);
       updateVisibleUsers(io);
+    });
+
+    socket.on('typing', () => {
+      // Broadcast: Avisar a todos menos al que escribe
+      console.log('DEBUG TYPING:', { 
+          id: socket.id, 
+          username: socket.username, 
+          userId: socket.userId 
+      });
+      socket.broadcast.emit('typing', {
+        userId: socket.userId || socket.id,
+        username: socket.username
+      });
+    });
+
+    socket.on('stop typing', () => {
+      socket.broadcast.emit('stop typing', {
+        userId: socket.userId || socket.id,
+      });
     });
 
     socket.on('disconnect', () => {
