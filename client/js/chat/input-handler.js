@@ -1,4 +1,4 @@
-import { sendTextMessage, sendTyping, sendStopTyping } from "../sockets/socket.js";
+import socketService from "../sockets/socket.js";
 
 const setupInputHandler = (socket, userId, username) => {
   const input = document.querySelector('.chat-input input');
@@ -37,18 +37,18 @@ const setupInputHandler = (socket, userId, username) => {
     if (hasText) {
       if (!isTyping) {
         isTyping = true;
-        sendTyping(socket);
+        socketService.emitters.sendTyping();
       };
 
       if (typingTimeout) clearTimeout(typingTimeout);
 
       typingTimeout = setTimeout(() => {
         isTyping = false;
-        sendStopTyping(socket);
+        socketService.emitters.sendStopTyping();
       }, 1500);
     } else if (isTyping) {
       isTyping = false;
-      sendStopTyping(socket);
+      socketService.emitters.sendStopTyping();
       if (typingTimeout) clearTimeout(typingTimeout);
     };
   };
@@ -58,7 +58,7 @@ const setupInputHandler = (socket, userId, username) => {
     e.preventDefault();
     const message = input.value;
     if (message.trim() !== '') {
-      sendTextMessage(socket, null, null, message);
+      socketService.emitters.sendTextMessage(message);
       input.value = '';
       handleInputInteraction();
     }

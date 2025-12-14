@@ -1,5 +1,5 @@
 import { startRecording, stopRecording } from "../audio/audio.js";
-import { sendAudioMessage } from "../sockets/socket.js";
+import socketService from "../sockets/socket.js";
 
 const MAX_RECORDING_TIME_MS = 5 * 60 * 1000; // 5 Minutos
 
@@ -30,7 +30,7 @@ const setupAudioHandler = (socket, userId, username) => {
           alert('No se pudo grabar el audio. ' + error.message);
           return;
         }
-        if (base64Audio && audioBlob) sendAudioMessage(socket, null, null, base64Audio, audioBlob.type);
+        if (base64Audio && audioBlob) socketService.emitters.sendAudioMessage(base64Audio, audioBlob.type);
       });
     } else {
       stopRecording();

@@ -1,14 +1,4 @@
-import {
-  onChatHistory,
-  onChatMessage,
-  onForceDisconnect,
-  onUserCount,
-  onRateLimitError,
-  onValidationError,
-  onError,
-  onUserTyping,
-  onUserStoppedTyping
-} from "../sockets/socket.js";
+import socketService from "../sockets/socket.js";
 import { getSeparatorIfNewDay, resetLastDisplayedDate } from "../utils/date-separator-manager.js";
 import addMessage from "../message/message-render.js";
 import { playNotification } from "../notifications/notifications.js";
@@ -18,7 +8,7 @@ import { t } from "../translations/translations-manager.js";
 
 const GUEST_INTERNAL_KEY = 'GUEST_USER';
 
-const setupSocketHandler = (socket, currentUserId, username, areUnreadMessagesCounterEnabled) => {
+const setupSocketHandler = (currentUserId, username, areUnreadMessagesCounterEnabled) => {
   const messagesContainer = document.querySelector('.chat-messages');
   const typingIndicator = document.getElementById('typing-indicator');
 
@@ -42,20 +32,17 @@ const setupSocketHandler = (socket, currentUserId, username, areUnreadMessagesCo
     };
   };
 
-  // Manejo de historial
-  onChatHistory(socket, (messages) => {
+  socketService.listeners.onChatHistory((messages) => {
     messagesContainer.innerHTML = '';
     resetLastDisplayedDate();
     messages.forEach(msg => {
       const separator = getSeparatorIfNewDay(msg.timestamp);
       const isOwn = (msg.userId && msg.userId === currentUserId) || (!msg.userId && msg.username === username);
-      // const isOwn = msg.userId === currentUserId;
       addMessage(msg, isOwn, separator);
     });
   });
 
-  // Manejo de mensajes nuevos
-  onChatMessage(socket, (msgObj) => {
+  socketService.listeners.onChatMessage((msgObj) => {
     const separator = getSeparatorIfNewDay(msgObj.timestamp);
     const isOwn = msgObj.userId === currentUserId;
     addMessage(msgObj, isOwn, separator);
@@ -71,37 +58,36 @@ const setupSocketHandler = (socket, currentUserId, username, areUnreadMessagesCo
     };
   });
 
-  onUserTyping(socket, (data) => {
+  socketService.listeners.onUserTyping((data) => {
     const name = data.username === GUEST_INTERNAL_KEY ? t('guestUserTyping') : data.username;
     typingMap.set(data.userId, name);
     updateTypingUI();
   });
 
-  onUserStoppedTyping(socket, (data) => {
+  socketService.listeners.onUserStoppedTyping((data) => {
     typingMap.delete(data.userId);
     updateTypingUI();
   });
 
-  // Manejo de contador de usuarios
-  onUserCount(socket, (count) => {
+  socketService.listeners.onUserCount((count) => {
     const onlineCount = document.getElementById('online-count');
     if (onlineCount) onlineCount.textContent = count;
   });
 
-  onRateLimitError(socket, (data) => {
+  socketService.listeners.onRateLimitError((data) => {
     alert(`⏱️ ${data.message}\nPuedes enviar otro mensaje en ${data.retryAfter} segundos.`); //REVISAR DE CREAR UNA NOTIFICACIÓN MÁS ELABORADA
   });
 
-  onValidationError(socket, (data) => {
+  socketService.listeners.onValidationError((data) => {
     alert(`❌ Validation error: ${data.message}`);
   });
 
-  onError(socket, (error) => {
+  socketService.listeners.onError((error) => {
     console.error('Socket error:', error);
     alert(`❌ Error: ${error.message}`);
   });
-  
-  onForceDisconnect(socket, (data) => {
+
+  socketService.listeners.onForceDisconnect((data) => {
     console.warn('Disconnected by server:', data.reason);
     socket.disconnect();
     const headerRight = document.querySelector('.header-right');
