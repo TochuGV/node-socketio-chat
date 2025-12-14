@@ -25,16 +25,15 @@ const setupSocketHandler = (socket, currentUserId, username, areUnreadMessagesCo
   const typingMap = new Map();
   
   const updateTypingUI = () => {
-    console.log('🔄 Updating typing UI, map size:', typingMap.size);
     if (!typingIndicator) return;
 
     if(typingMap.size > 0) {
       const users = Array.from(typingMap.values());
       let text = '';
 
-      if (users.length === 1) text = `${users[0]} is typing...`;
-      else if (users.length === 2) text = `${users[0]} and ${users[1]} are typing...`;
-      else text = `${users[0]}, ${users[1]} and others are typing...`;
+      if (users.length === 1) text = t('oneUserTyping').replace('{user}', users[0]);
+      else if (users.length === 2) text = t('twoUsersTyping').replace('{user1}', users[0]).replace('{user2}', users[1]);
+      else text = t('multipleUsersTyping').replace('{user1}', users[0]).replace('{user2}', users[1]);
 
       typingIndicator.textContent = text;
       typingIndicator.classList.add('visible');
@@ -73,8 +72,7 @@ const setupSocketHandler = (socket, currentUserId, username, areUnreadMessagesCo
   });
 
   onUserTyping(socket, (data) => {
-    console.log('👤 User typing event received:', data);
-    const name = data.username === GUEST_INTERNAL_KEY ? t('guestUsername') : data.username;
+    const name = data.username === GUEST_INTERNAL_KEY ? t('guestUserTyping') : data.username;
     typingMap.set(data.userId, name);
     updateTypingUI();
   });
