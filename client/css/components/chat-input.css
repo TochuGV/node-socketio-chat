@@ -7,16 +7,17 @@
 .chat-input {
   display: flex;
   align-items: stretch;
-  border-radius: 20px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-  overflow: hidden;
+  overflow: visible;
   flex: 0 0 auto;
   height: var(--pill-h);
+  position: relative;
 }
 
 .chat-input input {
   flex: 1 1 auto;
   padding-left: 32px;
+  padding-right: 32px;
   border: none;
   outline: none;
   background: var(--gray);
@@ -26,6 +27,12 @@
   height: 100%;
   display: inline-flex;
   align-items: center;
+  transition: padding-right 0.2s ease;
+  border-radius: 20px 0 0 20px;
+}
+
+.chat-input input.shrunk {
+  padding-right: 104px;
 }
 
 .chat-input input::placeholder {
@@ -47,6 +54,8 @@
   justify-content: center;
   transition: background 0.2s;
   flex: 0 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .chat-input button:hover {
@@ -59,17 +68,51 @@
   border-radius: 0 16px 16px 0;
 }
 
+.char-count {
+  position: absolute;
+  right: 96px;
+  top: 0;
+  bottom: 0;
+  width: 72px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--background);
+  font-size: var(--font-size-md);
+  font-weight: 700;
+  color: var(--text);
+  z-index: 10;
+  opacity: 0;
+  transform: translateX(24px);
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.char-count.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.char-count.warning {
+  color: #d32f2f;
+  background: #ffcdd2;
+  font-weight: 700;
+}
+
+:root.dark-theme .char-count.warning {
+  color: #ffcdd2;
+  background: #b71c1c;
+}
+
 @media (max-width: 768px) {
-/* 1. Contenedor de la barra */
   .chat-input {
-    height: 50px; /* Altura compacta */
-    border-radius: 25px; /* Estilo cápsula */
+    height: 50px;
+    border-radius: 25px;
   }
 
-  /* 2. Campo de texto */
   .chat-input input {
-    font-size: 0.95rem; /* Tamaño de letra equilibrado */
-    padding-left: 16px; /* Menos espacio a la izquierda */
+    font-size: 0.95rem;
+    padding-left: 16px;
   }
 
   .chat-input input::placeholder {
@@ -77,23 +120,25 @@
     opacity: 0.6;
   }
 
-  /* 3. Botones (General y Específicos) */
-  /* Unificamos todo aquí para evitar conflictos */
   .chat-input button {
     font-size: 1.2rem;
-    padding: 0; /* Centrado perfecto sin padding lateral */
+    padding: 0;
   }
 
-  /* Forzamos el ancho cuadrado para que coincida con la altura (50px) */
   .chat-input button#send-audio,
   .chat-input button#send-text {
     width: 50px; 
-    border-radius: 0 25px 25px 0; /* Ajustamos la curva del borde derecho */
+    border-radius: 0 25px 25px 0;
   }
 
-  /* 4. Contador de caracteres */
   .char-count {
-    right: 55px; /* Ajustado para que no se pegue al botón nuevo de 50px */
-    font-size: 0.7rem; /* Un pelín más chico para que no moleste */
+    right: 50px;
+    width: 50px;
+    font-size: 0.8rem;
+    transform: translate(16px);
+  }
+
+  .chat-input input.shrunk {
+    padding-right: 66px;
   }
 }

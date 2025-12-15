@@ -18,11 +18,14 @@ const setupInputHandler = (socket, userId, username) => {
     if (charCount) {
       charCount.textContent = remaining;
       if (remaining <= 100) {
-        charCount.style.opacity = '1'; // Hacer visible
+        charCount.classList.add('visible');
+        input.classList.add('shrunk');
         if (remaining <= 20) charCount.classList.add('warning');
         else charCount.classList.remove('warning');
       } else {
-        charCount.style.opacity = '0'; // Ocultar si sobra espacio
+        charCount.classList.remove('visible');
+        input.classList.remove('shrunk');
+        charCount.classList.remove('warning'); //Tiene sentido??
       };
     };
 
