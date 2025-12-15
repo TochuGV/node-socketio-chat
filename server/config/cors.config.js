@@ -2,7 +2,7 @@ import { NODE_ENV } from './env.config.js';
 
 const allowedOrigins = NODE_ENV === 'production'
   ? [
-    'https://node-socketio-chat-aaw8.onrender.com/'
+    'https://node-socketio-chat-aaw8.onrender.com'
   ] : [
     'http://localhost:3000',
     'http://127.0.0.1:3000'
