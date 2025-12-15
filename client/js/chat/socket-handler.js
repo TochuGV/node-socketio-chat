@@ -89,7 +89,7 @@ const setupSocketHandler = (currentUserId, username, areUnreadMessagesCounterEna
 
   socketService.listeners.onForceDisconnect((data) => {
     console.warn('Disconnected by server:', data.reason);
-    socket.disconnect();
+    if (socketService.socket) socketService.socket.disconnect();
     const headerRight = document.querySelector('.header-right');
     if (headerRight) headerRight.style.display = 'none';
     //alert(`You have been disconnected by the server. Reason: ${data.reason}`);
@@ -101,11 +101,15 @@ const setupSocketHandler = (currentUserId, username, areUnreadMessagesCounterEna
           <i class="fa-solid fa-triangle-exclamation" style="font-size: 4rem; color: var(--text); margin-bottom: 1rem;"></i>
           <h2 style="font-size: var(--font-size-xxl); margin-bottom: 1rem;" translate-key="sessionDisconnectedTitle">Session disconnected</h2>
           <p style="font-size: var(--font-size-lg);" translate-key="sessionDisconnectedMessage">You have opened the chat in another tab or device.</p>
-          <button onclick="location.reload()" style="margin-top: 2rem; padding: 1rem 2rem; border-radius: 1rem; border: none; background: var(--green-light); cursor: pointer; font-size: var(--font-size-lg);" translate-key="useHereButton">
+          <button id="reconnect-button" style="margin-top: 2rem; padding: 1rem 2rem; border-radius: 1rem; border: none; background: var(--green-light); cursor: pointer; font-size: var(--font-size-lg);" translate-key="useHereButton">
             Use here
           </button>
         </div>
       `;
+
+      const reconnectButton = document.getElementById('reconnect-button');
+      if (reconnectButton) reconnectButton.addEventListener('click', () => location.reload());
+
       applyTranslations();
     };
   });
