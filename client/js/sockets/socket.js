@@ -1,77 +1,55 @@
 import { io } from "https://cdn.socket.io/4.8.1/socket.io.esm.min.js";
 
-export const initSocket = () => {
-  return io();
+class SocketService {
+  constructor() {
+    this.socket = null;
+  };
+
+  init() {
+    this.socket = io();
+    return this.socket;
+  };
+
+  on(eventName, callback) {
+    if (!this.socket) return;
+    this.socket.on(eventName, callback);
+  };
+
+  emit(eventName, data) {
+    if (!this.socket) return;
+    this.socket.emit(eventName, data);
+  };
+
+  listeners = {
+    onConnect: (callback) => this.on('connect', () => callback(this.socket.id)),
+    onChatHistory: (callback) => this.on('chat history', callback),
+    onChatMessage: (callback) => this.on('chat message', callback),
+    onUserCount: (callback) => this.on('user count', callback),
+    onForceDisconnect: (callback) => this.on('force disconnect', callback),
+    onRateLimitError: (callback) => this.on('rate limit error', callback),
+    onValidationError: (callback) => this.on('validation error', callback),
+    onError: (callback) => this.on('error', callback),
+    onUserTyping: (callback) => this.on('typing', callback),
+    onUserStoppedTyping: (callback) => this.on('stop typing', callback)
+  };
+
+  emitters = {
+    registerUsername: (userId, username) => this.emit('register username', { userId, username }),
+    sendTextMessage: (message) => this.emit('chat message', {
+      message,
+      audio: null,
+      audioType: null,
+    }),
+    sendAudioMessage: (audio, audioType) => this.emit('chat message', {
+      message: null,
+      audio,
+      audioType,
+    }),
+    toggleOnlineVisibility: (showOnline) => this.emit("toggle online visibility", showOnline),
+    sendTyping: () => this.emit('typing'),
+    sendStopTyping: () => this.emit('stop typing'),
+  };
 };
 
-export const onConnect = (socket, callback) => {
-  socket.on('connect', () => {
-    callback(socket.id);
-  });
-};
-
-export const onChatHistory = (socket, callback) => {
-  socket.on('chat history', (messages) => {
-    callback(messages);
-  });
-};
-
-export const onChatMessage = (socket, callback) => {
-  socket.on('chat message', (msgObj) => {
-    callback(msgObj);
-  });
-};
-
-export const onUserCount = (socket, callback) => {
-  socket.on('user count', (count) => {
-    callback(count);
-  });
-};
-
-export const onForceDisconnect = (socket, callback) => {
-  socket.on('force disconnect', (data) => {
-    callback(data);
-  });
-};
-
-export const onRateLimitError = (socket, callback) => {
-  socket.on('rate limit error', (data) => {
-    callback(data);
-  });
-};
-
-export const onValidationError = (socket, callback) => {
-  socket.on('validation error', (data) => {
-    callback(data);
-  });
-};
-
-export const onError = (socket, callback) => {
-  socket.on('error', (error) => {
-    callback(error);
-  });
-};
-
-export const registerUsername = (socket, userId, username) => {
-  socket.emit('register username', { userId, username });
-};
-
-export const sendTextMessage = (socket, userId, username, message) => {
-  socket.emit('chat message', {
-    message,
-    audio: null,
-    audioType: null,
-  });
-};
-
-export const sendAudioMessage = (socket, userId, username, audio, audioType) => {
-  socket.emit('chat message', {
-    message: null,
-    audio,
-    audioType,
-  });
-};
-
-export const toggleOnlineVisibility = (socket, showOnline) => {
-  socket.emit("toggle online visibility", showOnline);
-};
+const socketService = new SocketService();
+export default socketService;

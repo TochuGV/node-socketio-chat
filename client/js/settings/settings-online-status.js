@@ -1,4 +1,4 @@
-import { toggleOnlineVisibility } from "../sockets/socket.js";
+import socketService from "../sockets/socket.js";
 
 export const initToggleOnlineStatus = (socket) => {
   const toggleOnlineStatus = document.getElementById("toggle-online-status");
@@ -6,11 +6,11 @@ export const initToggleOnlineStatus = (socket) => {
   let showOnline = localStorage.getItem("showOnline") !== "false";
   toggleOnlineStatus.checked = showOnline;
   
-  toggleOnlineVisibility(socket, showOnline);
+  socketService.emitters.toggleOnlineVisibility(showOnline);
   
   toggleOnlineStatus.addEventListener("change", () => {
     showOnline = toggleOnlineStatus.checked;
     localStorage.setItem("showOnline", showOnline);
-    toggleOnlineVisibility(socket, showOnline);
+    socketService.emitters.toggleOnlineVisibility(showOnline);
   });
 };

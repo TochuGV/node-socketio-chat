@@ -1,4 +1,4 @@
-import { initSocket, onConnect, registerUsername } from "./sockets/socket.js";
+import socketService from "./sockets/socket.js";
 import { initSettings } from "./settings/settings.js";
 import { initVolumeSlider } from "./settings/settings-volume.js";
 import { initToggleUnreadMessagesCounter } from "./settings/settings-notifications.js";
@@ -14,7 +14,7 @@ import setupInputHandler from "./chat/input-handler.js";
 import setupAudioHandler from "./chat/audio-handler.js";
 
 export const initializeChat = (userId, username) => {
-  const socket = initSocket();
+  const socket = socketService.init();
   window.debugSocket = socket; // Para depuración en consola
   const areUnreadMessagesCounterEnabled = initToggleUnreadMessagesCounter();
 
@@ -22,19 +22,19 @@ export const initializeChat = (userId, username) => {
     resetCounter();
   });
 
-  onConnect(socket, (id) => {
+  socketService.listeners.onConnect((id) => {
     console.log('Connected with ID:', id);
-    registerUsername(socket, userId, username)
+    socketService.emitters.registerUsername(userId, username);
   });
 
-  setupSocketHandler(socket, userId, username, areUnreadMessagesCounterEnabled);
-  setupInputHandler(socket, userId, username);
-  setupAudioHandler(socket, userId, username);
+  setupSocketHandler(userId, username, areUnreadMessagesCounterEnabled);
+  setupInputHandler(userId, username);
+  setupAudioHandler(userId, username);
 
   initSettings();
   initVolumeSlider();
   initLanguageButtons();
-  initToggleOnlineStatus(socket);
+  initToggleOnlineStatus();
   initTheme();
   initThemeButtons();
   initFontSizeButtons();

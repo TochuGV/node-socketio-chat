@@ -3,7 +3,7 @@ import { Server } from 'socket.io';
 import app from './app.js';
 import connectDatabase from './database/connection.js';
 import { PORT } from './config/env.config.js';
-import chatHandler from './sockets/chat.js';
+import chatHandler from './sockets/index.js';
 import sessionConfig from './config/session.config.js';
 import corsOptions from './config/cors.config.js';
 

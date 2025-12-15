@@ -1,0 +1,31 @@
+/*
+  ============================================
+  TYPING INDICATOR - User activity status
+  ============================================
+*/
+
+.typing-indicator {
+  background-color: var(--background); /* Se adapta al tema */
+  color: var(--green-dark); 
+  font-size: 0.85rem;
+  font-style: italic;
+  padding: 4px 48px; /* Alineado con el padding de la página */
+  min-height: 28px; /* Altura reservada */
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  transition: opacity 0.3s ease;
+  opacity: 0; /* Invisible por defecto */
+  pointer-events: none; /* Para que no bloquee clics si está transparente */
+}
+
+.typing-indicator.visible {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .typing-indicator {
+    padding: 4px 16px; /* Ajuste para móviles */
+    font-size: 0.75rem;
+  }
+}

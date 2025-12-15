@@ -1,35 +1,48 @@
-import {
-  onChatHistory,
-  onChatMessage,
-  onForceDisconnect,
-  onUserCount,
-  onRateLimitError,
-  onValidationError,
-  onError
-} from "../sockets/socket.js";
+import socketService from "../sockets/socket.js";
 import { getSeparatorIfNewDay, resetLastDisplayedDate } from "../utils/date-separator-manager.js";
 import addMessage from "../message/message-render.js";
 import { playNotification } from "../notifications/notifications.js";
 import { incrementCounter } from "../notifications/unread-message-counter.js";
 import { applyTranslations } from "../translations/translations-apply.js";
+import { t } from "../translations/translations-manager.js";
 
-const setupSocketHandler = (socket, currentUserId, username, areUnreadMessagesCounterEnabled) => {
+const GUEST_INTERNAL_KEY = 'GUEST_USER';
+
+const setupSocketHandler = (currentUserId, username, areUnreadMessagesCounterEnabled) => {
   const messagesContainer = document.querySelector('.chat-messages');
+  const typingIndicator = document.getElementById('typing-indicator');
+
+  const typingMap = new Map();
   
-  // Manejo de historial
-  onChatHistory(socket, (messages) => {
+  const updateTypingUI = () => {
+    if (!typingIndicator) return;
+
+    if(typingMap.size > 0) {
+      const users = Array.from(typingMap.values());
+      let text = '';
+
+      if (users.length === 1) text = t('oneUserTyping').replace('{user}', users[0]);
+      else if (users.length === 2) text = t('twoUsersTyping').replace('{user1}', users[0]).replace('{user2}', users[1]);
+      else text = t('multipleUsersTyping').replace('{user1}', users[0]).replace('{user2}', users[1]);
+
+      typingIndicator.textContent = text;
+      typingIndicator.classList.add('visible');
+    } else {
+      typingIndicator.classList.remove('visible');
+    };
+  };
+
+  socketService.listeners.onChatHistory((messages) => {
     messagesContainer.innerHTML = '';
     resetLastDisplayedDate();
     messages.forEach(msg => {
       const separator = getSeparatorIfNewDay(msg.timestamp);
       const isOwn = (msg.userId && msg.userId === currentUserId) || (!msg.userId && msg.username === username);
-      // const isOwn = msg.userId === currentUserId;
       addMessage(msg, isOwn, separator);
     });
   });
 
-  // Manejo de mensajes nuevos
-  onChatMessage(socket, (msgObj) => {
+  socketService.listeners.onChatMessage((msgObj) => {
     const separator = getSeparatorIfNewDay(msgObj.timestamp);
     const isOwn = msgObj.userId === currentUserId;
     addMessage(msgObj, isOwn, separator);
@@ -37,31 +50,46 @@ const setupSocketHandler = (socket, currentUserId, username, areUnreadMessagesCo
     if (!isOwn) {
       playNotification();
       if (areUnreadMessagesCounterEnabled()) incrementCounter();
+
+      if (typingMap.has(msgObj.userId)) {
+        typingMap.delete(msgObj.userId);
+        updateTypingUI();
+      };
     };
   });
 
-  // Manejo de contador de usuarios
-  onUserCount(socket, (count) => {
+  socketService.listeners.onUserTyping((data) => {
+    const name = data.username === GUEST_INTERNAL_KEY ? t('guestUserTyping') : data.username;
+    typingMap.set(data.userId, name);
+    updateTypingUI();
+  });
+
+  socketService.listeners.onUserStoppedTyping((data) => {
+    typingMap.delete(data.userId);
+    updateTypingUI();
+  });
+
+  socketService.listeners.onUserCount((count) => {
     const onlineCount = document.getElementById('online-count');
     if (onlineCount) onlineCount.textContent = count;
   });
 
-  onRateLimitError(socket, (data) => {
+  socketService.listeners.onRateLimitError((data) => {
     alert(`⏱️ ${data.message}\nPuedes enviar otro mensaje en ${data.retryAfter} segundos.`); //REVISAR DE CREAR UNA NOTIFICACIÓN MÁS ELABORADA
   });
 
-  onValidationError(socket, (data) => {
+  socketService.listeners.onValidationError((data) => {
     alert(`❌ Validation error: ${data.message}`);
   });
 
-  onError(socket, (error) => {
+  socketService.listeners.onError((error) => {
     console.error('Socket error:', error);
     alert(`❌ Error: ${error.message}`);
   });
-  
-  onForceDisconnect(socket, (data) => {
+
+  socketService.listeners.onForceDisconnect((data) => {
     console.warn('Disconnected by server:', data.reason);
-    socket.disconnect();
+    if (socketService.socket) socketService.socket.disconnect();
     const headerRight = document.querySelector('.header-right');
     if (headerRight) headerRight.style.display = 'none';
     //alert(`You have been disconnected by the server. Reason: ${data.reason}`);
@@ -73,11 +101,15 @@ const setupSocketHandler = (socket, currentUserId, username, areUnreadMessagesCo
           <i class="fa-solid fa-triangle-exclamation" style="font-size: 4rem; color: var(--text); margin-bottom: 1rem;"></i>
           <h2 style="font-size: var(--font-size-xxl); margin-bottom: 1rem;" translate-key="sessionDisconnectedTitle">Session disconnected</h2>
           <p style="font-size: var(--font-size-lg);" translate-key="sessionDisconnectedMessage">You have opened the chat in another tab or device.</p>
-          <button onclick="location.reload()" style="margin-top: 2rem; padding: 1rem 2rem; border-radius: 1rem; border: none; background: var(--green-light); cursor: pointer; font-size: var(--font-size-lg);" translate-key="useHereButton">
+          <button id="reconnect-button" style="margin-top: 2rem; padding: 1rem 2rem; border-radius: 1rem; border: none; background: var(--green-light); cursor: pointer; font-size: var(--font-size-lg);" translate-key="useHereButton">
             Use here
           </button>
         </div>
       `;
+
+      const reconnectButton = document.getElementById('reconnect-button');
+      if (reconnectButton) reconnectButton.addEventListener('click', () => location.reload());
+
       applyTranslations();
     };
   });
