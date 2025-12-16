@@ -91,8 +91,7 @@ const setupSocketHandler = (currentUserId, username, areUnreadMessagesCounterEna
     console.warn('Disconnected by server:', data.reason);
     if (socketService.socket) socketService.socket.disconnect();
     const headerRight = document.querySelector('.header-right');
-    if (headerRight) headerRight.style.display = 'none';
-    //alert(`You have been disconnected by the server. Reason: ${data.reason}`);
+    if (headerRight) headerRight.classList.add('hidden');
 
     const main = document.querySelector('main');
     if (main) {

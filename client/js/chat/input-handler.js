@@ -30,11 +30,11 @@ const setupInputHandler = (socket, userId, username) => {
     };
 
     if (hasText) {
-      sendTextButton.style.display = '';
-      sendAudioButton.style.display = 'none';
+      sendTextButton.classList.remove('hidden');
+      sendAudioButton.classList.add('hidden');
     } else {
-      sendTextButton.style.display = 'none';
-      sendAudioButton.style.display = '';
+      sendTextButton.classList.add('hidden');
+      sendAudioButton.classList.remove('hidden');
     };
 
     if (hasText) {
