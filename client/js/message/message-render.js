@@ -19,7 +19,7 @@ const addMessage = ({ username, message, audio, audioType, timestamp }, isOwn = 
   let time = '';
   if (timestamp) {
     const date = new Date(timestamp);
-    time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
   };
 
   let userText = '';
