@@ -12,6 +12,7 @@
   flex: 0 0 auto;
   height: var(--pill-h);
   position: relative;
+  border-radius: 16px;
 }
 
 .chat-input input {
@@ -28,7 +29,6 @@
   display: inline-flex;
   align-items: center;
   transition: padding-right 0.2s ease;
-  border-radius: 20px 0 0 20px;
 }
 
 .chat-input input.shrunk {
@@ -65,7 +65,7 @@
 .chat-input button#send-audio,
 .chat-input button#send-text {
   width: 72px;
-  border-radius: 0 16px 16px 0;
+  /*border-radius: 0 16px 16px 0;*/
 }
 
 .char-count {
@@ -107,7 +107,6 @@
 @media (max-width: 768px) {
   .chat-input {
     height: 50px;
-    border-radius: 25px;
   }
 
   .chat-input input {
@@ -127,8 +126,7 @@
 
   .chat-input button#send-audio,
   .chat-input button#send-text {
-    width: 50px; 
-    border-radius: 0 25px 25px 0;
+    width: 50px;
   }
 
   .char-count {
