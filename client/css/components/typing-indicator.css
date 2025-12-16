@@ -5,29 +5,41 @@
 */
 
 .typing-indicator {
-  background-color: transparent; /* Se adapta al tema */
+  position: absolute;
+  left: var(--page-pad-x);
+  bottom: calc(var(--pill-h) + 16px + 10px);
+  background-color: var(--gray);
   color: var(--green-dark); 
-  font-size: 0.85rem;
-  font-style: italic;
-  padding: 8px 32px; /* Alineado con el padding de la página */
-  min-height: 32px; /* Altura reservada */
+  font-size: calc(0.8rem * var(--font-scale-factor, 1));
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  height: auto;
   display: flex;
+  gap: 8px;
+  z-index: 5;
   align-items: center;
-  font-weight: 500;
-  transition: opacity 0.3s ease, max-height 0.3s ease;
-  opacity: 0; /* Invisible por defecto */
-  pointer-events: none; /* Para que no bloquee clics si está transparente */
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px) scale(0.9);
+  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .typing-indicator.visible {
   opacity: 1;
-  max-height: 50px;
+  transform: translateY(0);
+}
+
+:root.dark-theme .typing-indicator {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 @media (max-width: 768px) {
   .typing-indicator {
-    padding: 6px 0; /* Ajuste para móviles */
-    font-size: 0.75rem;
-    min-height: 28px;
+    bottom: calc(50px + 10px + 8px);
+    left: 16px;
+    padding: 6px 12px;
+    font-size: calc(0.75rem * var(--font-scale-factor, 1));
   }
 }
