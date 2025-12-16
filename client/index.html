@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title translate-key="appTitle">Chat in real time</title>
     <script src="js/theme/theme-shared.js"></script>
     <script src="js/theme/theme-loader.js"></script>
@@ -32,12 +32,12 @@
         </button>
       </div>
     </header>
-    <div id="typing-indicator" class="typing-indicator"></div>
     <main>
       <div class="chat-container">
         <div class="chat-messages" id="chat-messages">
           <!-- Messages will be dynamically inserted here -->
         </div>
+        <div id="typing-indicator" class="typing-indicator"></div>
         <form class="chat-input" id="chat-form" autocomplete="off">
           <input type="text" id="message-input" translate-key="messagePlaceholder" placeholder="Type a message..." autocomplete="off" maxlength="500">
           <span id="char-count" class="char-count"></span>

@@ -112,8 +112,13 @@
   .chat-input input {
     font-size: 0.95rem;
     padding-left: 16px;
+    padding-right: 16px;
   }
 
+  .chat-input input.shrunk {
+    padding-right: 66px;
+  }
+  
   .chat-input input::placeholder {
     font-size: 0.9rem;
     opacity: 0.6;
@@ -136,7 +141,4 @@
     transform: translate(16px);
   }
 
-  .chat-input input.shrunk {
-    padding-right: 66px;
-  }
 }

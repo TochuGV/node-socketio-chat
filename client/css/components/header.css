@@ -82,3 +82,71 @@
     white-space: nowrap; /* Evita que se rompa en dos líneas */
   }
 }
+
+/* Cuando el viewport es muy bajo (teclado abierto), mostrar versión compacta */
+@media (max-height: 500px) {
+  .header {
+    padding: 6px 15px; /* Más compacto */
+    min-height: 40px; /* Altura mínima */
+  }
+
+  .header h1 {
+    display: none; /* Ocultar el título */
+  }
+
+  /* Mantener solo el contador de usuarios online */
+  .header-right {
+    margin-right: 0;
+    gap: 10px;
+    flex: 1;
+    justify-content: flex-end;
+  }
+
+  .online-users {
+    font-size: 0.8rem;
+    margin-right: 0;
+  }
+
+  /* El botón de menú se mantiene visible */
+  .settings-menu-button {
+    height: 20px;
+    width: 26px;
+  }
+
+  .settings-menu-icon {
+    height: 2px;
+  }
+}
+
+/* Para pantallas MUY bajas (teclado + barra de navegación) */
+@media (max-height: 400px) {
+  .header {
+    padding: 4px 10px;
+    min-height: 36px;
+  }
+
+  .online-users {
+    font-size: 0.75rem;
+  }
+
+  .settings-menu-button {
+    height: 18px;
+    width: 24px;
+  }
+}
+
+/* Alternativa: Mostrar solo en landscape muy bajo */
+@media (max-height: 450px) and (orientation: landscape) {
+  .header {
+    padding: 5px 15px;
+    min-height: 38px;
+  }
+
+  .header h1 {
+    font-size: 1rem;
+  }
+
+  .online-users {
+    font-size: 0.75rem;
+  }
+}

@@ -15,12 +15,13 @@ main {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  padding: 27px var(--page-pad-x);
+  padding: 16px var(--page-pad-x);
   box-sizing: border-box;
   max-width: 1920px;
   width: 100%;
   margin: 0 auto;
   min-height: 0;
+  gap: 16px;
 }
 
 .chat-messages {
@@ -29,10 +30,7 @@ main {
   gap: 27px;
   flex: 1 1 auto;
   overflow-y: scroll;
-  padding-top: 27px;
-  padding-bottom: 27px;
-  padding-left: 32px;
-  padding-right: 32px;
+  padding: 16px 32px;
   min-height: 0;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
@@ -51,11 +49,11 @@ main {
 @media (max-width: 768px) {
   .chat-container {
     padding: 10px var(--page-pad-x); /* Usar variable ajustada */
+    gap: 10px;
   }
 
   .chat-messages {
-    padding-left: 0;
-    padding-right: 0;
+    padding: 10px 16px;
     gap: 16px; /* Menos espacio entre mensajes */
   }
 }
