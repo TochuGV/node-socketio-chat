@@ -12,7 +12,6 @@ const setupAudioHandler = (socket, userId, username) => {
     if (!isRecording) {
       isRecording = true;
       sendAudioButton.classList.add('recording');
-      sendAudioButton.innerHTML = '<i class="fa-solid fa-microphone fa-spin"></i>';
       
       recordingTimeout = setTimeout(() => {
         if (isRecording) {
@@ -25,7 +24,6 @@ const setupAudioHandler = (socket, userId, username) => {
         isRecording = false;
         if (recordingTimeout) clearTimeout(recordingTimeout);
         sendAudioButton.classList.remove('recording');
-        sendAudioButton.innerHTML = '<i class="fa-solid fa-microphone"></i>';
         if (error) {
           alert('No se pudo grabar el audio. ' + error.message);
           return;
