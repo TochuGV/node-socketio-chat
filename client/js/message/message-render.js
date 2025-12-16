@@ -42,8 +42,10 @@ const addMessage = ({ username, message, audio, audioType, timestamp }, isOwn = 
     bodyHTML = `
       <div class="audio-body">
         <div class="custom-audio-player">
-          <button class="audio-control-button"><i class="fa-solid fa-play"></i></button>
-          <div class="audio-progress-bar"></div>
+          <button class="audio-control-button">
+            <i class="fa-solid fa-play"></i>
+          </button>
+          <div class="audio-waveform"></div>
           <span class="audio-time-display">0:00</span>
           <audio preload="metadata" src="data:${audioType};base64,${audio}"></audio>
         </div>

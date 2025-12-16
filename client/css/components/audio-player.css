@@ -9,9 +9,10 @@
   align-items: center;
   gap: 0.5rem;
   height: 3rem;
-  border-radius: 1.5rem;
   color: var(--text);
   width: 100%;
+  max-width: 100%;
+  overflow: hidden;
 }
 
 /* Hide native audio element */
@@ -32,24 +33,35 @@
   justify-content: center;
 }
 
-.audio-progress-bar {
+.audio-waveform {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 1.2rem;
   flex-grow: 1;
-  height: 0.35rem;
-  margin: 0 0.5rem;
-  border-radius: 0.175rem;
-  --audio-progress: 0%;
-  background-image: linear-gradient(
-    to right,
-    var(--background) var(--audio-progress, 0%),
-    var(--text) var(--audio-progress, 0%)
-  );
-  background-repeat: no-repeat;
-  transition: background-position 0.1s linear;
+  overflow: hidden;
+}
+
+.audio-wave {
+  width: 3px;
+  height: 100%;
+  background-color: var(--text);
+  opacity: 0.4;
+  border-radius: 2px;
+  transform: scaleY(0.1);
+  transform-origin: center;
+  transition: opacity 0.1s linear;
+  flex-shrink: 0;
+}
+
+.audio-wave.played {
+  opacity: 1;
 }
 
 .audio-time-display {
   font-size: var(--font-size-sm);
   min-width: 2.5rem;
-  text-align: right;
+  text-align: center;
   font-weight: 500;
+  flex-shrink: 0;
 }
