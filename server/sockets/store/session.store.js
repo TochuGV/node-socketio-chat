@@ -1,4 +1,4 @@
-const MESSAGE_LIMIT = 10;
+const MESSAGE_LIMIT = 50;
 const TIME_WINDOW = 60 * 1000; // 60 Segundos
 
 class SessionStore {
