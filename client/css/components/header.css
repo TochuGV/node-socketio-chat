@@ -55,46 +55,44 @@
 
 @media (max-width: 768px) {
   .header {
-    padding: 10px 15px; /* Reducir padding drásticamente */
-    height: auto; /* Permitir que se ajuste, o fijarlo en 60px si prefieres */
-    flex-wrap: wrap; /* Permitir que los elementos bajen si no caben */
+    padding: 10px 15px;
+    height: auto;
+    flex-wrap: wrap;
   }
 
   .header h1 {
-    margin: 0; /* Eliminar el margen izquierdo de 48px */
-    font-size: 1.25rem; /* Achicar la letra (antes era xxxl) */
+    margin: 0;
+    font-size: 1.25rem;
     line-height: 1.2;
-    flex: 1; /* Que ocupe el espacio disponible */
+    flex: 1;
   }
 
   .header-right {
-    margin-right: 0; /* Eliminar margen derecho de 48px */
+    margin-right: 0;
     gap: 10px;
   }
 
   .online-users {
-    font-size: 0.85rem; /* Un poco más pequeño para que quepa bien */
+    font-size: 0.85rem;
     margin-right: 8px;
     display: flex;
-    flex-direction: row; /* ¡Horizontal! */
+    flex-direction: row;
     align-items: center;
-    gap: 4px; /* Espacio entre el texto y el número */
-    white-space: nowrap; /* Evita que se rompa en dos líneas */
+    gap: 4px;
+    white-space: nowrap;
   }
 }
 
-/* Cuando el viewport es muy bajo (teclado abierto), mostrar versión compacta */
 @media (max-height: 500px) {
   .header {
-    padding: 6px 15px; /* Más compacto */
-    min-height: 40px; /* Altura mínima */
+    padding: 6px 15px;
+    min-height: 40px;
   }
 
   .header h1 {
-    display: none; /* Ocultar el título */
+    display: none;
   }
 
-  /* Mantener solo el contador de usuarios online */
   .header-right {
     margin-right: 0;
     gap: 10px;
@@ -107,7 +105,6 @@
     margin-right: 0;
   }
 
-  /* El botón de menú se mantiene visible */
   .settings-menu-button {
     height: 20px;
     width: 26px;
@@ -118,7 +115,6 @@
   }
 }
 
-/* Para pantallas MUY bajas (teclado + barra de navegación) */
 @media (max-height: 400px) {
   .header {
     padding: 4px 10px;
@@ -135,7 +131,6 @@
   }
 }
 
-/* Alternativa: Mostrar solo en landscape muy bajo */
 @media (max-height: 450px) and (orientation: landscape) {
   .header {
     padding: 5px 15px;

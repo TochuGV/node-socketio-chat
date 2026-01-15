@@ -15,7 +15,6 @@
   overflow: hidden;
 }
 
-/* Hide native audio element */
 .custom-audio-player audio {
   display: none !important;
 }

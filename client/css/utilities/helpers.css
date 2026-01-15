@@ -4,16 +4,8 @@
   ============================================
 */
 
-/* Hide elements */
-.hidden {
-  display: none !important;
-}
+.hidden { display: none !important; }
 
-/* Specific modal hiding */
-.login-modal.hidden {
-  display: none !important;
-}
+.login-modal.hidden { display: none !important; }
 
-.login-overlay.hidden {
-  display: none !important;
-}
+.login-overlay.hidden { display: none !important; }

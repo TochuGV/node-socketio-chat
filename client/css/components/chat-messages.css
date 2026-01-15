@@ -37,7 +37,6 @@ main {
   overscroll-behavior: contain;
 }
 
-/* Hide scrollbar but keep functionality */
 .chat-messages {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -49,12 +48,12 @@ main {
 
 @media (max-width: 768px) {
   .chat-container {
-    padding: 10px var(--page-pad-x); /* Usar variable ajustada */
+    padding: 10px var(--page-pad-x);
     gap: 10px;
   }
 
   .chat-messages {
     padding: 10px 16px;
-    gap: 16px; /* Menos espacio entre mensajes */
+    gap: 16px;
   }
 }

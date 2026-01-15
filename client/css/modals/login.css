@@ -31,7 +31,6 @@
   text-align: center;
 }
 
-/* Separator lines between sections */
 .login-section h3:not(:first-child) {
   padding-top: 2rem;
   margin-top: 2rem;
@@ -53,7 +52,6 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
 }
 
-/* Login buttons (Google, GitHub, Guest) */
 .login-buttons {
   display: flex;
   gap: 1rem;
@@ -96,7 +94,6 @@
   height: 3rem;
 }
 
-/* Username input section */
 .username {
   display: flex;
   align-items: stretch;
@@ -142,7 +139,6 @@
   color: var(--background);
 }
 
-/* Guest button styling */
 #login-guest {
   width: 100%;
   max-width: 25rem;
@@ -150,7 +146,6 @@
   font-weight: 600;
 }
 
-/* Background for login screen */
 .login-active {
   background-color: var(--gray-dark);
   background-image: url('https://placehold.co/1920x1080/4f6d7a/ffffff/jpg?text=.');
@@ -163,7 +158,6 @@
   display: none;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .login-modal {
     width: 95%;

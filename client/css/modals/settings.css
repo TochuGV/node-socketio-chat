@@ -56,7 +56,6 @@
   font-size: var(--font-size-lg);
 }
 
-/* Option groups inside settings */
 .option-group {
   display: flex;
   flex-direction: row;
@@ -68,16 +67,14 @@
 .option-group > span {
   text-align: left;
   font-size: var(--font-size-md);
-  flex: 1; /* IMPORTANTE: El texto ocupa todo el espacio sobrante */
-  line-height: 1.2; /* Mejora la lectura si el texto se parte en dos líneas */
+  flex: 1;
+  line-height: 1.2;
 }
 
 .switch {
-  flex-shrink: 0; /* Prohíbe que el interruptor se achique o deforme */
-  /* ... resto de propiedades del switch ... */
+  flex-shrink: 0;
 }
 
-/* Button groups (Theme, Font Size, Language) */
 .button-group {
   display: flex;
   width: 100%;
@@ -116,7 +113,6 @@
   transition: background 0.2s, color 0.2s;
 }
 
-/* Volume slider */
 #volume-slider {
   width: 100%;
   max-width: 30rem;
@@ -186,7 +182,6 @@
   );
 }
 
-/* Toggle switch */
 .switch {
   position: relative;
   display: inline-block;
@@ -230,7 +225,6 @@ input:checked + .slider:before {
   transform: translateX(6.5em);
 }
 
-/* Footer with logout button */
 .settings-footer {
   padding: 1rem 2rem 2rem 2rem;
   display: flex;
@@ -261,13 +255,11 @@ input:checked + .slider:before {
   background: #c63d3d;
 }
 
-/* Flexible sections */
 .settings-section.fill-vertical {
   flex: 1 1 auto;
   min-height: 6rem;
 }
 
-/* Responsive */
 @media (min-width: 2000px) {
   .settings-modal {
     width: 48%;
@@ -285,12 +277,11 @@ input:checked + .slider:before {
 
 @media (max-width: 1024px) {
   .settings-modal {
-    width: 80%; /* Más ancho en tablets para dar aire al contenido */
+    width: 80%;
   }
 }
 
 @media (max-width: 768px) {
-  /* 1. Hacer el modal más ancho en móviles */
   .settings-modal {
     width: 95%;
     max-height: 90vh;
@@ -300,29 +291,25 @@ input:checked + .slider:before {
     padding: 1.5rem 1rem;
   }
 
-  /* 2. Arreglar ancho de grupos y sliders */
   .button-group,
   #volume-slider {
-    width: 100%; /* Adaptarse al ancho */
+    width: 100%;
     max-width: none;
   }
 
-  /* 3. Permitir que los botones bajen si no caben */
   .button-group {
     flex-wrap: wrap; 
   }
 
-  /* Estilo compacto para los botones */
   .button {
     min-width: 0;
     padding: 0.5rem 0.25rem;
     font-size: 0.85rem;
-    white-space: nowrap; /* Evitar saltos de línea feos */
+    white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis; /* Puntos suspensivos si sigue sin caber */
+    text-overflow: ellipsis;
   }
 
-  /* 4. Ajustar disposición de las opciones (Texto arriba, control abajo) */
   .option-group {
     flex-direction: column;
     align-items: flex-start;
@@ -340,9 +327,9 @@ input:checked + .slider:before {
   }
 
   .logout-button {
-    width: 100%; /* Que ocupe todo el ancho disponible */
-    max-width: 300px; /* Pero que no sea infinito en tablets */
-    font-size: 1.25rem; /* Letra más chica (antes era xxl / 2rem) */
-    padding: 0.75rem; /* Padding más cómodo */
+    width: 100%;
+    max-width: 300px;
+    font-size: 1.25rem;
+    padding: 0.75rem;
   }
 }

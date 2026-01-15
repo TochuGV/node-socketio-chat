@@ -17,13 +17,12 @@
   align-items: center;
   justify-content: center;
   transition: opacity 0.5s ease;
-  opacity: 1; /* Estado inicial visible */
+  opacity: 1; 
 }
 
-/* Clase utilitaria para ocultarlo suavemente */
 #app-loader.fade-out {
   opacity: 0;
-  pointer-events: none; /* Evita clics mientras desaparece */
+  pointer-events: none;
 }
 
 #app-loader i {

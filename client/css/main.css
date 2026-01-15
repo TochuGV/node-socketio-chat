@@ -2,7 +2,6 @@
   ============================================
   MAIN CSS - Imports all stylesheets
   ============================================
-  
   This file orchestrates the loading order of all CSS.
   Order matters: base styles first, components next,
   then modals, and utilities last.
@@ -29,6 +28,6 @@
 @import './modals/login.css';
 @import './modals/settings.css';
 
-/* 4. UTILITIES - Helper classes (load last to ensure they override) */
+/* 4. UTILITIES - Helper classes (Load last to ensure they override) */
 @import './utilities/helpers.css';
 @import './utilities/spacing.css';
