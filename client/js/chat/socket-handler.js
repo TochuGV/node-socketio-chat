@@ -75,7 +75,7 @@ const setupSocketHandler = (currentUserId, username, areUnreadMessagesCounterEna
   });
 
   socketService.listeners.onRateLimitError((data) => {
-    alert(`⏱️ ${data.message}\nPuedes enviar otro mensaje en ${data.retryAfter} segundos.`); //REVISAR DE CREAR UNA NOTIFICACIÓN MÁS ELABORADA
+    alert(`⏱️ ${data.message}\nPuedes enviar otro mensaje en ${data.retryAfter} segundos.`);
   });
 
   socketService.listeners.onValidationError((data) => {

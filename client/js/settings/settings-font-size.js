@@ -4,9 +4,9 @@ const STORAGE_KEY = "chat-font-size";
 const root = document.documentElement;
 
 const sizeMap = {
-  small: '0.8', // Ver 0.75
+  small: '0.8',
   medium: '1',
-  large: '1.2' // Ver 1.25
+  large: '1.2'
 };
 
 const applyFontSize = (size = 'medium') => {

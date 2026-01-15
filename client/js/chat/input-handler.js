@@ -56,7 +56,6 @@ const setupInputHandler = (socket, userId, username) => {
     };
   };
 
-  // Evento de envío de texto
   sendTextButton.addEventListener('click', (e) => {
     e.preventDefault();
     const message = input.value;
@@ -67,7 +66,6 @@ const setupInputHandler = (socket, userId, username) => {
     }
   });
 
-  // Envío con Enter
   input.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -75,10 +73,8 @@ const setupInputHandler = (socket, userId, username) => {
     }
   });
 
-  // Actualización de botones al escribir
   input.addEventListener('input', handleInputInteraction);
 
-  // Inicializar estado de botones
   handleInputInteraction();
 };
 

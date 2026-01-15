@@ -16,16 +16,14 @@ export const startChatSession = (username, userId = null) => {
     currentSessionUserId = getOrCreateUserId();
   } else {
     currentSessionUserId = userId;
-  }
+  };
 
-  //localStorage.setItem('chat-username', username);
   document.body.classList.remove('login-active');
 
   if (loginModal) loginModal.classList.add('hidden');
   if (loginOverlay) loginOverlay.classList.add('hidden');
   if (chatViewMain) chatViewMain.classList.remove('hidden');
 
-  //currentSessionUserId = getOrCreateUserId();
   currentSessionUsername = username;
   initializeChat(currentSessionUserId, currentSessionUsername);
 };
@@ -55,7 +53,7 @@ export const initFlow = async () => {
     }
   } catch (error) {
     console.error("Hubo un error verificando la sesión:", error);
-  }
+  };
   
   const storedUsername = localStorage.getItem('chat-username');
 
@@ -65,7 +63,7 @@ export const initFlow = async () => {
     document.body.classList.add('login-active');
     if (chatViewMain) chatViewMain.classList.add('hidden');
     initAuthManager();
-  }
+  };
 
   removeLoader();
 };

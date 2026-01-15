@@ -13,14 +13,6 @@ export default (io, socket, services) => {
       io.to(oldSocketId).emit('force disconnect', {
         reason: 'New session started in another tab/window.'
       });
-
-      /*
-      const oldSocket = io.sockets.sockets.get(oldSocketId);
-      if (oldSocket) {
-        oldSocket.disconnect(true);
-        console.log(`Force disconnected duplicate session for user: ${userId}`);
-      };
-      */
     };
 
     sessionStore.saveSession(userId, socket.id);

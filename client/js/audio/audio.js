@@ -2,7 +2,6 @@ let mediaRecorder = null;
 let audioChunks = [];
 let stream = null;
 
-// Inicia la grabación de audio. Recibe un callback que se ejecuta al detenerse la grabación.
 export const startRecording = async (onStop) => {
   try {
     stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -36,7 +35,6 @@ export const stopRecording = () => {
   if (mediaRecorder && mediaRecorder.state !== 'inactive') mediaRecorder.stop();
 };
 
-// Convierte un Blob a base64 (async)
 const blobToBase64 = (blob) => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();

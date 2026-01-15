@@ -50,7 +50,7 @@ const addMessage = ({ username, message, audio, audioType, timestamp }, isOwn = 
           <audio preload="metadata" src="data:${audioType};base64,${audio}"></audio>
         </div>
       </div>
-    `; // <button class="audio-control-button"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+    `;
   };
 
   messageElement.innerHTML = `
