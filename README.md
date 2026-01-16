@@ -34,23 +34,14 @@ Quería enfrentarme a los problemas que las librerías modernas nos resuelven 'm
 
 ## 🛠️ Tecnologías Utilizadas
 
-### Frontend (Cliente)
-
-- **HTML5:**
-- **CSS3:**
-- **JavaScript (Vanilla ES6+):**
-- **Socket.IO Client:**
-- **Web Audio API:**
-- **MediaStream API:**
-
-### Backend (Servidor)
-
-- **Node.js & Express:**
-- **MongoDB & Mongoose:**
-- **Socket.IO:**
-- **Passport:**
-
-
+| Categoría | Tecnologías y Propósito |
+| :--- | :--- |
+| **Frontend (Cliente)** | [**HTML5**](https://developer.mozilla.org/es/docs/Web/HTML) & [**CSS3**](https://developer.mozilla.org/es/docs/Web/CSS) (Variables, Flexbox) <br> [**JavaScript Vanilla (ES6+)**](https://developer.mozilla.org/es/docs/Web/JavaScript) - Manipulación directa del DOM y gestión de eventos. |
+| **Tiempo Real** | [**Socket.IO**](https://socket.io/) (Client & Server) - Comunicación bidireccional basada en eventos. |
+| **Multimedia (Nativo)** | [**Web Audio API**](https://developer.mozilla.org/es/docs/Web/API/Web_Audio_API) - Análisis de frecuencias (FFT) para visualización de ondas. <br> [**MediaStream API**](https://developer.mozilla.org/es/docs/Web/API/Media_Streams_API) - Captura de flujo de audio del micrófono. |
+| **Backend (Servidor)** | [**Node.js**](https://nodejs.org/) & [**Express**](https://expressjs.com/) - Runtime de JS y Framework para servidor HTTP. |
+| **Base de Datos** | [**MongoDB**](https://www.mongodb.com/) & [**Mongoose**](https://mongoosejs.com/) - Modelado de esquemas y persistencia de datos. |
+| **Seguridad** | [**Passport.js**](https://www.passportjs.org/) - Estrategias de autenticación OAuth 2.0. <br> [**Helmet**](https://www.npmjs.com/package/helmet) - Protección de cabeceras HTTP. <br> [**Express-Rate-Limit**](https://www.npmjs.com/package/express-rate-limit) - Prevención de ataques de fuerza bruta. |
 
 ## 📁 Estructura del Proyecto
 
@@ -100,7 +91,7 @@ Quería enfrentarme a los problemas que las librerías modernas nos resuelven 'm
 
 ## 🚀 Futuras Mejoras
 
-### 📡 Arquitectura e Infraestructura
+### 🏗️ Arquitectura e Infraestructura
 
 - [ ] **Migración a React:** Refactorización completa del cliente para adoptar una arquitectura basada en componentes y Virtual DOM.
 
@@ -108,7 +99,7 @@ Quería enfrentarme a los problemas que las librerías modernas nos resuelven 'm
 
 - [ ] **Búsqueda Full-Text:** Implementación de un motor de búsqueda indexado para recuperar mensajes históricos eficientemente.
 
-### 💬 Experiencia de Usuario (Social)
+### 👥 Experiencia de Usuario (Social)
 
 - [ ] **Sistema de reacciones:** Interacción rápida mediante emojis sobre mensajes específicos.
 
@@ -116,7 +107,7 @@ Quería enfrentarme a los problemas que las librerías modernas nos resuelven 'm
 
 - [ ] **Menciones y notificaciones:** Sistema de etiquetado (@usuario) con alertas directas.
 
-### ⚡ Comunicación Avanzada
+### 📡 Comunicación Avanzada
 
 - [ ] **Mensajería privada (DMs):** Implementación de canales directos 1:1 encriptados entre usuarios.
 
