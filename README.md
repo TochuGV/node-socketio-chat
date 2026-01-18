@@ -1,5 +1,14 @@
 # 💬 Chat en Tiempo Real
 
+## 🎥 Demostración
+
+[![Real-Time Chat App DEMO | Node.js + Socket.IO + Vanilla JavaScript](assets/preview.png)](https://youtu.be/dyyySLptN5Y "Ver en YouTube")
+
+> [!NOTE]  
+> Haz clic en la imagen para ver la demostración completa (con audio y modo oscuro).
+
+## 🧠 Filosofía del Proyecto
+
 En un mundo dominado por **React** y **Next.js**, es fácil olvidar cómo funciona la web por detrás. Así que decidí desarrollar esta aplicación utilizando **JavaScript Vanilla**.
 
 El objetivo fue explorar el diseño de una arquitectura de software utilizando únicamente estándares web nativos. Esto implicó implementar patrones de diseño clásicos como **Singleton**, **Facade** y **Observer**. En lugar de depender de la gestión de estado de un framework, diseñé una estructura modular escalable que orquesta el ciclo de vida del DOM, la comunicación vía **WebSockets** y el procesamiento de audio en tiempo real.
