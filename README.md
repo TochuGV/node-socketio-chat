@@ -2,6 +2,10 @@
 
 ## 🎥 Demostración
 
+- La aplicación se encuentra [desplegada en producción](https://node-socketio-chat-aaw8.onrender.com).
+
+- La siguiente demostración fue grabada sobre la versión actualmente activa.
+
 [![Real-Time Chat App DEMO | Node.js + Socket.IO + Vanilla JavaScript](assets/preview.png)](https://youtu.be/dyyySLptN5Y "Ver en YouTube")
 
 > [!NOTE]  
@@ -14,6 +18,12 @@ En un mundo dominado por **React** y **Next.js**, es fácil olvidar cómo funcio
 El objetivo fue explorar el diseño de una arquitectura de software utilizando únicamente estándares web nativos. Esto implicó implementar patrones de diseño clásicos como **Singleton**, **Facade** y **Observer**. En lugar de depender de la gestión de estado de un framework, diseñé una estructura modular escalable que orquesta el ciclo de vida del DOM, la comunicación vía **WebSockets** y el procesamiento de audio en tiempo real.
 
 Quería enfrentarme a los problemas que las librerías modernas nos resuelven 'mágicamente', tales como la sincronización del estado, la eficiencia del renderizado y el manejo de flujos de datos complejos. Al hacerlo, transformé la teoría en experiencia práctica.
+
+## 🎯 Público Objetivo
+
+- Desarrolladores que quieran entender WebSockets sin frameworks
+- Estudiantes de arquitectura de software
+- Proyectos educativos y demostrativos
 
 ## ✨ Características
 
@@ -104,7 +114,7 @@ Quería enfrentarme a los problemas que las librerías modernas nos resuelven 'm
 - **[Node.js](https://nodejs.org/)** (Versión 18+) 
 - **[MongoDB Atlas](https://www.mongodb.com/products/platform/atlas-database)**
   - Alternativamente: **[MongoDB Local](https://www.mongodb.com/)** (Versión 5+)
-- Cuenta de **[Google Cloud](https://console.cloud.google.com/apis/credentials)** y **[GitHub](https://github.com/settings/developers)** (Necesario para configurar las credenciales OAuth)
+- Cuenta de **[Google](https://console.cloud.google.com/apis/credentials)** y/o **[GitHub](https://github.com/settings/developers)** (Necesario para configurar las credenciales OAuth)
 
 ### 2️⃣ Clonar el repositorio:
 ```bash
@@ -118,8 +128,8 @@ npm install
 ```
 
 ### 4️⃣ Configurar variables de entorno:
-- Crear un archivo .env en la raíz del proyecto.
-- Copiar y pegar la siguiente plantilla y reemplazar los valores con los propios:
+- Renombrar el archivo `.env.example` a `.env`
+- Abrir el archivo `.env` y reemplazar los valores de ejemplo con tus credenciales:
 
 ```bash
 # Base de datos
@@ -138,6 +148,12 @@ GOOGLE_CLIENT_SECRET=tu_google_client_secret
 GITHUB_CLIENT_ID=tu_github_client_id
 GITHUB_CLIENT_SECRET=tu_github_client_secret
 ```
+
+> [!TIP]  
+> Para obtener las credenciales OAuth:
+> - **Google:** [Google Cloud Console](https://console.cloud.google.com/apis/credentials)
+> 
+> - **Github:** [GitHub Developer Settings](https://github.com/settings/developers) 
 
 ### 5️⃣ Iniciar el servidor:
 
