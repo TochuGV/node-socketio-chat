@@ -1,15 +1,16 @@
 # 💬 Chat en Tiempo Real
+<br>
 
 ## 🎥 Demostración
 
-- La aplicación se encuentra [desplegada en producción](https://node-socketio-chat-aaw8.onrender.com).
-
-- La siguiente demostración fue grabada sobre la versión actualmente activa.
+La aplicación se encuentra [desplegada en producción](https://node-socketio-chat-aaw8.onrender.com) y la siguiente demostración fue grabada sobre la versión activa.
 
 [![Real-Time Chat App DEMO | Node.js + Socket.IO + Vanilla JavaScript](assets/preview.png)](https://youtu.be/dyyySLptN5Y "Ver en YouTube")
 
 > [!NOTE]  
 > Haz clic en la imagen para ver la demostración completa (con audio y modo oscuro).
+
+<br>
 
 ## 🧠 Filosofía del Proyecto
 
@@ -19,11 +20,15 @@ El objetivo fue explorar el diseño de una arquitectura de software utilizando �
 
 Quería enfrentarme a los problemas que las librerías modernas nos resuelven 'mágicamente', tales como la sincronización del estado, la eficiencia del renderizado y el manejo de flujos de datos complejos. Al hacerlo, transformé la teoría en experiencia práctica.
 
+<br>
+
 ## 🎯 Público Objetivo
 
 - Desarrolladores que quieran entender WebSockets sin frameworks
 - Estudiantes de arquitectura de software
 - Proyectos educativos y demostrativos
+
+<br>
 
 ## ✨ Características
 
@@ -51,6 +56,8 @@ Quería enfrentarme a los problemas que las librerías modernas nos resuelven 'm
 - Notificaciones de sonido
 - Separadores de fecha automáticos
 
+<br>
+
 ## 🛠️ Tecnologías Utilizadas
 
 | Categoría | Tecnologías y Propósito |
@@ -61,6 +68,8 @@ Quería enfrentarme a los problemas que las librerías modernas nos resuelven 'm
 | **Backend (Servidor)** | [**Node.js**](https://nodejs.org/) & [**Express**](https://expressjs.com/) - Runtime de JS y Framework para servidor HTTP. |
 | **Base de Datos** | [**MongoDB**](https://www.mongodb.com/) & [**Mongoose**](https://mongoosejs.com/) - Modelado de esquemas y persistencia de datos. |
 | **Seguridad** | [**Passport.js**](https://www.passportjs.org/) - Estrategias de autenticación OAuth 2.0. <br> [**Helmet**](https://www.npmjs.com/package/helmet) - Protección de cabeceras HTTP. <br> [**Express-Rate-Limit**](https://www.npmjs.com/package/express-rate-limit) - Prevención de ataques de fuerza bruta. |
+
+<br>
 
 ## 📁 Estructura del Proyecto
 
@@ -108,6 +117,8 @@ Quería enfrentarme a los problemas que las librerías modernas nos resuelven 'm
 ├── package.json               # Dependencias y scripts
 ```
 
+<br>
+
 ## 💻 Instalación y Configuración
 
 ### 1️⃣ Prerrequisitos:
@@ -124,11 +135,12 @@ cd node-socketio-chat
 
 ### 3️⃣ Instalar dependencias:
 ```bash
+cd server
 npm install
 ```
 
 ### 4️⃣ Configurar variables de entorno:
-- Renombrar el archivo `.env.example` a `.env`
+- Dentro de `server`, renombrar el archivo `.env.example` a `.env`
 - Abrir el archivo `.env` y reemplazar los valores de ejemplo con tus credenciales:
 
 ```bash
@@ -156,6 +168,7 @@ GITHUB_CLIENT_SECRET=tu_github_client_secret
 > - **Github:** [GitHub Developer Settings](https://github.com/settings/developers) 
 
 ### 5️⃣ Iniciar el servidor:
+Desde la carpeta `server`:
 
 ```bash
 # Modo desarrollo
@@ -164,6 +177,8 @@ npm run dev
 # Modo producción
 npm start
 ```
+
+<br>
 
 ## 🚀 Futuras Mejoras
 
@@ -196,3 +211,18 @@ npm start
 ### 🛡️ Administración
 
 - [ ] **Panel de moderación:** Herramientas para reportar usuarios y gestionar contenido inapropiado.
+
+<br>
+
+## 📄 Licencia
+
+Este proyecto está bajo la **Licencia MIT**. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+
+<br>
+
+## 👤 Autor
+
+**Tobías Vallejos**
+
+- **GitHub: [@TochuGV](https://github.com/TochuGV)**
+- **LinkedIn: [Tobías Vallejos](https://www.linkedin.com/in/tobiasvallejos/)**
