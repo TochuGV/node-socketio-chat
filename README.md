@@ -9,7 +9,7 @@
 
 ## 🧠 Filosofía del Proyecto
 
-En un mundo dominado por **React** y **Next.js**, es fácil olvidar cómo funciona la web por detrás. Así que decidí desarrollar esta aplicación utilizando **JavaScript Vanilla**.
+En un mundo dominado por **React** y **Next.js**, es fácil olvidar cómo funciona la web por detrás. Por eso desarrollé esta aplicación utilizando **JavaScript Vanilla**.
 
 El objetivo fue explorar el diseño de una arquitectura de software utilizando únicamente estándares web nativos. Esto implicó implementar patrones de diseño clásicos como **Singleton**, **Facade** y **Observer**. En lugar de depender de la gestión de estado de un framework, diseñé una estructura modular escalable que orquesta el ciclo de vida del DOM, la comunicación vía **WebSockets** y el procesamiento de audio en tiempo real.
 
@@ -96,6 +96,57 @@ Quería enfrentarme a los problemas que las librerías modernas nos resuelven 'm
 │   └── index.js               # Punto de entrada del servidor
 │
 ├── package.json               # Dependencias y scripts
+```
+
+## 💻 Instalación y Configuración
+
+### 1️⃣ Prerrequisitos:
+- **[Node.js](https://nodejs.org/)** (Versión 18+) 
+- **[MongoDB Atlas](https://www.mongodb.com/products/platform/atlas-database)**
+  - Alternativamente: **[MongoDB Local](https://www.mongodb.com/)** (Versión 5+)
+- Cuenta de **[Google Cloud](https://console.cloud.google.com/apis/credentials)** y **[GitHub](https://github.com/settings/developers)** (Necesario para configurar las credenciales OAuth)
+
+### 2️⃣ Clonar el repositorio:
+```bash
+git clone https://github.com/tu-usuario/node-socketio-chat.git
+cd node-socketio-chat
+```
+
+### 3️⃣ Instalar dependencias:
+```bash
+npm install
+```
+
+### 4️⃣ Configurar variables de entorno:
+- Crear un archivo .env en la raíz del proyecto.
+- Copiar y pegar la siguiente plantilla y reemplazar los valores con los propios:
+
+```bash
+# Base de datos
+MONGODB_URI_DEV=mongodb+srv://<usuario>:<contraseña>@cluster.mongodb.net/chat_development
+MONGODB_URI_PROD=mongodb+srv://<usuario>:<contraseña>@cluster.mongodb.net/chat_production
+
+# Servidor
+PORT=3000
+SESSION_SECRET=tu_secreto_de_sesion_aqui
+
+# Autenticación (Google OAuth)
+GOOGLE_CLIENT_ID=tu_google_client_id
+GOOGLE_CLIENT_SECRET=tu_google_client_secret
+
+# Autenticación (GitHub OAuth)
+GITHUB_CLIENT_ID=tu_github_client_id
+GITHUB_CLIENT_SECRET=tu_github_client_secret
+```
+
+### 5️⃣ Iniciar el servidor:
+
+```bash
+# Modo desarrollo
+npm run dev
+
+# Modo producción
+npm start
 ```
 
 ## 🚀 Futuras Mejoras
