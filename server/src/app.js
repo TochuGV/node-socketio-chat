@@ -27,7 +27,7 @@ app.use(sessionConfig)
 app.use(passport.initialize());
 app.use(passport.session()); // Soporte para sesiones persistentes
 
-app.use(express.static(path.join(process.cwd(), 'client'),{
+app.use(express.static(path.join(process.cwd(), '../client'),{
   etag: false,
   lastModified: false,
   maxAge: 0,
