@@ -23,7 +23,6 @@ export const initializeChat = (userId, username) => {
   });
 
   socketService.listeners.onConnect((id) => {
-    console.log('Connected with ID:', id);
     socketService.emitters.registerUsername(userId, username);
   });
 
