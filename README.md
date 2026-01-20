@@ -1,4 +1,7 @@
 # 💬 Chat en Tiempo Real
+
+> Aplicación de chat en tiempo real construida con **JavaScript Vanilla**, **Socket.IO**, **Node.js**, **Express** y **MongoDB**. Incluye autenticación OAuth (Google/GitHub), mensajes de audio con visualización de forma de onda, y modo oscuro/claro.
+
 <br>
 
 ## 🎥 Demostración
@@ -8,7 +11,7 @@ La aplicación se encuentra [desplegada en producción](https://node-socketio-ch
 [![Real-Time Chat App DEMO | Node.js + Socket.IO + Vanilla JavaScript](assets/preview.png)](https://youtu.be/dyyySLptN5Y "Ver en YouTube")
 
 > [!NOTE]  
-> Haz clic en la imagen para ver la demostración completa (con audio y modo oscuro).
+> La demostración completa con audio y modo oscuro está disponible en el video.
 
 <br>
 
@@ -18,7 +21,7 @@ En un mundo dominado por **React** y **Next.js**, es fácil olvidar cómo funcio
 
 El objetivo fue explorar el diseño de una arquitectura de software utilizando únicamente estándares web nativos. Esto implicó implementar patrones de diseño clásicos como **Singleton**, **Facade** y **Observer**. En lugar de depender de la gestión de estado de un framework, diseñé una estructura modular escalable que orquesta el ciclo de vida del DOM, la comunicación vía **WebSockets** y el procesamiento de audio en tiempo real.
 
-Quería enfrentarme a los problemas que las librerías modernas nos resuelven 'mágicamente', tales como la sincronización del estado, la eficiencia del renderizado y el manejo de flujos de datos complejos. Al hacerlo, transformé la teoría en experiencia práctica.
+Quería enfrentarme a los problemas que las librerías modernas nos resuelven 'mágicamente', tales como la **sincronización del estado**, la **eficiencia del renderizado** y el **manejo de flujos de datos complejos**. Al hacerlo, transformé la teoría en experiencia práctica.
 
 <br>
 
@@ -65,7 +68,7 @@ Quería enfrentarme a los problemas que las librerías modernas nos resuelven 'm
 | **Frontend (Cliente)** | [**HTML5**](https://developer.mozilla.org/es/docs/Web/HTML) & [**CSS3**](https://developer.mozilla.org/es/docs/Web/CSS) (Variables, Flexbox) <br> [**JavaScript Vanilla (ES6+)**](https://developer.mozilla.org/es/docs/Web/JavaScript) - Manipulación directa del DOM y gestión de eventos. |
 | **Tiempo Real** | [**Socket.IO**](https://socket.io/) (Client & Server) - Comunicación bidireccional basada en eventos. |
 | **Multimedia (Nativo)** | [**Web Audio API**](https://developer.mozilla.org/es/docs/Web/API/Web_Audio_API) - Análisis de frecuencias (FFT) para visualización de ondas. <br> [**MediaStream API**](https://developer.mozilla.org/es/docs/Web/API/Media_Streams_API) - Captura de flujo de audio del micrófono. |
-| **Backend (Servidor)** | [**Node.js**](https://nodejs.org/) & [**Express**](https://expressjs.com/) - Runtime de JS y Framework para servidor HTTP. |
+| **Backend (Servidor)** | [**Node.js**](https://nodejs.org/) & [**Express**](https://expressjs.com/) - Entorno de ejecución de JavaScript y framework para servidor HTTP. |
 | **Base de Datos** | [**MongoDB**](https://www.mongodb.com/) & [**Mongoose**](https://mongoosejs.com/) - Modelado de esquemas y persistencia de datos. |
 | **Seguridad** | [**Passport.js**](https://www.passportjs.org/) - Estrategias de autenticación OAuth 2.0. <br> [**Helmet**](https://www.npmjs.com/package/helmet) - Protección de cabeceras HTTP. <br> [**Express-Rate-Limit**](https://www.npmjs.com/package/express-rate-limit) - Prevención de ataques de fuerza bruta. |
 
@@ -74,6 +77,8 @@ Quería enfrentarme a los problemas que las librerías modernas nos resuelven 'm
 ## 📁 Estructura del Proyecto
 
 ```
+├── assets/                    # Recursos estáticos (Imágenes, íconos, multimedia)
+│
 ├── client/                    # Cliente (Frontend)
 │   ├── css/                   # Estilos organizados por arquitectura modular
 │   │   ├── base/              # Reset, variables, tipografía
@@ -99,22 +104,23 @@ Quería enfrentarme a los problemas que las librerías modernas nos resuelven 'm
 │   └── index.html             # Punto de entrada HTML
 │
 ├── server/                    # Servidor (Backend)
-│   ├── config/                # Configuración (Env, Passport, Session, CORS)
-│   ├── controllers/           # Controladores de rutas
-│   ├── database/              # Conexión a MongoDB
-│   ├── middlewares/           # Middlewares (Rate Limit, Auth Check)
-│   ├── models/                # Modelos de Mongoose (User, Message)
-│   ├── routes/                # Rutas de la API (Express Router)
-│   ├── services/              # Lógica de negocio
-│   ├── sockets/               # Manejadores de eventos de Socket.IO
-│   │   ├── handlers/          # Lógica por tipo de evento
-│   │   ├── store/             # Almacenamiento de sesiones en memoria
-│   │   └── index.js           # Inicializador de Sockets
-│   ├── utils/                 # Validaciones y seguridad
-│   ├── app.js                 # Configuración de la App Express
-│   └── index.js               # Punto de entrada del servidor
-│
-├── package.json               # Dependencias y scripts
+│   ├── src/
+│   │   ├── config/            # Configuración (Env, Passport, Session, CORS)
+│   │   ├── controllers/       # Controladores de rutas
+│   │   ├── database/          # Conexión a MongoDB
+│   │   ├── middlewares/       # Middlewares (Rate Limit, Auth Check)
+│   │   ├── models/            # Modelos de Mongoose (User, Message)
+│   │   ├── routes/            # Rutas de la API (Express Router)
+│   │   ├── services/          # Lógica de negocio
+│   │   ├── sockets/           # Manejadores de eventos de Socket.IO
+│   │   │   ├── handlers/      # Lógica por tipo de evento
+│   │   │   ├── store/         # Almacenamiento de sesiones en memoria
+│   │   │   └── index.js       # Inicializador de Sockets
+│   │   ├── utils/             # Validaciones y seguridad
+│   │   ├── app.js             # Configuración de la App Express
+│   │   └── index.js           # Punto de entrada del servidor
+│   │
+│   └── package.json           # Dependencias y scripts
 ```
 
 <br>
@@ -143,23 +149,7 @@ npm install
 - Dentro de `server`, renombrar el archivo `.env.example` a `.env`
 - Abrir el archivo `.env` y reemplazar los valores de ejemplo con tus credenciales:
 
-```bash
-# Base de datos
-MONGODB_URI_DEV=mongodb+srv://<usuario>:<contraseña>@cluster.mongodb.net/chat_development
-MONGODB_URI_PROD=mongodb+srv://<usuario>:<contraseña>@cluster.mongodb.net/chat_production
-
-# Servidor
-PORT=3000
-SESSION_SECRET=tu_secreto_de_sesion_aqui
-
-# Autenticación (Google OAuth)
-GOOGLE_CLIENT_ID=tu_google_client_id
-GOOGLE_CLIENT_SECRET=tu_google_client_secret
-
-# Autenticación (GitHub OAuth)
-GITHUB_CLIENT_ID=tu_github_client_id
-GITHUB_CLIENT_SECRET=tu_github_client_secret
-```
+![.env.example](assets/env-example.png)
 
 > [!TIP]  
 > Para obtener las credenciales OAuth:
@@ -222,7 +212,7 @@ Este proyecto está bajo la **Licencia MIT**. Consulta el archivo [LICENSE](LICE
 
 ## 👤 Autor
 
-**Tobías Vallejos**
+**Tobías Vallejos** - Desarrollador Full Stack
 
 - **GitHub: [@TochuGV](https://github.com/TochuGV)**
 - **LinkedIn: [Tobías Vallejos](https://www.linkedin.com/in/tobiasvallejos/)**
